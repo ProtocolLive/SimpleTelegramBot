@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
-//https://github.com/ProtocolLive/ProtocolEngine
-//2022.03.07.00
+//https://github.com/ProtocolLive/FuncoesComuns
+//2022.03.07.01
 
 function HandlerError(
   int $errno,
@@ -62,8 +62,9 @@ function vdd(mixed $v):never{
 }
 
 $DebugTraceCount = 0;
+$DebugTraceFolder = __DIR__;
 function DebugTrace():void{
-  global $DebugTraceCount;
+  global $DebugTraceCount, $DebugTraceFolder;
   if((Debug & StbDebug::Trace) !== StbDebug::Trace):
     return;
   endif;
@@ -77,6 +78,5 @@ function DebugTrace():void{
     $temp .= json_encode($trace[1]['args'], JSON_PRETTY_PRINT) . "\n";
   endif;
   $temp .= "\n";
-  DirCreate(DirSystem . '/system/logs');
-  file_put_contents(DirSystem . '/system/logs/trace.log', $temp, FILE_APPEND);
+  file_put_contents($DebugTraceFolder . '/trace.log', $temp, FILE_APPEND);
 }
