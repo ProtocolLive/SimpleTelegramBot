@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.06.00
+//2022.03.07.00
 
 require(__DIR__ . '/php.php');
 define('DirSystem', dirname(__DIR__, 1));
@@ -14,7 +14,9 @@ date_default_timezone_set(Timezone);
 
 $temp = explode(':', Token);
 define('DirToken', DirSystem . '/' . $temp[1]);
+
 ini_set('error_log', DirToken . '/logs/error.log');
+$DebugTraceFolder = DirToken . '/logs';
 
 $BotData = new TblData(
   Token,
