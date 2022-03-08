@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.05.00
+//2022.03.08.00
+
+define('DirSystem', dirname(__DIR__, 1));
 
 enum StbEvents:int{
   case Text = 0;

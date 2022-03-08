@@ -4,12 +4,9 @@
 //2022.03.07.00
 
 require(__DIR__ . '/php.php');
-define('DirSystem', dirname(__DIR__, 1));
-require(DirSystem . '/system/functions/debug.php');
+require(__DIR__ . '/requires.php');
 set_error_handler('HandlerError');
 set_exception_handler('HandlerException');
-require(__DIR__ . '/constants.php');
-require(__DIR__ . '/requires.php');
 date_default_timezone_set(Timezone);
 
 $temp = explode(':', Token);
