@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.06.00
+//2022.03.08.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -15,6 +15,7 @@ function Action_():void{
    * @var TelegramBotLibrary $Bot
    */
   global $Bot;
+  DebugTrace();
   $Webhook = $Bot->WebhookGet();
   vdd($Webhook);
 }
