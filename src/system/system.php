@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.07.00
+//2022.03.16.00
 
 require(__DIR__ . '/php.php');
 require(__DIR__ . '/requires.php');
@@ -21,10 +21,10 @@ $BotData = new TblData(
   Debug
 );
 $Bot = new TelegramBotLibrary($BotData);
+$Db = new StbSysDatabase(DirToken);
+$Lang = new StbLanguage(DefaultLanguage);
 
 //Load modules
-$System['Modules'] = [];
-foreach(glob(DirSystem . '/modules/*', GLOB_ONLYDIR) as $file):
-  $System['Modules'][] = basename($file);
-  include($file . '/index.php');
+foreach($Db->Modules() as $module => $install):
+  require(DirSystem . '/modules/' . $module . '/index.php');
 endforeach;
