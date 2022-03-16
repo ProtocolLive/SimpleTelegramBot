@@ -1,0 +1,5 @@
+{
+  "ModuleInstallPick": "Choose a module to install:",
+  "ModuleInstallNotFound": "⚠️ The module %s dont have Install method",
+  "ModuleInstallNone": "ℹ️ None module to install"
+}
