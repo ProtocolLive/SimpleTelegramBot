@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.03.17.01
+//2022.03.17.02
 
 class StbSysDatabase{
   private readonly string $DirToken;
@@ -163,7 +163,7 @@ class StbDatabase{
   public function __construct(string $DirToken, string $Module){
     DebugTrace();
     if($Module === 'System'):
-      return null;
+      $Module .= 1;
     endif;
     $this->DirToken = $DirToken;
     $this->Module = $Module;
