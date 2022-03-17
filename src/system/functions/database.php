@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.03.17.00
+//2022.03.17.01
 
 class StbSysDatabase{
   private readonly string $DirToken;
@@ -17,7 +17,7 @@ class StbSysDatabase{
       $db = file_get_contents($file);
       $db = json_decode($db, true);
     else:
-      $db = ['System' => []];
+      $db = [];
     endif;
     return $db['System'] ?? [];
   }
