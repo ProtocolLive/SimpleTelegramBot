@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.03.16.00
+//2022.03.17.00
 
 class StbSysDatabase{
   private readonly string $DirToken;
@@ -104,6 +104,26 @@ class StbSysDatabase{
     $db = $this->Open();
     $db[DbParam::Commands] ??= [];
     return array_keys($db[DbParam::Commands], $Module);
+  }
+
+  public function ListenerTextAdd(int $User, string $Listener):void{
+    DebugTrace();
+    $db = $this->Open($User);
+    $db[DbParam::ListenerText] = $Listener;
+    $this->Save($db);
+  }
+
+  public function ListenerTextDel(int $User):void{
+    DebugTrace();
+    $db = $this->Open($User);
+    unset($db[DbParam::ListenerText]);
+    $this->Save($db);
+  }
+
+  public function ListenerText(int $User):string{
+    DebugTrace();
+    $db = $this->Open($User);
+    return $db[DbParam::ListenerText];
   }
 }
 
