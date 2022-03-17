@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.16.00
+//2022.03.17.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -13,26 +13,47 @@ endif;
 function Action_():void{
   /**
    * @var TelegramBotLibrary $Bot
-   * @var object $Webhook
-   * @var StbDatabase $Db
+   * @var StbSysDatabase $Db
+   * @var string $UserLang
    */
-  global $Bot, $Webhook, $Db;
+  global $Bot, $Webhook, $Db, $UserLang;
   DebugTrace();
   $Webhook = $Bot->WebhookGet();
-  if(get_class($Webhook) === 'TblCmd'
-  and function_exists('Command_' . strtolower($Webhook->Command))):
-    call_user_func('Command_' . strtolower($Webhook->Command));
+  if($Webhook === null):
+    return;
+  endif;
+  $Bot->SendAction(
+    $Webhook->Chat->Id,
+    TgChatAction::Typing
+  );
+  if(get_class($Webhook) === 'TblCmd'):
+    /** @var TblCmd $Webhook */
+    $UserLang = $Webhook->User->Language;
+    if(function_exists('Command_' . strtolower($Webhook->Command))):
+      call_user_func('Command_' . strtolower($Webhook->Command));
+      return;
+    endif;
+
+    $commands = $Db->Commands();
+    $module = $commands[$Webhook->Command] ?? null;
+    if($module !== null):
+      $command = $module . '::Command_' . $Webhook->Command;
+      $command();
+      return;
+    endif;
+
+    if(SendUserCmd($Webhook->Command) === false):
+      SendUserCmd('unknown');
+    endif;
   elseif(get_class($Webhook) === 'TgCallback'):
+    /** @var TblCallback $Webhook */
     if(function_exists('Callback_' . $Webhook->Data)):
       call_user_func('Callback_' . $Webhook->Data);
       return;
     endif;
-    $callbacks = $Db->Get(DbParam::Callbacks);
-    if(array_search($Webhook->Data, $callbacks) !== false):
-      //depois
-    endif;
   elseif(get_class($Webhook) === 'TgText'):
-    $listener = $Db->Get(DbParam::ListenerText, $Webhook->User->Id);
+    /** @var TblText $Webhook */
+    $listener = $Db->ListenerText($Webhook->User->Id);
     if($listener !== null):
       call_user_func('Listener_' . $listener);
     endif;
