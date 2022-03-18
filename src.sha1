@@ -1,4 +1,4 @@
-01775ed249130f8576bb6763a81393b887ec03c8  src/RENAME_WITH_TOKEN/index.php
+9edb79a02ff5bf60e2c65b419dd11f92a3735083  src/RENAME_WITH_TOKEN/index.php
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/info.php
 5054c3d7f1583aa0a043a72b08d9abf93591802f  src/UserCmds/en/start.txt
 73aec899ddfa259065560495e12d3319ec82ae28  src/UserCmds/en/unknown.txt
@@ -15,7 +15,7 @@ b39d09d6400f91a20d6b2f4f9654c871ad8bcef1  src/modules/index.php
 f918a823c1602c2dcffb617918535a89a19f69d4  src/system/constants.php
 3d0b480a05bc20213d42a5b5e6763d9e730583fd  src/system/functions/basics.php
 afd9bd6381f402a384f9603f3b8b353902f9b725  src/system/functions/bot.php
-a0b438eea5095bbdb7f59473a3927f8451967e90  src/system/functions/database.php
+577ad5c32e8969279775c5bc55989e9e1395c791  src/system/functions/database.php
 e555252ed46f746d32796bc9c0c336e05988de48  src/system/functions/debug.php
 ae0c2a89a4d341a7427dabbc43a7c44c6ea48987  src/system/functions/language.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
