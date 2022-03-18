@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.17.00
+//2022.03.18.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -29,8 +29,9 @@ function Action_():void{
   if(get_class($Webhook) === 'TblCmd'):
     /** @var TblCmd $Webhook */
     $UserLang = $Webhook->User->Language;
-    if(function_exists('Command_' . strtolower($Webhook->Command))):
-      call_user_func('Command_' . strtolower($Webhook->Command));
+    $command = 'Command_' . strtolower($Webhook->Command);
+    if(function_exists($command)):
+      $command();
       return;
     endif;
 
