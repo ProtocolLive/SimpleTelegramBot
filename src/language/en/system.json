@@ -1,3 +1,12 @@
 {
-  "Denied": "⛔ Access denied"
+  "Commands":[
+    [
+      "chat",
+      "cmd",
+      "Manage command list",
+      "cmd"
+    ]
+  ],
+  "Denied": "⛔ Access denied",
+  "Installed": "✅ SimpleTelegramBot installed!"
 }

@@ -1,5 +1,7 @@
 {
-  "ModuleInstallPick": "Clique em um módulo para instalar:",
-  "ModuleInstallNotFound": "⚠️ O módulo %s não tem o método Install",
-  "ModuleInstallNone": "ℹ️ Nenhum módulo para instalar"
+  "Module":{
+    "InstallPick": "Clique em um módulo para instalar:",
+    "InstallNotFound": "⚠️ O módulo %s não tem o método Install",
+    "InstallNone": "ℹ️ Nenhum módulo para instalar"
+  }
 }

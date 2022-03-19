@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.16.00
+//2022.03.19.00
 
 function Command_installmod():void{
   /**
@@ -32,7 +32,7 @@ function Command_installmod():void{
   if(count($ModulesFiles) === 0):
     $Bot->SendText(
       $Webhook->User->Id,
-      $Lang->Get('ModuleInstallNone')
+      $Lang->Get('InstallNone', null, 'Module')
     );
     return;
   endif;
@@ -50,7 +50,7 @@ function Command_installmod():void{
 
   $Bot->SendText(
     $Webhook->User->Id,
-    $Lang->Get('ModuleInstallPick'),
+    $Lang->Get('InstallPick', null, 'Module'),
     Markup: $mk
   );
 }
@@ -71,7 +71,7 @@ function Callback_ModulePick():void{
     $Bot->SendText(
       $Webhook->User->Id,
       sprintf(
-        $Lang->Get('ModuleInstallAlready'),
+        $Lang->Get('InstallAlready', null, 'Module'),
         $module
       )
     );
@@ -83,7 +83,7 @@ function Callback_ModulePick():void{
     $Bot->SendText(
       $Webhook->User->Id,
       sprintf(
-        $Lang->Get('ModuleNotFound'),
+        $Lang->Get('NotFound', null, 'Module'),
         $module
       )
     );
@@ -95,7 +95,7 @@ function Callback_ModulePick():void{
     $Bot->SendText(
       $Webhook->User->Id,
       sprintf(
-        $Lang->Get('ModuleInstallNotFound'),
+        $Lang->Get('InstallNotFound', null, 'Module'),
         $module
       )
     );
