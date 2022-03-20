@@ -1,12 +1,12 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.03.17.03
+//2022.03.20.00
 
 class StbSysDatabase{
   private readonly string $DirToken;
 
-  private function Open(int $User = null):array{
+  private function OpenAll(int $User = null):array{
     DebugTrace();
     if($User === null):
       $file = $this->DirToken . '/db/system.json';
@@ -19,6 +19,12 @@ class StbSysDatabase{
     else:
       $db = [];
     endif;
+    return $db;
+  }
+
+  private function Open(int $User = null):array{
+    DebugTrace();
+    $db = $this->OpenAll($User);
     return $db['System'] ?? [];
   }
 
@@ -29,6 +35,7 @@ class StbSysDatabase{
     else:
       $file = $this->DirToken . '/db/' . $User . '.json';
     endif;
+    $db = $this->OpenAll($User);
     $db['System'] = $Db;
     $db = json_encode($db);
     DirCreate(dirname($file));
@@ -131,7 +138,7 @@ class StbDatabase{
   private readonly string $DirToken;
   private readonly string $Module;
 
-  private function Open(int $User = null):array{
+  private function OpenAll(int $User = null):array{
     DebugTrace();
     if($User === null):
       $file = $this->DirToken . '/db/system.json';
@@ -144,6 +151,12 @@ class StbDatabase{
     else:
       $db = [];
     endif;
+    return $db;
+  }
+
+  private function Open(int $User = null):array{
+    DebugTrace();
+    $db = $this->OpenAll($User);
     return $db[$this->Module] ?? [];
   }
 
@@ -154,6 +167,7 @@ class StbDatabase{
     else:
       $file = $this->DirToken . '/db/' . $User . '.json';
     endif;
+    $db = $this->OpenAll($User);
     $db[$this->Module] = $Db;
     $db = json_encode($db);
     DirCreate(dirname($file));
