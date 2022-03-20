@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.18.00
+//2022.03.20.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -22,11 +22,11 @@ function Action_():void{
   if($Webhook === null):
     return;
   endif;
-  $Bot->SendAction(
-    $Webhook->Chat->Id,
-    TgChatAction::Typing
-  );
   if(get_class($Webhook) === 'TblCmd'):
+    $Bot->SendAction(
+      $Webhook->Chat->Id,
+      TgChatAction::Typing
+    );
     /** @var TblCmd $Webhook */
     $UserLang = $Webhook->User->Language;
     $command = 'Command_' . strtolower($Webhook->Command);
@@ -47,12 +47,20 @@ function Action_():void{
       SendUserCmd('unknown');
     endif;
   elseif(get_class($Webhook) === 'TgCallback'):
+    $Bot->SendAction(
+      $Webhook->Message->Chat->Id,
+      TgChatAction::Typing
+    );
     /** @var TblCallback $Webhook */
     if(function_exists('Callback_' . $Webhook->Data)):
       call_user_func('Callback_' . $Webhook->Data);
       return;
     endif;
   elseif(get_class($Webhook) === 'TgText'):
+    $Bot->SendAction(
+      $Webhook->Chat->Id,
+      TgChatAction::Typing
+    );
     /** @var TblText $Webhook */
     $listener = $Db->ListenerText($Webhook->User->Id);
     if($listener !== null):
