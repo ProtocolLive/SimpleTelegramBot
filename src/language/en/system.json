@@ -7,6 +7,10 @@
       "cmd"
     ]
   ],
-  "Denied": "⛔ Access denied",
-  "Installed": "✅ SimpleTelegramBot installed!"
+  "Module":{
+    "InstallPick": "Choose a module to install:",
+    "InstallNotFound": "⚠️ The module %s dont have Install method",
+    "InstallNone": "ℹ️ None module to install"
+  },
+  "Denied": "⛔ Access denied"
 }
