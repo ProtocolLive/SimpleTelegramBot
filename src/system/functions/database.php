@@ -1,12 +1,17 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.03.20.00
+//2022.04.06.00
 
 class StbSysDatabase{
   private readonly string $DirToken;
 
-  private function OpenAll(int $User = null):array{
+  private const ParamCommands = 'Commands';
+  private const ParamModules = 'Modules';
+  private const ParamVariables = 'Variables';
+  private const ParamListenerText = 'ListenerText';
+
+  private function Open(int $User = null):array{
     DebugTrace();
     if($User === null):
       $file = $this->DirToken . '/db/system.json';
@@ -22,12 +27,6 @@ class StbSysDatabase{
     return $db;
   }
 
-  private function Open(int $User = null):array{
-    DebugTrace();
-    $db = $this->OpenAll($User);
-    return $db['System'] ?? [];
-  }
-
   private function Save(array $Db, int $User = null):void{
     DebugTrace();
     if($User === null):
@@ -35,9 +34,7 @@ class StbSysDatabase{
     else:
       $file = $this->DirToken . '/db/' . $User . '.json';
     endif;
-    $db = $this->OpenAll($User);
-    $db['System'] = $Db;
-    $db = json_encode($db);
+    $db = json_encode($Db);
     DirCreate(dirname($file));
     file_put_contents($file, $db);
   }
@@ -50,13 +47,15 @@ class StbSysDatabase{
   public function ModuleInstall(string $Module):void{
     DebugTrace();
     $db = $this->Open();
-    $db[DbParam::Modules][$Module] = time();
+    $db['System'][self::ParamModules][$Module] = time();
     $this->Save($db);
   }
 
   public function ModuleUninstall(string $Module):void{
+    DebugTrace();
     $db = $this->Open();
-    unset($db[DbParam::Modules][$Module]);
+    unset($db['System'][self::ParamModules][$Module]);
+    unset($db[$Module]);
     $this->Save($db);
   }
 
@@ -66,24 +65,27 @@ class StbSysDatabase{
    * @return array|bool
    */
   public function Modules(string $Module = null):array|bool{
+    DebugTrace();
     $db = $this->Open();
-    $db[DbParam::Modules] ??= [];
+    $db['System'][self::ParamModules] ??= [];
     if($Module === null):
-      return $db[DbParam::Modules];
+      return $db['System'][self::ParamModules];
     else:
-      return isset($db[DbParam::Modules][$Module]);
+      return isset($db['System'][self::ParamModules][$Module]);
     endif;
   }
 
   public function CommandAdd(string $Command, string $Module):void{
+    DebugTrace();
     $db = $this->Open();
-    $db[DbParam::Commands][$Command] = $Module;
+    $db['System'][self::ParamCommands][$Command] = $Module;
     $this->Save($db);
   }
 
   public function CommandDel(string $Command):void{
+    DebugTrace();
     $db = $this->Open();
-    unset($db[DbParam::Commands][$Command]);
+    unset($db['System'][self::ParamCommands][$Command]);
     $this->Save($db);
   }
 
@@ -93,12 +95,13 @@ class StbSysDatabase{
    * @return array|string|null Return all commands, the respective module or null for command not found
    */
   public function Commands(string $Command = null):array|string|null{
+    DebugTrace();
     $db = $this->Open();
-    $db[DbParam::Commands] ??= [];
+    $db['System'][self::ParamCommands] ??= [];
     if($Command === null):
-      return $db[DbParam::Commands];
+      return $db['System'][self::ParamCommands];
     else:
-      return $db[DbParam::Commands][$Command] ?? null;
+      return $db['System'][self::ParamCommands][$Command] ?? null;
     endif;
   }
 
@@ -108,29 +111,42 @@ class StbSysDatabase{
    * @return array
    */
   public function ModuleCommands(string $Module):array{
+    DebugTrace();
     $db = $this->Open();
-    $db[DbParam::Commands] ??= [];
-    return array_keys($db[DbParam::Commands], $Module);
+    $db['System'][self::ParamCommands] ??= [];
+    return array_keys($db['System'][self::ParamCommands], $Module);
   }
 
   public function ListenerTextAdd(int $User, string $Listener):void{
     DebugTrace();
     $db = $this->Open($User);
-    $db[DbParam::ListenerText] = $Listener;
+    $db['System'][self::ParamListenerText] = $Listener;
     $this->Save($db);
   }
 
   public function ListenerTextDel(int $User):void{
     DebugTrace();
     $db = $this->Open($User);
-    unset($db[DbParam::ListenerText]);
+    unset($db['System'][self::ParamListenerText]);
     $this->Save($db);
   }
 
   public function ListenerText(int $User):string|null{
     DebugTrace();
     $db = $this->Open($User);
-    return $db[DbParam::ListenerText] ?? null;
+    return $db['System'][self::ParamListenerText] ?? null;
+  }
+
+  public function Variable(string $Name, string $Value = null):string|bool|null{
+    DebugTrace();
+    $db = $this->Open();
+    if($Value === null):
+      return $db['System'][self::ParamVariables][$Name] ?? null;
+    else:
+      $db['System'][self::ParamVariables][$Name] = $Value;
+      $this->Save($db);
+      return true;
+    endif;
   }
 }
 
