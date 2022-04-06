@@ -10,7 +10,10 @@
   "Module":{
     "InstallPick": "Clique em um módulo para instalar:",
     "InstallNotFound": "⚠️ O módulo %s não tem o método Install",
-    "InstallNone": "ℹ️ Nenhum módulo para instalar"
+    "InstallNone": "ℹ️ Nenhum módulo para instalar",
+    "UnInstallPick": "Clique em um módulo para desinstalar:",
+    "UnInstallNotFound": "⚠️ O módulo %s não tem o método Uninstall",
+    "UnInstallNone": "ℹ️ Nenhum módulo para desinstalar"
   },
   "Denied": "⛔ Acesso negado"
 }

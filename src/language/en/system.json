@@ -10,7 +10,10 @@
   "Module":{
     "InstallPick": "Choose a module to install:",
     "InstallNotFound": "⚠️ The module %s dont have Install method",
-    "InstallNone": "ℹ️ None module to install"
+    "InstallNone": "ℹ️ None module to install",
+    "UnInstallPick": "Choose a module to uninstall:",
+    "UnInstallNotFound": "⚠️ The module %s dont have Uninstall method",
+    "UnInstallNone": "ℹ️ None module to uninstall"
   },
   "Denied": "⛔ Access denied"
 }
