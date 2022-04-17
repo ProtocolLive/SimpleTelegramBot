@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.06.00
+//2022.04.17.00
 
 class StbSysDatabase{
   private readonly string $DirToken;
@@ -10,6 +10,7 @@ class StbSysDatabase{
   private const ParamModules = 'Modules';
   private const ParamVariables = 'Variables';
   private const ParamListenerText = 'ListenerText';
+  private const ParamListenerInlineQuery = 'ListenerInlineQuery';
 
   private function Open(int $User = null):array{
     DebugTrace();
@@ -135,6 +136,26 @@ class StbSysDatabase{
     DebugTrace();
     $db = $this->Open($User);
     return $db['System'][self::ParamListenerText] ?? null;
+  }
+
+  public function ListenerInlineQueryAdd(string $Listener):void{
+    DebugTrace();
+    $db = $this->Open();
+    $db['System'][self::ParamListenerInlineQuery] = $Listener;
+    $this->Save($db);
+  }
+
+  public function ListenerInlineQueryDel():void{
+    DebugTrace();
+    $db = $this->Open();
+    unset($db['System'][self::ParamListenerInlineQuery]);
+    $this->Save($db);
+  }
+
+  public function ListenerInlineQuery():string|null{
+    DebugTrace();
+    $db = $this->Open();
+    return $db['System'][self::ParamListenerInlineQuery] ?? null;
   }
 
   public function Variable(string $Name, string $Value = null):string|bool|null{
