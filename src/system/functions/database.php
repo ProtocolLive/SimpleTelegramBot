@@ -123,6 +123,9 @@ class StbSysDatabase{
     return array_keys($db['System'][self::ParamCommands], $Module);
   }
 
+  /**
+   * @param int $User User ID to associate the listener. Not allowed to checkout listener
+   */
   public function ListenerAdd(
     StbDbListeners $Listener,
     string $Function,
