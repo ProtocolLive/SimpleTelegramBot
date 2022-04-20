@@ -1,11 +1,12 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.20.00
+//2022.04.20.01
 
 enum StbDbListeners:string{
-  case Text = 'ListenerText';
-  case InlineQuery = 'ListenerInlineQuery';
+  case Text = 'Text';
+  case InlineQuery = 'InlineQuery';
+  case Invoice = 'Invoice';
 }
 
 class StbSysDatabase{
@@ -131,7 +132,7 @@ class StbSysDatabase{
       $User = null;
     endif;
     $db = $this->Open($User);
-    $db['System'][$Listener->value] = $Function;
+    $db['System']['Listeners'][$Listener->value] = $Function;
     $this->Save($db);
   }
 
@@ -144,7 +145,7 @@ class StbSysDatabase{
       $User = null;
     endif;
     $db = $this->Open($User);
-    unset($db['System'][$Listener->value]);
+    unset($db['System']['Listeners'][$Listener->value]);
     $this->Save($db);
   }
 
@@ -157,7 +158,7 @@ class StbSysDatabase{
       $User = null;
     endif;
     $db = $this->Open($User);
-    return $db['System'][$Listener->value] ?? null;
+    return $db['System']['Listeners'][$Listener->value] ?? null;
   }
 
   public function Variable(string $Name, string $Value = null):string|bool|null{
