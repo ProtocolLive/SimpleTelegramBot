@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.07.00
+//2022.04.20.00
 
 //PHP
 /**
@@ -35,3 +35,8 @@ const Admin = 0;
  * Default: TblDebug::All
  */
 const Debug = TblDebug::All;
+
+//Default currency
+//Type: TgInvoiceCurrencies 
+//Default: TgInvoiceCurrencies::USD
+const DefaultCurrency = TgInvoiceCurrencies::USD;
