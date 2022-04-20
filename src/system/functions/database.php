@@ -1,12 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.20.02
+//2022.04.20.03
 
 enum StbDbListeners:string{
   case Text = 'Text';
   case InlineQuery = 'InlineQuery';
   case Invoice = 'Invoice';
+  case InvoiceCheckout = 'InvoiceCheckout';
 }
 
 class StbSysDatabase{
