@@ -56,7 +56,7 @@ function Action_():void{
   endif;
   
   if(get_class($Webhook) === 'TgCallback'):
-    /** @var TblCallback $Webhook */
+    /** @var TgCallback $Webhook */
     $Bot->SendAction(
       $Webhook->Message->Chat->Id,
       TgChatAction::Typing
@@ -69,7 +69,7 @@ function Action_():void{
   endif;
 
   if(get_class($Webhook) === 'TgText'):
-    /** @var TblText $Webhook */
+    /** @var TgText $Webhook */
     $Bot->SendAction(
       $Webhook->Chat->Id,
       TgChatAction::Typing
