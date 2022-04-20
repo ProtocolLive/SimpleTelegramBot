@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.20.01
+//2022.04.20.02
 
 enum StbDbListeners:string{
   case Text = 'Text';
@@ -125,7 +125,7 @@ class StbSysDatabase{
   public function ListenerAdd(
     StbDbListeners $Listener,
     string $Function,
-    int $User
+    int $User = null
   ):void{
     DebugTrace();
     if($Listener === StbDbListeners::InlineQuery):
@@ -138,7 +138,7 @@ class StbSysDatabase{
 
   public function ListenerDel(
     StbDbListeners $Listener,
-    int $User
+    int $User = null
   ):void{
     DebugTrace();
     if($Listener === StbDbListeners::InlineQuery):
@@ -151,7 +151,7 @@ class StbSysDatabase{
 
   public function Listener(
     StbDbListeners $Listener,
-    int $User
+    int $User = null
   ):string|null{
     DebugTrace();
     if($Listener === StbDbListeners::InlineQuery):
