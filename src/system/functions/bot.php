@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.20.00
+//2022.04.20.01
 
 function LogEvent(string $Event, string $Additional = null):void{
   /** @var TblCmd $Webhook */
@@ -26,6 +26,7 @@ function LogEvent(string $Event, string $Additional = null):void{
 }
 
 function LogBot(string $Msg):void{
+  DebugTrace();
   $Msg = date('Y-m-d H:i:s') . "\n" . $Msg;
   file_put_contents(DirToken . '/logs/bot.log', $Msg, FILE_APPEND);
 }
@@ -37,6 +38,7 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
    * @var string $UserLang
    */
   global $Bot, $Webhook, $UserLang;
+  DebugTrace();
   $Photo = false;
   $Text = false;
   $File = DirSystem . "/UserCmds/$UserLang/$Command";
