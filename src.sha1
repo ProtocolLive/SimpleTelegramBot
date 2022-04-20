@@ -15,7 +15,7 @@ e39a0c084e982f2497bee11f7de72ea8c136116f  src/language/en/system.json
 ae43ea385ec84da897c1b5e44148629776599c94  src/system/constants.php
 ee11c96fa6555f7f1d511d79bdf751197f4125bd  src/system/functions/basics.php
 c6350f1709b1eac3278e1b8308908f64c6347841  src/system/functions/bot.php
-d02403870059dc747da404e65a037ae7973d024c  src/system/functions/database.php
+f2b900c61df53ecbb857552a1faa4dfdcb740604  src/system/functions/database.php
 310c0b2ee3bf788fc23852093eaecc04f87104ff  src/system/functions/debug.php
 4adc7773f4f3e9db265f308ba5025b312a43a11b  src/system/functions/language.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php

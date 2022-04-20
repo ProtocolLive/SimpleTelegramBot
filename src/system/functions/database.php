@@ -1,7 +1,12 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.17.00
+//2022.04.20.00
+
+enum StbDbListeners:string{
+  case Text = 'ListenerText';
+  case InlineQuery = 'ListenerInlineQuery';
+}
 
 class StbSysDatabase{
   private readonly string $DirToken;
@@ -9,8 +14,6 @@ class StbSysDatabase{
   private const ParamCommands = 'Commands';
   private const ParamModules = 'Modules';
   private const ParamVariables = 'Variables';
-  private const ParamListenerText = 'ListenerText';
-  private const ParamListenerInlineQuery = 'ListenerInlineQuery';
 
   private function Open(int $User = null):array{
     DebugTrace();
@@ -118,44 +121,43 @@ class StbSysDatabase{
     return array_keys($db['System'][self::ParamCommands], $Module);
   }
 
-  public function ListenerTextAdd(int $User, string $Listener):void{
+  public function ListenerAdd(
+    StbDbListeners $Listener,
+    string $Function,
+    int $User
+  ):void{
     DebugTrace();
+    if($Listener === StbDbListeners::InlineQuery):
+      $User = null;
+    endif;
     $db = $this->Open($User);
-    $db['System'][self::ParamListenerText] = $Listener;
+    $db['System'][$Listener->value] = $Function;
     $this->Save($db);
   }
 
-  public function ListenerTextDel(int $User):void{
+  public function ListenerDel(
+    StbDbListeners $Listener,
+    int $User
+  ):void{
     DebugTrace();
+    if($Listener === StbDbListeners::InlineQuery):
+      $User = null;
+    endif;
     $db = $this->Open($User);
-    unset($db['System'][self::ParamListenerText]);
+    unset($db['System'][$Listener->value]);
     $this->Save($db);
   }
 
-  public function ListenerText(int $User):string|null{
+  public function Listener(
+    StbDbListeners $Listener,
+    int $User
+  ):string|null{
     DebugTrace();
+    if($Listener === StbDbListeners::InlineQuery):
+      $User = null;
+    endif;
     $db = $this->Open($User);
-    return $db['System'][self::ParamListenerText] ?? null;
-  }
-
-  public function ListenerInlineQueryAdd(string $Listener):void{
-    DebugTrace();
-    $db = $this->Open();
-    $db['System'][self::ParamListenerInlineQuery] = $Listener;
-    $this->Save($db);
-  }
-
-  public function ListenerInlineQueryDel():void{
-    DebugTrace();
-    $db = $this->Open();
-    unset($db['System'][self::ParamListenerInlineQuery]);
-    $this->Save($db);
-  }
-
-  public function ListenerInlineQuery():string|null{
-    DebugTrace();
-    $db = $this->Open();
-    return $db['System'][self::ParamListenerInlineQuery] ?? null;
+    return $db['System'][$Listener->value] ?? null;
   }
 
   public function Variable(string $Name, string $Value = null):string|bool|null{
