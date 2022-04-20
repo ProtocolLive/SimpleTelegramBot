@@ -109,7 +109,7 @@ function Action_WebhookGet():void{
 function Action_WebhookDel():void{
   /**
   * @var TblData $BotData
-   */
+  */
   global $BotData;
   $Webhook = new TblWebhook($BotData);
   $Webhook->Del();
