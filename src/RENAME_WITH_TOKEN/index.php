@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.16.00
+//2022.04.20.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -23,11 +23,11 @@ function Action_():void{
     return;
   endif;
   if(get_class($Webhook) === 'TblCmd'):
+    /** @var TblCmd $Webhook */
     $Bot->SendAction(
       $Webhook->Chat->Id,
       TgChatAction::Typing
     );
-    /** @var TblCmd $Webhook */
     $UserLang = $Webhook->User->Language;
     $command = 'Command_' . strtolower($Webhook->Command);
     if(function_exists($command)):
@@ -46,27 +46,34 @@ function Action_():void{
     if(SendUserCmd($Webhook->Command) === false):
       SendUserCmd('unknown');
     endif;
-  elseif(get_class($Webhook) === 'TgCallback'):
+    return;
+  endif;
+  
+  if(get_class($Webhook) === 'TgCallback'):
+    /** @var TblCallback $Webhook */
     $Bot->SendAction(
       $Webhook->Message->Chat->Id,
       TgChatAction::Typing
     );
-    /** @var TblCallback $Webhook */
     if(function_exists('Callback_' . $Webhook->Data)):
       call_user_func('Callback_' . $Webhook->Data);
       return;
     endif;
-  elseif(get_class($Webhook) === 'TgText'):
+    return;
+  endif;
+
+  if(get_class($Webhook) === 'TgText'):
+    /** @var TblText $Webhook */
     $Bot->SendAction(
       $Webhook->Chat->Id,
       TgChatAction::Typing
     );
-    /** @var TblText $Webhook */
-    $listener = $Db->ListenerText($Webhook->User->Id);
+    $listener = $Db->Listener(StbDbListeners::Text, $Webhook->User->Id);
     if($listener !== null):
       call_user_func('Listener_' . $listener);
     endif;
   endif;
+  return;
 }
 
 function Action_WebhookSet():void{
