@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.20.03
+//2022.04.21.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -103,7 +103,7 @@ function Action_WebhookSet():void{
    */
   global $BotData;
   $Webhook = new TblWebhook($BotData);
-  $Webhook->Set($_SERVER['SCRIPT_URI']);
+  $Webhook->Set($_SERVER['SCRIPT_URI'], Updates: TgUpdateType::cases());
   echo $Webhook->ErrorStr;
 }
 
@@ -119,7 +119,11 @@ function Action_WebhookGet():void{
   echo 'Pending updates: ' . $temp['pending_update_count'] . '<br>';
   echo 'Max connections: ' . ($temp['max_connections'] ?? 0) . '<br>';
   echo 'Server: ' . ($temp['ip_address'] ?? 'None') . '<br>';
-  echo 'Last sync error: ';
+  echo 'Updates: ';
+  foreach($temp['allowed_updates'] as $update):
+    echo $update . ', ';
+  endforeach;
+  echo '<br>Last sync error: ';
   if(isset($temp['last_synchronization_error_date'])):
     echo date('Y-m-d H:i:s', $temp['last_synchronization_error_date']);
   else:
