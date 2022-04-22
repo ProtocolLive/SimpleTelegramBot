@@ -15,5 +15,8 @@
     "UnInstallNotFound": "⚠️ O módulo %s não tem o método Uninstall",
     "UnInstallNone": "ℹ️ Nenhum módulo para desinstalar"
   },
+  "Admin":{
+    "Admins": "Lista de administradores:"
+  },
   "Denied": "⛔ Acesso negado"
 }
