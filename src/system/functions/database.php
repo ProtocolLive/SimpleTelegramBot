@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.21.00
+//2022.04.21.01
 
 enum StbDbListeners:string{
   case Text = 'Text';
@@ -17,6 +17,8 @@ class StbSysDatabase{
   private const ParamCommands = 'Commands';
   private const ParamModules = 'Modules';
   private const ParamVariables = 'Variables';
+  
+  public const ParamUserDetails = 'UserDetails';
 
   private function Open(int $User = null):array{
     DebugTrace();
@@ -166,16 +168,26 @@ class StbSysDatabase{
     return $db['System']['Listeners'][$Listener->value] ?? null;
   }
 
+  /**
+   * @return true If the value are set successfully
+   * @return null If the name are not found
+   * @return mixed The value stored. If the value stored are an object, it will be returned as array
+   */
   public function Variable(
     string $Name,
-    string $Value = null
-  ):string|bool|null{
+    mixed $Value = null,
+    int $User = null
+  ):mixed{
     DebugTrace();
-    $db = $this->Open();
+    $db = $this->Open($User);
     if($Value === null):
       return $db['System'][self::ParamVariables][$Name] ?? null;
     else:
       $db['System'][self::ParamVariables][$Name] = $Value;
+      $this->Save($db, $User);
+      return true;
+    endif;
+  }
       $this->Save($db);
       return true;
     endif;
