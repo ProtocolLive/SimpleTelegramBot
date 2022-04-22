@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.20.04
+//2022.04.21.00
 
 enum StbDbListeners:string{
   case Text = 'Text';
@@ -166,7 +166,10 @@ class StbSysDatabase{
     return $db['System']['Listeners'][$Listener->value] ?? null;
   }
 
-  public function Variable(string $Name, string $Value = null):string|bool|null{
+  public function Variable(
+    string $Name,
+    string $Value = null
+  ):string|bool|null{
     DebugTrace();
     $db = $this->Open();
     if($Value === null):
