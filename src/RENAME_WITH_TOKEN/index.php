@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.22.00
+//2022.04.22.01
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -126,9 +126,13 @@ function Action_WebhookGet():void{
   echo 'Max connections: ' . ($temp['max_connections'] ?? 0) . '<br>';
   echo 'Server: ' . ($temp['ip_address'] ?? 'None') . '<br>';
   echo 'Updates: ';
-  foreach($temp['allowed_updates'] as $update):
-    echo $update . ', ';
-  endforeach;
+  if(isset($temp['allowed_updates'])):
+    foreach($temp['allowed_updates'] as $update):
+      echo $update . ', ';
+    endforeach;
+  else:
+    echo 'None';
+  endif;
   echo '<br>Last sync error: ';
   if(isset($temp['last_synchronization_error_date'])):
     echo date('Y-m-d H:i:s', $temp['last_synchronization_error_date']);
