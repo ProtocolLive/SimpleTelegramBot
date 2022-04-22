@@ -8,7 +8,7 @@ a6bd1dbe6c6fe7249552f794d0b78ba5618e0188  src/UserCmds/pt-br/start.txt
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
 9760938d62278ac06240875e0a4636e1949f899b  src/cmds/admin.php
 e5cc3fa76ef6c169d5598a8d3aee86c3db0f397a  src/cmds/install.php
-094c2465f43157e8810057a4f3edd19f7f786034  src/config.php
+78a27ca9cc56a1228138037ad4ce88c2b02094d6  src/config.php
 0eaabe22a17c0f69c36a6b9832bec2b33fe8481c  src/cron.php
 c26ff63aa52f6b716a0a82e33b33b90f1551181a  src/language/en/system.json
 215286029e96815436975c5c30e3fa26b0e88270  src/language/pt-br/system.json
@@ -21,4 +21,4 @@ d747aa08a49c40bbff0b8253db0ccac9a1fb3998  src/system/functions/debug.php
 4adc7773f4f3e9db265f308ba5025b312a43a11b  src/system/functions/language.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
 a845ddf0ab6bb0c85597d9f8754ec8b0c11717f9  src/system/requires.php
-360f1b07509eb64bd133d66c4b0b75d207b32d69  src/system/system.php
+51a3a5d254c825df02d99e7c4e55b6402ec6184c  src/system/system.php
