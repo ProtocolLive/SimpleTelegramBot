@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.21.02
+//2022.04.22.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -30,6 +30,25 @@ function Action_():void{
   if(get_class($Webhook) === 'TblCmd'):
     /** @var TblCmd $Webhook */
     $UserLang = $Webhook->User->Language;
+
+    //In a group, with many bots, the commands have the target bot.
+    //This block check the target and caches the bot name
+    if($Webhook->Chat->Type !== TgChatType::Private):
+      $name = $Db->Variable(StbSysDatabase::ParamUserDetails);
+      if($name === null):
+        $name = $Bot->MeGet();
+        if($name !== null):
+          $Db->Variable(StbSysDatabase::ParamUserDetails, $name);
+          $name = $name->Nick;
+        endif;
+      else:
+        $name = $name['Nick'];
+      endif;
+      if($Webhook->Target !== $name):
+        return;
+      endif;
+    endif;
+
     $command = 'Command_' . strtolower($Webhook->Command);
     if(function_exists($command)):
       $command();
