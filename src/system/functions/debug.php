@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.03.20.00
+//2022.03.21.00
 
 function HandlerError(
   int $errno,
@@ -70,13 +70,18 @@ function DebugTrace():void{
   endif;
   $trace = debug_backtrace();
   $temp = '#' . $DebugTraceCount++ . ' ';
-  $temp .= date('Y-m-d H:i:s ') . microtime(true) . ' ';
-  $temp .= memory_get_usage() . " bytes\n";
+  $temp .= date('Y-m-d H:i:s ') . microtime(true) . "\n";
+  $temp .= 'Memory: ' . number_format(memory_get_usage()) . ' ';
+  $temp .= 'Limit: ' . ini_get('memory_limit') . ' ';
+  $temp .= 'Peak: ' . number_format(memory_get_peak_usage()) . "\n";
   $temp .= $trace[1]['function'];
   $temp .= ' in ' . ($trace[1]['file'] ?? 'unknown');
   $temp .= ' line ' . ($trace[1]['line'] ?? 'unknown') . "\n";
   if(count($trace[1]['args']) > 0):
-    $temp .= json_encode($trace[1]['args'], JSON_PRETTY_PRINT) . "\n";
+    ob_start();
+    var_dump($trace[1]['args']);
+    $temp .= ob_get_contents() . "\n";
+    ob_end_clean();
   endif;
   $temp .= "\n";
   file_put_contents($DebugTraceFolder . '/trace.log', $temp, FILE_APPEND);
