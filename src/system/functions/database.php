@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.21.01
+//2022.04.21.02
 
 enum StbDbListeners:string{
   case Text = 'Text';
@@ -14,6 +14,7 @@ enum StbDbListeners:string{
 class StbSysDatabase{
   private readonly string $DirToken;
 
+  private const ParamAdmins = 'Admins';
   private const ParamCommands = 'Commands';
   private const ParamModules = 'Modules';
   private const ParamVariables = 'Variables';
@@ -188,9 +189,42 @@ class StbSysDatabase{
       return true;
     endif;
   }
+
+  public function AdminAdd(
+    int $User
+  ):bool{
+    DebugTrace();
+    $db = $this->Open();
+    if(isset($db['System'][self::ParamAdmins][$User]) === false):
+      $db['System'][self::ParamAdmins][$User] = time();
       $this->Save($db);
       return true;
     endif;
+    return false;
+  }
+
+  public function AdminDel(
+    int $User
+  ):bool{
+    DebugTrace();
+    $db = $this->Open();
+    unset($db['System'][self::ParamAdmins][$User]);
+    $this->Save($db);
+    return true;
+  }
+
+  public function Admin(
+    int $User
+  ):int|false{
+    DebugTrace();
+    $db = $this->Open();
+    return $db['System'][self::ParamAdmins][$User] ?? false;
+  }
+
+  public function Admins():array{
+    DebugTrace();
+    $db = $this->Open();
+    return $db['System'][self::ParamAdmins] ?? [];
   }
 }
 
