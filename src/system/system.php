@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.22.00
+//2022.04.22.01
 
 require(__DIR__ . '/php.php');
 require(__DIR__ . '/requires.php');
@@ -18,7 +18,8 @@ $DebugTraceFolder = DirToken . '/logs';
 $BotData = new TblData(
   Token,
   DirToken . '/logs',
-  Debug
+  Debug,
+  TestServer
 );
 $Bot = new TelegramBotLibrary($BotData, TestServer);
 $Db = new StbSysDatabase(DirToken);
