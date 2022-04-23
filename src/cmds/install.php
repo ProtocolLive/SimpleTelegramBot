@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.21.00
+//2022.03.23.00
 
 function Command_installmod():void{
   /**
@@ -13,7 +13,7 @@ function Command_installmod():void{
   global $Bot, $Db, $Lang, $Webhook;
   DebugTrace();
   if($Webhook->User->Id !== Admin):
-    $Bot->SendText(
+    $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('Denied')
     );
@@ -31,7 +31,7 @@ function Command_installmod():void{
   endforeach;
 
   if(count($ModulesFiles) === 0):
-    $Bot->SendText(
+    $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('InstallNone', null, 'Module')
     );
@@ -49,7 +49,7 @@ function Command_installmod():void{
     endif;
   endforeach;
 
-  $Bot->SendText(
+  $Bot->TextSend(
     $Webhook->User->Id,
     $Lang->Get('InstallPick', null, 'Module'),
     Markup: $mk
@@ -69,7 +69,7 @@ function Callback_InsModPic():void{
 
   $file = DirSystem . '/modules/' . $module . '/index.php';
   if(is_file($file) === false):
-    $Bot->SendText(
+    $Bot->TextSend(
       $Webhook->User->Id,
       sprintf(
         $Lang->Get('NotFound', null, 'Module'),
@@ -81,7 +81,7 @@ function Callback_InsModPic():void{
 
   require($file);
   if(method_exists($module, 'Install') === false):
-    $Bot->SendText(
+    $Bot->TextSend(
       $Webhook->User->Id,
       sprintf(
         $Lang->Get('InstallNotFound', null, 'Module'),
@@ -105,7 +105,7 @@ function Command_uninstallmod():void{
   global $Bot, $Db, $Lang, $Webhook;
   DebugTrace();
   if($Webhook->User->Id !== Admin):
-    $Bot->SendText(
+    $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('Denied')
     );
@@ -114,7 +114,7 @@ function Command_uninstallmod():void{
 
   $mods = $Db->Modules();
   if(count($mods) === 0):
-    $Bot->SendText(
+    $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('UnInstallNone', null, 'Module')
     );
@@ -131,7 +131,7 @@ function Command_uninstallmod():void{
       $col = 0;
     endif;
   endforeach;
-  $Bot->SendText(
+  $Bot->TextSend(
     $Webhook->User->Id,
     $Lang->Get('UnInstallPick', null, 'Module'),
     Markup: $mk
@@ -150,7 +150,7 @@ function Callback_UniModPic():void{
   $module = $Webhook->Parameter;
 
   if(method_exists($module, 'Uninstall') === false):
-    $Bot->SendText(
+    $Bot->TextSend(
       $Webhook->User->Id,
       sprintf(
         $Lang->Get('UnInstallNotFound', null, 'Module'),

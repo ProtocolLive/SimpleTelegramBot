@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.21.00
+//2022.04.23.00
 
 function Command_admin():void{
   /**
@@ -12,7 +12,7 @@ function Command_admin():void{
    */
   global $Bot, $Webhook, $Db, $Lang;
   if($Webhook->User->Id !== Admin):
-    $Bot->SendText(
+    $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('Denied')
     );
@@ -43,7 +43,7 @@ function Command_admin():void{
     endif;
     $mk->ButtonCallback($line, $col++, $admin, 'Admin ' . $admin);
   endforeach;
-  $Bot->SendText(
+  $Bot->TextSend(
     Admin,
     $Lang->Get('Admins', Group: 'Admin'),
     Markup: $mk

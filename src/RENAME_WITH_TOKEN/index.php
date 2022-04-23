@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.22.01
+//2022.04.23.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -36,7 +36,7 @@ function Action_():void{
     if($Webhook->Chat->Type !== TgChatType::Private):
       $name = $Db->Variable(StbSysDatabase::ParamUserDetails);
       if($name === null):
-        $name = $Bot->MeGet();
+        $name = $Bot->MyGet();
         if($name !== null):
           $Db->Variable(StbSysDatabase::ParamUserDetails, $name);
           $name = $name->Nick;
