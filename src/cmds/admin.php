@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.23.00
+//2022.04.24.00
 
 function Command_admin():void{
   /**
@@ -11,9 +11,9 @@ function Command_admin():void{
    * @var StbLanguage $Lang
    */
   global $Bot, $Webhook, $Db, $Lang;
-  if($Webhook->User->Id !== Admin):
+  if($Webhook->Message->User->Id !== Admin):
     $Bot->TextSend(
-      $Webhook->User->Id,
+      $Webhook->Message->User->Id,
       $Lang->Get('Denied')
     );
     return;
