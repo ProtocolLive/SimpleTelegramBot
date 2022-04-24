@@ -1,4 +1,4 @@
-820336522da7c864f70b60f92ea1ead78d1a00fd  src/RENAME_WITH_TOKEN/index.php
+3d57d4d4c9049475498a27ed765f7f16975bf5da  src/RENAME_WITH_TOKEN/index.php
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/tools/info.php
 76f88ac21ab1040670edd49c88307d33a52f5a4c  src/RENAME_WITH_TOKEN/tools/scope.php
 5054c3d7f1583aa0a043a72b08d9abf93591802f  src/UserCmds/en/start.txt
@@ -7,7 +7,7 @@ a6bd1dbe6c6fe7249552f794d0b78ba5618e0188  src/UserCmds/pt-br/start.txt
 673be2874cd1daaf48768fe60ce464d7254e9caa  src/UserCmds/pt-br/unknown.txt
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
 c496f09b51259c39155cef04e1ff548f98efbce1  src/cmds/admin.php
-a0489f7d7a0964e046d797b4fbbafb2b8190e913  src/cmds/install.php
+b81e2acfed857fb637a9005e8c10ac415888c905  src/cmds/install.php
 78a27ca9cc56a1228138037ad4ce88c2b02094d6  src/config.php
 0eaabe22a17c0f69c36a6b9832bec2b33fe8481c  src/cron.php
 c26ff63aa52f6b716a0a82e33b33b90f1551181a  src/language/en/system.json
