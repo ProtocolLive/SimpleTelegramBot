@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.23.00
+//2022.04.24.00
 
 function LogEvent(string $Event, string $Additional = null):void{
   /** @var TblCmd $Webhook */
@@ -11,7 +11,7 @@ function LogEvent(string $Event, string $Additional = null):void{
   if($Webhook->User->Nick !== null):
     $temp .= '@' . $Webhook->User->Nick . ' ';
   endif;
-  $temp .= '(' . $Webhook->User->Id . ') ';
+  $temp .= '(' . $Webhook->Message->User->Id . ') ';
   $temp .= $Webhook->User->Name;
   if($Webhook->User->NameLast !== null):
     $temp .= ' ' . $Webhook->User->NameLast;
