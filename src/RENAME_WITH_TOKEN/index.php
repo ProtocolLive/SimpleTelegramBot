@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.23.00
+//2022.04.24.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -80,7 +80,7 @@ function Action_():void{
 
   if(get_class($Webhook) === 'TgText'):
     /** @var TgText $Webhook */
-    $listener = $Db->Listener(StbDbListeners::Text, $Webhook->User->Id);
+    $listener = $Db->Listener(StbDbListeners::Text, $Webhook->Message->User->Id);
     if($listener !== null):
       call_user_func('Listener_' . $listener);
     endif;
