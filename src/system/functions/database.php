@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.21.02
+//2022.04.24.00
 
 enum StbDbListeners:string{
   case Text = 'Text';
@@ -132,7 +132,7 @@ class StbSysDatabase{
    */
   public function ListenerAdd(
     StbDbListeners $Listener,
-    string $Function,
+    callable $Function,
     int $User = null
   ):void{
     DebugTrace();
