@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.24.00
+//2022.04.24.01
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -29,11 +29,11 @@ function Action_():void{
 
   if(get_class($Webhook) === 'TblCmd'):
     /** @var TblCmd $Webhook */
-    $UserLang = $Webhook->User->Language;
+    $UserLang = $Webhook->Message->User->Language;
 
     //In a group, with many bots, the commands have the target bot.
     //This block check the target and caches the bot name
-    if($Webhook->Chat->Type !== TgChatType::Private):
+    if($Webhook->Message->Chat->Type !== TgChatType::Private):
       $name = $Db->Variable(StbSysDatabase::ParamUserDetails);
       if($name === null):
         $name = $Bot->MyGet();
@@ -80,10 +80,17 @@ function Action_():void{
 
   if(get_class($Webhook) === 'TgText'):
     /** @var TgText $Webhook */
+    $listener = $Db->Listener(StbDbListeners::Text);
+    if($listener !== null):
+      call_user_func($listener);
+      return;
+    endif;
     $listener = $Db->Listener(StbDbListeners::Text, $Webhook->Message->User->Id);
     if($listener !== null):
-      call_user_func('Listener_' . $listener);
+      call_user_func($listener);
+      return;
     endif;
+    SendUserCmd('unknown');
   endif;
 
   if(get_class($Webhook) === 'TgInvoiceCheckout'):
