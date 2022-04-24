@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.24.01
+//2022.04.24.02
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -104,6 +104,15 @@ function Action_():void{
     $listener = $Db->Listener(StbDbListeners::InvoiceShipping);
     if($listener !== null):
       call_user_func($listener);
+    endif;
+  endif;
+
+  if(get_class($Webhook) === 'TgInlineQuery'):
+    /** @var TgInlineQuery $Webhook */
+    $listener = $Db->Listener(StbDbListeners::InlineQuery);
+    if($listener !== null):
+      call_user_func($listener);
+      return;
     endif;
   endif;
 
