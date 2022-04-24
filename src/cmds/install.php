@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.23.00
+//2022.03.24.00
 
 function Command_installmod():void{
   /**
@@ -20,9 +20,10 @@ function Command_installmod():void{
     return;
   endif;
 
-  $ModulesFiles = array_map(function($var){
-    return basename($var);
-  }, glob(DirSystem . '/modules/*', GLOB_ONLYDIR));
+  $ModulesFiles = [];
+  foreach(glob(DirSystem . '/modules/*', GLOB_ONLYDIR) as $file):
+    $ModulesFiles[] = basename($file);
+  endforeach;
   foreach($Db->Modules() as $mod):
     $temp = array_search($mod, $ModulesFiles);
     if($temp !== null):
@@ -67,19 +68,7 @@ function Callback_InsModPic():void{
   DebugTrace();
   $module = $Webhook->Parameter;
 
-  $file = DirSystem . '/modules/' . $module . '/index.php';
-  if(is_file($file) === false):
-    $Bot->TextSend(
-      $Webhook->User->Id,
-      sprintf(
-        $Lang->Get('NotFound', null, 'Module'),
-        $module
-      )
-    );
-    return;
-  endif;
-
-  require($file);
+  require(DirSystem . '/modules/' . $module . '/index.php');
   if(method_exists($module, 'Install') === false):
     $Bot->TextSend(
       $Webhook->User->Id,
