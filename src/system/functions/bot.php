@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.24.00
+//2022.04.25.00
 
 function LogEvent(string $Event, string $Additional = null):void{
   /** @var TblCmd $Webhook */
@@ -46,7 +46,7 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
   $temp = $File . 'jpg';
   if(is_file($temp)):
     $Bot->PhotoSend(
-      $Webhook->Chat->Id,
+      $Webhook->Message->Chat->Id,
       $temp
     );
     $Photo = true;
@@ -55,11 +55,11 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
   $File .= '.txt';
   if(is_file($File)):
     $text = file_get_contents($File);
-    $text = str_replace('##NAME##', $Webhook->User->Name, $text);
+    $text = str_replace('##NAME##', $Webhook->Message->User->Name, $text);
     $text = explode('##BREAK##', $text);
     foreach($text as $txt):
       $Bot->TextSend(
-        $Webhook->Chat->Id,
+        $Webhook->Message->Chat->Id,
         $txt
       );
     endforeach;
