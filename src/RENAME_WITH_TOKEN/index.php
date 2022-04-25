@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.24.02
+//2022.04.25.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -22,10 +22,12 @@ function Action_():void{
   if($Webhook === null):
     return;
   endif;
-  ob_start();
-  var_dump($Webhook);
-  LogBot(ob_get_contents());
-  ob_end_flush();
+  if((Debug & StbDebug::Bot) === StbDebug::Bot):
+    ob_start();
+    var_dump($Webhook);
+    LogBot(ob_get_contents());
+    ob_end_flush();
+  endif;
 
   if(get_class($Webhook) === 'TblCmd'):
     /** @var TblCmd $Webhook */

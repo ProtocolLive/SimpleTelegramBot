@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.06.00
+//2022.04.25.00
 
 define('DirSystem', dirname(__DIR__, 1));
 
@@ -14,4 +14,5 @@ enum StbEvents:int{
 
 abstract class StbDebug{
   const Trace = 16;
+  const Bot = 32;
 }
