@@ -1,20 +1,20 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.25.00
+//2022.04.25.01
 
 function LogEvent(string $Event, string $Additional = null):void{
   /** @var TblCmd $Webhook */
   global $Webhook;
   DebugTrace();
   $temp = date('Y-m-d H:i:s') . "\t";
-  if($Webhook->User->Nick !== null):
-    $temp .= '@' . $Webhook->User->Nick . ' ';
+  if($Webhook->Message->User->Nick !== null):
+    $temp .= '@' . $Webhook->Message->User->Nick . ' ';
   endif;
   $temp .= '(' . $Webhook->Message->User->Id . ') ';
-  $temp .= $Webhook->User->Name;
-  if($Webhook->User->NameLast !== null):
-    $temp .= ' ' . $Webhook->User->NameLast;
+  $temp .= $Webhook->Message->User->Name;
+  if($Webhook->Message->User->NameLast !== null):
+    $temp .= ' ' . $Webhook->Message->User->NameLast;
   endif;
   $temp .= "\t";
   $temp .= $Event;
