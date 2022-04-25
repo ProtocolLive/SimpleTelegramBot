@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.25.00
+//2022.04.25.01
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -92,7 +92,7 @@ function Action_():void{
       call_user_func($listener);
       return;
     endif;
-    SendUserCmd('unknown');
+    SendUserCmd('dontknow');
   endif;
 
   if(get_class($Webhook) === 'TgInvoiceCheckout'):
