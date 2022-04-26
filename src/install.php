@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.26.01
+//2022.04.26.02
 
 require(__DIR__ . '/system/php.php');
 
@@ -75,4 +75,7 @@ function Action_ok():void{
   rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/' . $token[1]);
   rename(__DIR__ . '/install.php', __DIR__ . '/_install.php');
   echo 'Install complete!';
+  $url = dirname($_SERVER['SCRIPT_URI']);
+  $url .= '/' . $token[1] . '/index.php?a=WebhookSet';
+  echo '<p><a href="' . $url . '">Click here to set the webhook</a></p>';
 }
