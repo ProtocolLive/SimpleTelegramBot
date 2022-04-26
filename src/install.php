@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.26.00
+//2022.04.26.01
+
+require(__DIR__ . '/system/php.php');
 
 $_GET['a'] ??= '';
 if(basename(__FILE__) !== 'install.php'):
@@ -69,6 +71,8 @@ function Action_ok():void{
   $config = str_replace('##LANGUAGE##', $_POST['language'], $config);
   $config = str_replace('##ADMIN##', $_POST['admin'], $config);
   file_put_contents(__DIR__ . '/config.php', $config);
+  $token = explode(':', $_POST['token']);
+  rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/' . $token[1]);
   rename(__DIR__ . '/install.php', __DIR__ . '/_install.php');
   echo 'Install complete!';
 }
