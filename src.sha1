@@ -1,5 +1,5 @@
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/db/index.htm
-516a942f4a739db8d19cdacf21debda35dc9977e  src/RENAME_WITH_TOKEN/index.php
+50b8ca04598a0bfbdb0a98a728bd2374c61f609f  src/RENAME_WITH_TOKEN/index.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/logs/index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/tools/index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/tools/info.php
@@ -15,7 +15,7 @@ c496f09b51259c39155cef04e1ff548f98efbce1  src/cmds/admin.php
 b81e2acfed857fb637a9005e8c10ac415888c905  src/cmds/install.php
 458f2bda95d54f3092ff2c4d6179256cfc87b9d4  src/config.php
 0eaabe22a17c0f69c36a6b9832bec2b33fe8481c  src/cron.php
-0bcff0932dd1bfc32890f12c1cb5e580d6e7a62b  src/install.php
+a0fc1fa41950629833b1cf466ef54bd5b4b3701a  src/install.php
 c26ff63aa52f6b716a0a82e33b33b90f1551181a  src/language/en/system.json
 215286029e96815436975c5c30e3fa26b0e88270  src/language/pt-br/system.json
 6ca48c044c98c54730d108b27e8d796427a7eb5a  src/modules/index.php

@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.25.01
+//2022.04.26.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -129,6 +129,7 @@ function Action_WebhookSet():void{
   $Webhook = new TblWebhook($BotData);
   $Webhook->Set($_SERVER['SCRIPT_URI'], Updates: TgUpdateType::cases());
   echo $Webhook->ErrorStr;
+  echo '<p><a href="index.php?a=WebhookGet">Click here see details</a></p>';
 }
 
 function Action_WebhookGet():void{
