@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.24.01
+//2022.03.26.00
 
 function Command_installmod():void{
   /**
@@ -93,7 +93,7 @@ function Command_uninstallmod():void{
    */
   global $Bot, $Db, $Lang, $Webhook;
   DebugTrace();
-  if($Webhook->User->Id !== Admin):
+  if($Webhook->Message->User->Id !== Admin):
     $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('Denied')
@@ -121,7 +121,7 @@ function Command_uninstallmod():void{
     endif;
   endforeach;
   $Bot->TextSend(
-    $Webhook->User->Id,
+    $Webhook->Message->User->Id,
     $Lang->Get('UnInstallPick', null, 'Module'),
     Markup: $mk
   );
