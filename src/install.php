@@ -1,9 +1,11 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.26.02
+//2022.04.26.03
 
 require(__DIR__ . '/system/php.php');
+set_error_handler('error');
+set_exception_handler('error');
 
 $_GET['a'] ??= '';
 if(basename(__FILE__) !== 'install.php'):
@@ -74,8 +76,15 @@ function Action_ok():void{
   $token = explode(':', $_POST['token']);
   rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/' . $token[1]);
   rename(__DIR__ . '/install.php', __DIR__ . '/_install.php');
-  echo 'Install complete!';
+  echo '✅ Install complete!';
   $url = dirname($_SERVER['SCRIPT_URI']);
   $url .= '/' . $token[1] . '/index.php?a=WebhookSet';
   echo '<p><a href="' . $url . '">Click here to set the webhook</a></p>';
+}
+
+function error():never{
+  echo '<p>⚠️ Install error!</p>';
+  $args = func_get_args();
+  echo '<p>' . $args[1] . '</p>';
+  die();
 }
