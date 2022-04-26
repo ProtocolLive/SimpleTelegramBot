@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.26.00
+//2022.04.26.01
 
 enum StbDbListeners:string{
   case Text = 'Text';
@@ -97,10 +97,15 @@ class StbSysDatabase{
     endif;
   }
 
-  public function CommandDel(string $Command):void{
+  public function CommandDel(string|array $Command):void{
     DebugTrace();
+    if(is_string($Command)):
+      $Command = [$Command];
+    endif;
     $db = $this->Open();
-    unset($db['System'][self::ParamCommands][$Command]);
+    foreach($Command as $cmd):
+      unset($db['System'][self::ParamCommands][$cmd]);
+    endforeach;
     $this->Save($db);
   }
 
