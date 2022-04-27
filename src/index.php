@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.26.04
+//2022.04.27.00
 
 require(__DIR__ . '/system/php.php');
 set_error_handler('error');
@@ -15,6 +15,7 @@ elseif(function_exists('Action_' . $_GET['a'])):
 endif;
 
 function Action_():void{?>
+  <h1>SimpleTelegramBot Install</h1>
   <form method="post" action="index.php?a=ok">
     <table>
       <tr>
@@ -48,7 +49,8 @@ function Action_():void{?>
           <select name="language">
             <option value="en">English</option>
             <option value="pt-br">Portuguese Brazil</option>
-          </select>
+          </select><br>
+          Another language? Add later in config.php
         </td>
       </tr>
       <tr>
@@ -65,6 +67,7 @@ function Action_():void{?>
 }
 
 function Action_ok():void{
+  echo '<h1>SimpleTelegramBot Install</h1>';
   $config = file_get_contents(__DIR__ . '/config.php');
   $config = str_replace('##DATE##', date('Y-m-d H:i:s'), $config);
   $config = str_replace('##TIMEZONE##', $_POST['timezone'], $config);
