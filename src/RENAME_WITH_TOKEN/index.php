@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.26.00
+//2022.04.27.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -53,7 +53,7 @@ function Action_():void{
 
     $command = 'Command_' . strtolower($Webhook->Command);
     if(function_exists($command)):
-      $command();
+      call_user_func($command);
       return;
     endif;
 
