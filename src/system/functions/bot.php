@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.27.00
+//2022.04.27.01
 
 function LogEvent(string $Event, string $Additional = null):void{
   /** @var TblCmd $Webhook */
@@ -60,7 +60,8 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
     foreach($text as $txt):
       $Bot->TextSend(
         $Webhook->Message->Chat->Id,
-        $txt
+        $txt,
+        TgParseMode::Html
       );
     endforeach;
     $Text = true;
