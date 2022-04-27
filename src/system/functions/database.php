@@ -1,7 +1,15 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.27.01
+//2022.04.26.01
+
+enum StbDbListeners:string{
+  case Text = 'Text';
+  case InlineQuery = 'InlineQuery';
+  case Invoice = 'Invoice';
+  case InvoiceCheckout = 'InvoiceCheckout';
+  case InvoiceShipping = 'InvoiceShipping';
+}
 
 class StbSysDatabase{
   private readonly string $DirToken;
@@ -39,17 +47,6 @@ class StbSysDatabase{
     $db = json_encode($Db);
     DirCreate(dirname($file));
     file_put_contents($file, $db);
-  }
-
-  private function NoUserListener(
-    TgUpdateType $Listener
-  ):bool{
-    if($Listener === TgUpdateType::InlineQuery
-    or $Listener === TgUpdateType::ChatMy):
-      return true;
-    else:
-      return false;
-    endif;
   }
 
   public function __construct(string $DirToken){
@@ -144,12 +141,12 @@ class StbSysDatabase{
    * @param int $User User ID to associate the listener. Not allowed to checkout listener
    */
   public function ListenerAdd(
-    TgUpdateType $Listener,
+    StbDbListeners $Listener,
     callable $Function,
     int $User = null
   ):void{
     DebugTrace();
-    if($this->NoUserListener($Listener)):
+    if($Listener === StbDbListeners::InlineQuery):
       $User = null;
     endif;
     $db = $this->Open($User);
@@ -158,11 +155,11 @@ class StbSysDatabase{
   }
 
   public function ListenerDel(
-    TgUpdateType $Listener,
+    StbDbListeners $Listener,
     int $User = null
   ):void{
     DebugTrace();
-    if($this->NoUserListener($Listener)):
+    if($Listener === StbDbListeners::InlineQuery):
       $User = null;
     endif;
     $db = $this->Open($User);
@@ -171,11 +168,11 @@ class StbSysDatabase{
   }
 
   public function Listener(
-    TgUpdateType $Listener,
+    StbDbListeners $Listener,
     int $User = null
   ):string|null{
     DebugTrace();
-    if($this->NoUserListener($Listener)):
+    if($Listener === StbDbListeners::InlineQuery):
       $User = null;
     endif;
     $db = $this->Open($User);

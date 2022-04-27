@@ -22,7 +22,7 @@ bc9fb047f1bdc28f891855671ca728ee1461139d  src/modules/index.php
 1eb7b76bd269dd28d66854138d95f4b01a4b2b7b  src/system/constants.php
 ee11c96fa6555f7f1d511d79bdf751197f4125bd  src/system/functions/basics.php
 039884f750e281ed05f74c8ec8cb2b7bc410de8a  src/system/functions/bot.php
-c3559609459e7689726ca6b6907e81bfbb559e48  src/system/functions/database.php
+7eaf7c3087951a0a691953232fbafac9d8b8197f  src/system/functions/database.php
 d747aa08a49c40bbff0b8253db0ccac9a1fb3998  src/system/functions/debug.php
 4adc7773f4f3e9db265f308ba5025b312a43a11b  src/system/functions/language.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
