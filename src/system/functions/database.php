@@ -1,9 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.26.01
+//2022.04.27.00
 
 enum StbDbListeners:string{
+  case ChatMy = 'ChatMy';
   case Text = 'Text';
   case InlineQuery = 'InlineQuery';
   case Invoice = 'Invoice';
@@ -47,6 +48,17 @@ class StbSysDatabase{
     $db = json_encode($Db);
     DirCreate(dirname($file));
     file_put_contents($file, $db);
+  }
+
+  private function NoUserListener(
+    StbDbListeners $Listener
+  ):bool{
+    if($Listener === StbDbListeners::InlineQuery
+    or $Listener === StbDbListeners::ChatMy):
+      return true;
+    else:
+      return false;
+    endif;
   }
 
   public function __construct(string $DirToken){
@@ -146,7 +158,7 @@ class StbSysDatabase{
     int $User = null
   ):void{
     DebugTrace();
-    if($Listener === StbDbListeners::InlineQuery):
+    if($this->NoUserListener($Listener)):
       $User = null;
     endif;
     $db = $this->Open($User);
@@ -159,7 +171,7 @@ class StbSysDatabase{
     int $User = null
   ):void{
     DebugTrace();
-    if($Listener === StbDbListeners::InlineQuery):
+    if($this->NoUserListener($Listener)):
       $User = null;
     endif;
     $db = $this->Open($User);
@@ -172,7 +184,7 @@ class StbSysDatabase{
     int $User = null
   ):string|null{
     DebugTrace();
-    if($Listener === StbDbListeners::InlineQuery):
+    if($this->NoUserListener($Listener)):
       $User = null;
     endif;
     $db = $this->Open($User);
