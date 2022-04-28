@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.27.00
+//2022.04.27.01
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -19,6 +19,7 @@ class StbSysDatabase{
   private const ParamCommands = 'Commands';
   private const ParamModules = 'Modules';
   private const ParamVariables = 'Variables';
+  private const ParamListeners = 'Listeners';
   
   public const ParamUserDetails = 'UserDetails';
 
@@ -162,7 +163,7 @@ class StbSysDatabase{
       $User = null;
     endif;
     $db = $this->Open($User);
-    $db['System']['Listeners'][$Listener->value] = $Function;
+    $db['System'][self::ParamListeners][$Listener->value] = $Function;
     $this->Save($db);
   }
 
@@ -175,7 +176,7 @@ class StbSysDatabase{
       $User = null;
     endif;
     $db = $this->Open($User);
-    unset($db['System']['Listeners'][$Listener->value]);
+    unset($db['System'][self::ParamListeners][$Listener->value]);
     $this->Save($db);
   }
 
@@ -188,7 +189,7 @@ class StbSysDatabase{
       $User = null;
     endif;
     $db = $this->Open($User);
-    return $db['System']['Listeners'][$Listener->value] ?? null;
+    return $db['System'][self::ParamListeners][$Listener->value] ?? null;
   }
 
   /**
