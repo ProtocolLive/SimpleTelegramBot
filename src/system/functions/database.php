@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.27.01
+//2022.04.28.00
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -192,25 +192,24 @@ class StbSysDatabase{
     return $db['System'][self::ParamListeners][$Listener->value] ?? null;
   }
 
-  /**
-   * @return true If the value are set successfully
-   * @return null If the name are not found
-   * @return mixed The value stored. If the value stored are an object, it will be returned as array
-   */
-  public function Variable(
+  public function VariableSet(
     string $Name,
     mixed $Value = null,
+    int $User = null
+  ):void{
+    DebugTrace();
+    $db = $this->Open($User);
+    $db['System'][self::ParamVariables][$Name] = $Value;
+    $this->Save($db, $User);
+  }
+
+  public function VariableGet(
+    string $Name,
     int $User = null
   ):mixed{
     DebugTrace();
     $db = $this->Open($User);
-    if($Value === null):
-      return $db['System'][self::ParamVariables][$Name] ?? null;
-    else:
-      $db['System'][self::ParamVariables][$Name] = $Value;
-      $this->Save($db, $User);
-      return true;
-    endif;
+    return $db['System'][self::ParamVariables][$Name];
   }
 
   public function AdminAdd(
