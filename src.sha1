@@ -15,7 +15,8 @@ c496f09b51259c39155cef04e1ff548f98efbce1  src/cmds/admin.php
 2267471d3d3d88e40b9f621d3422fd156f786d30  src/cmds/install.php
 c5a3e9f8e9ea043af17b18589e66ac130160276b  src/config.php
 f3933af3c8b6909cb00900522ec40c0f3a5484da  src/cron.php
-770fd29522d20f47ca7bae0083b23788388bf648  src/index.php
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
+737463f046b282dc25068ec6d9abdad1b61da5f3  src/index.php
 c26ff63aa52f6b716a0a82e33b33b90f1551181a  src/language/en/system.json
 215286029e96815436975c5c30e3fa26b0e88270  src/language/pt-br/system.json
 bc9fb047f1bdc28f891855671ca728ee1461139d  src/modules/index.php

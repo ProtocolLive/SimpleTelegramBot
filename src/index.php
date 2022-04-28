@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.27.00
+//2022.04.28.00
 
 require(__DIR__ . '/system/php.php');
 set_error_handler('error');
@@ -19,6 +19,18 @@ function Action_():void{?>
   <form method="post" action="index.php?a=ok">
     <table>
       <tr>
+        <td>Token:</td>
+        <td>
+          <input type="text" name="token">
+        </td>
+      </tr>
+      <tr>
+        <td>Admin ID:</td>
+        <td>
+          <input type="text" name="admin">
+        </td>
+      </tr>
+      <tr>
         <td>Timezone:</td>
         <td>
           <select name="timezone"><?php
@@ -29,22 +41,7 @@ function Action_():void{?>
         </td>
       </tr>
       <tr>
-        <td>Token:</td>
-        <td>
-          <input type="text" name="token">
-        </td>
-      </tr>
-      <tr>
-        <td>Test server:</td>
-        <td>
-          <select name="testserver">
-            <option value="false">No</option>
-            <option value="true">Yes</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Default language:</td>
+        <td style="vertical-align:top">Default language:</td>
         <td>
           <select name="language">
             <option value="en">English</option>
@@ -54,9 +51,12 @@ function Action_():void{?>
         </td>
       </tr>
       <tr>
-        <td>Admin ID:</td>
+        <td>Test server:</td>
         <td>
-          <input type="text" name="admin">
+          <select name="testserver">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
         </td>
       </tr>
     </table>
@@ -78,6 +78,7 @@ function Action_ok():void{
   file_put_contents(__DIR__ . '/config.php', $config);
   $token = explode(':', $_POST['token']);
   rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/' . $token[1]);
+  file_put_contents(__DIR__ . '/' . $token[1] . '/system.php', '{}');
   rename(__DIR__ . '/index.php', __DIR__ . '/install.php');
   echo '✅ Install complete!';
   $url = dirname($_SERVER['SCRIPT_URI']);
