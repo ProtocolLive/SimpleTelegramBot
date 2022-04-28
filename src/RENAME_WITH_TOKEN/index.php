@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.28.00
+//2022.04.28.01
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -51,17 +51,19 @@ function Action_():void{
       endif;
     endif;
 
+    //Internal command
     $command = 'Command_' . strtolower($Webhook->Command);
     if(function_exists($command)):
       call_user_func($command);
       return;
     endif;
 
+    //Module command
     $commands = $Db->Commands();
     $module = $commands[$Webhook->Command] ?? null;
     if($module !== null):
       $command = $module . '::Command_' . $Webhook->Command;
-      $command();
+      call_user_func($command);
       return;
     endif;
 
@@ -75,7 +77,6 @@ function Action_():void{
     /** @var TgCallback $Webhook */
     if(function_exists('Callback_' . $Webhook->Data)):
       call_user_func('Callback_' . $Webhook->Data);
-      return;
     endif;
     return;
   endif;
@@ -93,6 +94,7 @@ function Action_():void{
       return;
     endif;
     SendUserCmd('dontknow');
+    return;
   endif;
 
   if(get_class($Webhook) === 'TgInvoiceCheckout'):
@@ -107,6 +109,7 @@ function Action_():void{
     if($listener !== null):
       call_user_func($listener);
     endif;
+    return;
   endif;
 
   if(get_class($Webhook) === 'TgInlineQuery'):
@@ -114,8 +117,8 @@ function Action_():void{
     $listener = $Db->ListenerGet(StbDbListeners::InlineQuery);
     if($listener !== null):
       call_user_func($listener);
-      return;
     endif;
+    return;
   endif;
 
   if(get_class($Webhook) === 'TgGroupStatusMy'):
@@ -123,11 +126,9 @@ function Action_():void{
     $listener = $Db->ListenerGet(StbDbListeners::ChatMy);
     if($listener !== null):
       call_user_func($listener);
-      return;
     endif;
+    return;
   endif;
-
-  return;
 }
 
 function Action_WebhookSet():void{
