@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.03.19.00
+//2022.04.28.00
 
 require(dirname(__DIR__, 2) . '/system/system.php');
 
@@ -13,41 +13,41 @@ $lang = substr(DefaultLanguage, 0, 2);?>
 
 <p>
   Default<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::Default));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Default));?>
 </p>
 <p>
   Default + language<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::Default, $lang));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Default, $lang));?>
 </p>
 <p>
   Users<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::Users));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Users));?>
 </p>
 <p>
   Users + language<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::Users, $lang));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Users, $lang));?>
 </p>
 <p>
   Groups<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::Groups));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Groups));?>
 </p>
 <p>
   Groups + language<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::Groups, $lang));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Groups, $lang));?>
 </p>
 <p>
   Groups Admins<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::GroupsAdmins));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::GroupsAdmins));?>
 </p>
 <p>
   Groups Admins + language<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::GroupsAdmins, $lang));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::GroupsAdmins, $lang));?>
 </p>
 <p>
   Main admin<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::Chat, null, Admin));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Chat, null, Admin));?>
 </p>
 <p>
   Main admin + language<br>
-  <?php var_dump($Bot->CmdGet(TgCmdScope::Chat, $lang, Admin));?>
+  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Chat, $lang, Admin));?>
 </p>
