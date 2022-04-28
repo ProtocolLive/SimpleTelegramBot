@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.26.00
+//2022.04.27.00
 
 //Installation date: ##DATE##
 
@@ -31,7 +31,7 @@ const Admin = ##ADMIN##;
 //Tips: & and, | or, ^ xor
 //Type: TblDebug
 //Default: TblDebug::All
-const Debug = TblDebug::All ^ TblDebug::Curl;
+const Debug = TblDebug::All ^ TblDebug::Curl ^ TblDebug::Webhook;
 
 //Default currency
 //Type: TgInvoiceCurrencies 
