@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.29.01
+//2022.04.29.02
 
 require(__DIR__ . '/php.php');
 require(__DIR__ . '/requires.php');
@@ -20,7 +20,7 @@ $BotData = new TblData(
 );
 $Bot = new TelegramBotLibrary($BotData, TestServer);
 $Db = new StbSysDatabase(DirToken);
-$Lang = new StbLanguage(DefaultLanguage);
+$Lang = new StbLanguageSys(DefaultLanguage);
 $UserLang = DefaultLanguage;
 
 //Load modules
