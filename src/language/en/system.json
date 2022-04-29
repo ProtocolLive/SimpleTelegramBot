@@ -16,6 +16,8 @@
     "UnInstallNone": "ℹ️ None module to uninstall"
   },
   "Admin":{
+    "AdminMenu": "Administration menu",
+    "AdminsButton": "Administrators",
     "Admins": "Administrators list:",
     "MyId": "Your ID is %s"
   },

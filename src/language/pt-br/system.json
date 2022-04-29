@@ -16,6 +16,8 @@
     "UnInstallNone": "ℹ️ Nenhum módulo para desinstalar"
   },
   "Admin":{
+    "AdminMenu": "Menu de administração",
+    "AdminsButton": "Administradores",
     "Admins": "Lista de administradores:",
     "MyId": "Seu ID é %s"
   },
