@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.28.01
+//2022.04.29.00
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -12,7 +12,7 @@ enum StbDbListeners:string{
   case InvoiceShipping = 'InvoiceShipping';
 }
 
-class StbSysDatabase{
+class StbDatabaseSys{
   private readonly string $DirToken;
 
   private const ParamAdmins = 'Admins';
@@ -250,7 +250,7 @@ class StbSysDatabase{
   }
 }
 
-class StbDatabase{
+class StbDatabaseModule{
   private readonly string $DirToken;
   private readonly string $Module;
 
