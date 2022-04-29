@@ -1,12 +1,28 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.28.00
+//2022.04.28.01
+
+function Command_id():void{
+  /**
+   * @var TelegramBotLibrary $Bot
+   * @var StbLanguage $Lang
+   * @var TblCmd $Webhook
+   */
+  global $Bot, $Lang, $Webhook;
+  $Bot->TextSend(
+    $Webhook->Message->User->Id,
+    sprintf(
+      $Lang->Get('MyId', Group: 'Admin'),
+      $Webhook->Message->User->Id,
+    )
+  );
+}
 
 function Command_admin():void{
   /**
    * @var TelegramBotLibrary $Bot
-   * @var TgCmd $Webhook
+   * @var TblCmd $Webhook
    * @var StbSysDatabase $Db
    * @var StbLanguage $Lang
    */

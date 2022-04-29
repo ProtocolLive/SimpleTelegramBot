@@ -16,7 +16,8 @@
     "UnInstallNone": "ℹ️ None module to uninstall"
   },
   "Admin":{
-    "Admins": "Administrators list:"
+    "Admins": "Administrators list:",
+    "MyId": "Your ID is %s"
   },
   "Denied": "⛔ Access denied"
 }
