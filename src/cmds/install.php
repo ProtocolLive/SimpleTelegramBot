@@ -1,13 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.29.00
+//2022.04.29.01
 
 function Command_installmod():void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var StbDatabaseSys $Db
-   * @var StbLanguage $Lang
+   * @var StbLanguageSys $Lang
    * @var TblCmd $Webhook
    */
   global $Bot, $Db, $Lang, $Webhook;
@@ -61,7 +61,7 @@ function Callback_InsModPic():void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var TgCallback $Webhook
-   * @var StbLanguage $Lang
+   * @var StbLanguageSys $Lang
    * @var StbDatabaseSys $Db
    */
   global $Bot, $Webhook, $Lang, $Db;
@@ -88,7 +88,7 @@ function Command_uninstallmod():void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var StbDatabaseSys $Db
-   * @var StbLanguage $Lang
+   * @var StbLanguageSys $Lang
    * @var TblCmd $Webhook
    */
   global $Bot, $Db, $Lang, $Webhook;
@@ -131,7 +131,7 @@ function Callback_UniModPic():void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var TgCallback $Webhook
-   * @var StbLanguage $Lang
+   * @var StbLanguageSys $Lang
    * @var StbDatabaseSys $Db
    */
   global $Bot, $Webhook, $Lang, $Db;
