@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.29.00
+//2022.04.29.01
 
 require(__DIR__ . '/php.php');
 require(__DIR__ . '/requires.php');
@@ -25,5 +25,5 @@ $UserLang = DefaultLanguage;
 
 //Load modules
 foreach($Db->Modules() as $module => $install):
-  require(DirSystem . '/modules/' . $module . '/index.php');
+  require(DirToken . '/modules/' . $module . '/index.php');
 endforeach;
