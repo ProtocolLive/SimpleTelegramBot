@@ -1,31 +1,35 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.27.00
+//2022.04.29.00
 
 //Installation date: ##DATE##
-
-//Type: string
-//Default: UTC
-const Timezone = '##TIMEZONE##';
 
 //Token given by @BotFather
 //Type: string
 const Token = '##TOKEN##';
 
-//Use the test server
-//Type: bool
-//Default: false
-const TestServer = ##TESTSERVER##;
+//Main admin
+//Type: int
+const Admin = ##ADMIN##;
 
 //Default language
 //Type: string
 //Default: en
 const DefaultLanguage = '##LANGUAGE##';
 
-//Main admin
-//Type: int
-const Admin = ##ADMIN##;
+//Type: string
+//Default: UTC
+const Timezone = '##TIMEZONE##';
+
+//Use the test server
+//Type: bool
+//Default: false
+const TestServer = ##TESTSERVER##;
+
+//Private bot dir
+//Type: String
+const DirToken = '##DIRTOKEN##';
 
 //Use the debug constants of the class TelegramBot or/and the constants defined to bot
 //Tips: & and, | or, ^ xor
@@ -34,6 +38,6 @@ const Admin = ##ADMIN##;
 const Debug = TblDebug::All ^ TblDebug::Curl ^ TblDebug::Webhook;
 
 //Default currency
-//Type: TgInvoiceCurrencies 
+//Type: TgInvoiceCurrencies
 //Default: TgInvoiceCurrencies::USD
 const DefaultCurrency = TgInvoiceCurrencies::USD;
