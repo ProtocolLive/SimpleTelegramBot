@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.28.01
+//2022.04.29.00
 
 require(dirname(__DIR__, 1) . '/system/system.php');
 
@@ -13,7 +13,7 @@ endif;
 function Action_():void{
   /**
    * @var TelegramBotLibrary $Bot
-   * @var StbSysDatabase $Db
+   * @var StbDatabaseSys $Db
    * @var string $UserLang
    */
   global $Bot, $Webhook, $Db, $UserLang;
@@ -36,11 +36,11 @@ function Action_():void{
     //In a group, with many bots, the commands have the target bot.
     //This block check the target and caches the bot name
     if($Webhook->Message->Chat->Type !== TgChatType::Private):
-      $name = $Db->VariableGet(StbSysDatabase::ParamUserDetails);
+      $name = $Db->VariableGet(StbDatabaseSys::ParamUserDetails);
       if($name === null):
         $name = $Bot->MyGet();
         if($name !== null):
-          $Db->VariableSet(StbSysDatabase::ParamUserDetails, $name);
+          $Db->VariableSet(StbDatabaseSys::ParamUserDetails, $name);
           $name = $name->Nick;
         endif;
       else:

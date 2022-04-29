@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.28.01
+//2022.04.29.00
 
 function Command_id():void{
   /**
@@ -23,7 +23,7 @@ function Command_admin():void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var TblCmd $Webhook
-   * @var StbSysDatabase $Db
+   * @var StbDatabaseSys $Db
    * @var StbLanguage $Lang
    */
   global $Bot, $Webhook, $Db, $Lang;
@@ -41,7 +41,7 @@ function Command_admin():void{
 
   $Admins = [Admin => 0] + $Db->Admins();
   foreach($Admins as $admin => $time):
-    $detail = $Db->VariableGet(StbSysDatabase::ParamUserDetails, $admin);
+    $detail = $Db->VariableGet(StbDatabaseSys::ParamUserDetails, $admin);
     if($detail === null):
       $detail = $admin;
     else:
@@ -58,7 +58,7 @@ function Command_admin():void{
   foreach($Admins as $admin => $time):
     $detail = $Bot->ChatGet($admin);
     if($detail !== null):
-      $Db->VariableSet(StbSysDatabase::ParamUserDetails, $detail, $admin);
+      $Db->VariableSet(StbDatabaseSys::ParamUserDetails, $detail, $admin);
     endif;
   endforeach;
 }
