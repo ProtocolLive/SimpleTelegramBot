@@ -1,21 +1,19 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.26.00
+//2022.04.29.00
 
-interface InterfaceModule{
+interface StbModuleInterface{
   static public function Install(
     TelegramBotLibrary $Bot,
     TgCallback $Webhook,
-    StbSysDatabase $Db,
-    StbLanguage $Lang
+    StbDatabaseSys $Db
   );
 
   static public function Uninstall(
     TelegramBotLibrary $Bot,
     TgCallback $Webhook,
-    StbSysDatabase $Db,
-    StbLanguage $Lang
+    StbDatabaseSys $Db
   );
 }
 
