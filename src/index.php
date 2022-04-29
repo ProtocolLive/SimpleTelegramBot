@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.28.00
+//2022.04.29.00
 
 require(__DIR__ . '/system/php.php');
 set_error_handler('error');
@@ -68,6 +68,9 @@ function Action_():void{?>
 
 function Action_ok():void{
   echo '<h1>SimpleTelegramBot Install</h1>';
+  $token = explode(':', $_POST['token']);
+  $token = $token[1];
+
   $config = file_get_contents(__DIR__ . '/config.php');
   $config = str_replace('##DATE##', date('Y-m-d H:i:s'), $config);
   $config = str_replace('##TIMEZONE##', $_POST['timezone'], $config);
@@ -75,20 +78,22 @@ function Action_ok():void{
   $config = str_replace('##TESTSERVER##', $_POST['testserver'], $config);
   $config = str_replace('##LANGUAGE##', $_POST['language'], $config);
   $config = str_replace('##ADMIN##', $_POST['admin'], $config);
+  $config = str_replace('##DIRTOKEN##', __DIR__ . '/' . $token, $config);
   file_put_contents(__DIR__ . '/config.php', $config);
-  $token = explode(':', $_POST['token']);
-  rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/' . $token[1]);
-  file_put_contents(__DIR__ . '/' . $token[1] . '/system.php', '{}');
+
+  rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/' . $token);
+  file_put_contents(__DIR__ . '/' . $token . '/system.php', '{}');
   rename(__DIR__ . '/index.php', __DIR__ . '/install.php');
+
   echo '✅ Install complete!';
   $url = dirname($_SERVER['SCRIPT_URI']);
-  $url .= '/' . $token[1] . '/index.php?a=WebhookSet';
+  $url .= '/' . $token . '/index.php?a=WebhookSet';
   echo '<p><a href="' . $url . '">Click here to set the webhook</a></p>';
 }
 
 function error():never{
   echo '<p>⚠️ Install error!</p>';
   $args = func_get_args();
-  echo '<p>' . $args[1] . '</p>';
+  echo '<pre>' . $args[1] . '</pre>';
   die();
 }
