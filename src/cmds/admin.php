@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.24.00
+//2022.04.28.00
 
 function Command_admin():void{
   /**
@@ -22,26 +22,16 @@ function Command_admin():void{
   $line = 0;
   $col = 0;
   $mk->ButtonCallback($line, $col++, '➕', 'AdminNew');
-  $todo = [];
 
-  $detail = $Db->Variable(StbSysDatabase::ParamUserDetails, null, Admin);
-  if($detail === null):
-    $detail = Admin;
-    $todo[] = Admin;
-  else:
-    $detail = $detail['Name'];
-  endif;
-  $mk->ButtonCallback($line, $col++, $detail, 'Admin ' . Admin);
-
-  foreach($Db->Admins() as $admin => $time):
-    $detail = $Db->Variable(StbSysDatabase::ParamUserDetails, null, $admin);
+  $Admins = [Admin => 0] + $Db->Admins();
+  foreach($Admins as $admin => $time):
+    $detail = $Db->VariableGet(StbSysDatabase::ParamUserDetails, $admin);
     if($detail === null):
       $detail = $admin;
-      $todo[] = $admin;
     else:
       $detail = $detail['Name'];
     endif;
-    $mk->ButtonCallback($line, $col++, $admin, 'Admin ' . $admin);
+    $mk->ButtonCallback($line, $col++, $detail, 'Admin ' . $admin);
   endforeach;
   $Bot->TextSend(
     Admin,
@@ -49,11 +39,10 @@ function Command_admin():void{
     Markup: $mk
   );
 
-  foreach($todo as $user):
-    $detail = $Bot->ChatGet($user);
+  foreach($Admins as $admin => $time):
+    $detail = $Bot->ChatGet($admin);
     if($detail !== null):
-      vd($detail);
-      $Db->Variable(StbSysDatabase::ParamUserDetails, $detail, $user);
+      $Db->VariableSet(StbSysDatabase::ParamUserDetails, $detail, $admin);
     endif;
   endforeach;
 }
