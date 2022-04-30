@@ -1,8 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.29.00
+//2022.04.30.00
 
+define('DirToken', __DIR__);
 require(dirname(__DIR__, 1) . '/system/system.php');
 
 $_GET['a'] ??= '';
