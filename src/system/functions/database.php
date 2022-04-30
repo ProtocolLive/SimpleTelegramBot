@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.29.00
+//2022.04.30.00
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -83,18 +83,18 @@ class StbDatabaseSys{
   }
 
   /**
-   * List all installed modules or check if a module are installed
+   * List all installed modules or get the module installation timestamp
    * @param string $Module
-   * @return array|bool
+   * @return array|int|null
    */
-  public function Modules(string $Module = null):array|bool{
+  public function Modules(string $Module = null):array|int|null{
     DebugTrace();
     $db = $this->Open();
     $db['System'][self::ParamModules] ??= [];
     if($Module === null):
       return $db['System'][self::ParamModules];
     else:
-      return isset($db['System'][self::ParamModules][$Module]);
+      return $db['System'][self::ParamModules][$Module] ?? null;
     endif;
   }
 
