@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.30.01
+//2022.04.30.02
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -202,7 +202,7 @@ class StbDatabaseSys{
   ):mixed{
     DebugTrace();
     $db = $this->Open($User);
-    return $db['System'][self::ParamVariables][$Name];
+    return $db['System'][self::ParamVariables][$Name] ?? null;
   }
 
   public function AdminAdd(
