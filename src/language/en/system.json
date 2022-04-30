@@ -11,16 +11,20 @@
     "InstallNotFound": "⚠️ This module cannot be installed because don't have Install method",
     "InstallPick": "Choose a module to install:",
     "Module": "Module: %1$s\nInstallation: %2$s",
-    "Modules": "Modules installed:",
+    "Modules": "🧩 Modules installed:",
     "UninstallButton": "Uninstall",
     "UninstallNotFound": "⚠️ This module cannot be installed because don't have Uninstall method"
   },
   "Admin":{
-    "AdminMenu": "Administration menu",
-    "Admins": "Administrators:",
-    "AdminsButton": "Administrators",
-    "ModulesButton": "Modules",
-    "MyId": "Your ID is %s"
+    "AdminMenu": "⚙️ Administration menu",
+    "Admins": "🎖️ Administrators:",
+    "AdminsButton": "🎖️ Administrators",
+    "ModulesButton": "🧩 Modules",
+    "MyId": "Your ID is %s",
+    "PhpInfoButton": "🔍 Server info",
+    "StatsButton": "📊 Statistics",
+    "Updates": "Outdated files:\n\n%s",
+    "UpdatesButton": "📡 Updates"
   },
   "Add": "➕",
   "Back": "🔙",

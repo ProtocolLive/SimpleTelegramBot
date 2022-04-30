@@ -11,16 +11,20 @@
     "InstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de instalação",
     "InstallPick": "Clique em um módulo para instalar:",
     "Module": "Módulo: %1$s\nInstalação: %2$s",
-    "Modules": "Módulos instalados:",
+    "Modules": "🧩 Módulos instalados:",
     "UninstallButton": "Desinstalar",
     "UninstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de desinstalação"
   },
   "Admin":{
-    "AdminMenu": "Menu de administração",
-    "Admins": "Administradores:",
-    "AdminsButton": "Administradores",
-    "ModulesButton": "Módulos",
-    "MyId": "Seu ID é %s"
+    "AdminMenu": "⚙️ Menu de administração",
+    "Admins": "🎖️ Administradores:",
+    "AdminsButton": "🎖️ Administradores",
+    "ModulesButton": "🧩 Módulos",
+    "MyId": "Seu ID é %s",
+    "PhpInfoButton": "🔍 Detalhes do servidor",
+    "StatsButton": "📊 Estatísticas",
+    "Updates": "Arquivos desatualizados:\n\n%s",
+    "UpdatesButton": "📡 Atualizações"
   },
   "Add": "➕",
   "Back": "🔙",
