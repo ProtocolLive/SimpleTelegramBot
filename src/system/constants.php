@@ -1,9 +1,12 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.25.00
+//2022.04.30.00
 
 define('DirSystem', dirname(__DIR__, 1));
+const DirDb = DirToken . '/db';
+const DirLogs = DirToken . '/modules';
+const DirModules = DirToken . '/modules';
 
 enum StbEvents:int{
   case Text = 0;
