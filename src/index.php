@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.00
+//2022.04.30.01
 
 require(__DIR__ . '/system/php.php');
 set_error_handler('error');
@@ -18,6 +18,12 @@ function Action_():void{?>
   <h1>SimpleTelegramBot Install</h1>
   <form method="post" action="index.php?a=ok">
     <table>
+      <tr>
+        <td>Name:</td>
+        <td>
+          <input type="text" name="name">
+        </td>
+      </tr>
       <tr>
         <td>Token:</td>
         <td>
@@ -81,7 +87,7 @@ function Action_ok():void{
   file_put_contents(__DIR__ . '/RENAME_WITH_TOKEN/config.php', $config);
 
   file_put_contents(__DIR__ . '/RENAME_WITH_TOKEN/db/system.php', '{}');
-  rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/' . $token);
+  rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/Bot-' . $_POST['name'] . '-' . $token);
   rename(__FILE__, __DIR__ . '/install.php');
 
   echo '✅ Install complete!';
