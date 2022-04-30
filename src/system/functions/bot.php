@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.30.00
+//2022.04.30.01
 
 function LogEvent(string $Event, string $Additional = null):void{
   /** @var TblCmd $Webhook */
@@ -41,7 +41,7 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
   DebugTrace();
   $Photo = false;
   $Text = false;
-  $File = DirSystem . "/UserCmds/$UserLang/$Command";
+  $File = DirUserCmds . '/' . $UserLang . '/' . $Command;
   
   $temp = $File . 'jpg';
   if(is_file($temp)):
