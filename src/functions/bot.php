@@ -74,3 +74,33 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
     return false;
   endif;
 }
+
+function UpdateCheck(){
+  $NowHashes = HashDir('sha1', DirSystem);
+  $ServerHashes = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/SimpleTelegramBot/main/src.sha1');
+  $ServerHashes = explode("\n", $ServerHashes);
+  array_pop($ServerHashes);
+  foreach($ServerHashes as $sh):
+    $sh = explode('  ', $sh);
+    $file = str_replace('src/', DirSystem . '/', $sh[1]);
+    if(strpos($file, DirSystem . '/config.php') !== false):
+      continue;
+    endif;
+    if(isset($NowHashes[$file])
+    and $sh[0] !== $NowHashes[$file]):
+      $return[] = $file;
+    endif;
+  endforeach;
+  $ServerHashes = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/TelegramBotLibrary/main/src.sha1');
+  $ServerHashes = explode("\n", $ServerHashes);
+  array_pop($ServerHashes);
+  foreach($ServerHashes as $sh):
+    $sh = explode('  ', $sh);
+    $file = str_replace('src/', DirSystem . '/class/', $sh[1]);
+    if(isset($NowHashes[$file])
+    and $sh[0] !== $NowHashes[$file]):
+      $return[] = $file;
+    endif;
+  endforeach;
+  return $return;
+}
