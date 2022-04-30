@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.29.00
+//2022.04.30.00
 
 //Installation date: ##DATE##
 
@@ -18,18 +18,14 @@ const Admin = ##ADMIN##;
 //Default: en
 const DefaultLanguage = '##LANGUAGE##';
 
-//Type: string
-//Default: UTC
-const Timezone = '##TIMEZONE##';
-
 //Use the test server
 //Type: bool
 //Default: false
 const TestServer = ##TESTSERVER##;
 
-//Private bot dir
-//Type: String
-const DirToken = '##DIRTOKEN##';
+//Type: string
+//Default: UTC
+const Timezone = '##TIMEZONE##';
 
 //Use the debug constants of the class TelegramBot or/and the constants defined to bot
 //Tips: & and, | or, ^ xor
