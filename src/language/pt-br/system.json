@@ -8,18 +8,22 @@
     ]
   ],
   "Module":{
+    "InstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de instalação",
     "InstallPick": "Clique em um módulo para instalar:",
-    "InstallNotFound": "⚠️ O módulo %s não tem o método Install",
-    "InstallNone": "ℹ️ Nenhum módulo para instalar",
-    "UnInstallPick": "Clique em um módulo para desinstalar:",
-    "UnInstallNotFound": "⚠️ O módulo %s não tem o método Uninstall",
-    "UnInstallNone": "ℹ️ Nenhum módulo para desinstalar"
+    "Module": "Módulo: %1$s\nInstalação: %2$s",
+    "Modules": "Módulos instalados:",
+    "UninstallButton": "Desinstalar",
+    "UninstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de desinstalação"
   },
   "Admin":{
     "AdminMenu": "Menu de administração",
+    "Admins": "Administradores:",
     "AdminsButton": "Administradores",
-    "Admins": "Lista de administradores:",
+    "ModulesButton": "Módulos",
     "MyId": "Seu ID é %s"
   },
-  "Denied": "⛔ Acesso negado"
+  "Add": "➕",
+  "Back": "🔙",
+  "Denied": "⛔ Acesso negado",
+  "Yes": "✅"
 }

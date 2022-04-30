@@ -8,18 +8,22 @@
     ]
   ],
   "Module":{
+    "InstallNotFound": "⚠️ This module cannot be installed because don't have Install method",
     "InstallPick": "Choose a module to install:",
-    "InstallNotFound": "⚠️ The module %s dont have Install method",
-    "InstallNone": "ℹ️ None module to install",
-    "UnInstallPick": "Choose a module to uninstall:",
-    "UnInstallNotFound": "⚠️ The module %s dont have Uninstall method",
-    "UnInstallNone": "ℹ️ None module to uninstall"
+    "Module": "Module: %1$s\nInstallation: %2$s",
+    "Modules": "Modules installed:",
+    "UninstallButton": "Uninstall",
+    "UninstallNotFound": "⚠️ This module cannot be installed because don't have Uninstall method"
   },
   "Admin":{
     "AdminMenu": "Administration menu",
+    "Admins": "Administrators:",
     "AdminsButton": "Administrators",
-    "Admins": "Administrators list:",
+    "ModulesButton": "Modules",
     "MyId": "Your ID is %s"
   },
-  "Denied": "⛔ Access denied"
+  "Add": "➕",
+  "Back": "🔙",
+  "Denied": "⛔ Access denied",
+  "Yes": "✅"
 }

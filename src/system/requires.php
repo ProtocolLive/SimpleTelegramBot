@@ -9,9 +9,9 @@ require(DirSystem . '/system/functions/basics.php');
 require(DirSystem . '/system/functions/bot.php');
 require(DirSystem . '/system/functions/database.php');
 require(DirSystem . '/system/functions/language.php');
-require(DirSystem . '/cmds/admin.php');
 require(DirSystem . '/class/TelegramBotLibrary.php');
 
 require(DirToken . '/modules/index.php');
 
-require(DirSystem . '/cmds/install.php');
+require(DirSystem . '/cmds/admin.php');
+require(DirSystem . '/cmds/modules.php');
