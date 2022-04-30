@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.03.17.00
+//2022.04.27.00
 
 function AccentInsensitive(string $Text):string{
   return strtr($Text, [
@@ -81,4 +81,16 @@ function ArgV():void{
     parse_str($temp, $_temp);
     $_SERVER = array_merge($_SERVER, $_temp);
   endif;
+}
+
+function HashDir(string $Algo, string $Dir):array{
+  $hash = [];
+  foreach(glob($Dir . '/*') as $file):
+    if(is_dir($file)):
+      $hash += HashDir($Algo, $file);
+    else:
+      $hash[$file] = hash_file($Algo, $file);
+    endif;
+  endforeach;
+  return $hash;
 }
