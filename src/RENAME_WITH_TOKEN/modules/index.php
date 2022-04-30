@@ -1,9 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.00
+//2022.04.30.01
 
-abstract class StbModuleTools{
+class StbModuleTools{
   static public function CommandDel(
     array $Commands,
     array|string $Command
@@ -15,6 +15,6 @@ abstract class StbModuleTools{
       $index = array_search($cmd, array_column($Commands, 'command'));
       unset($Commands[$index]);
     endforeach;
-    return $Commands;
+    return TblCommand::ToObject($Commands);
   }
 }
