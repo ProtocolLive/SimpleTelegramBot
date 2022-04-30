@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.00
+//2022.04.30.01
 
 function Command_id():void{
   /**
@@ -48,6 +48,12 @@ function Callback_admin():void{
     $col++,
     $Lang->Get('AdminsButton', Group: 'Admin'),
     'Admins'
+  );
+  $mk->ButtonCallback(
+    $line,
+    $col++,
+    $Lang->Get('ModulesButton', Group: 'Admin'),
+    'Modules'
   );
   if(get_class($Webhook) === 'TblCmd'):
     $Bot->TextSend(
