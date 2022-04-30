@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.01
+//2022.04.30.02
 
 function Command_id():void{
   /**
@@ -22,10 +22,10 @@ function Command_id():void{
 }
 
 function Command_admin():void{
-  Callback_admin();
+  Callback_AdminMenu();
 }
 
-function Callback_admin():void{
+function Callback_AdminMenu():void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var TblCmd|TgCallback $Webhook
@@ -71,7 +71,7 @@ function Callback_admin():void{
   endif;
 }
 
-function Callback_admins():void{
+function Callback_Admins():void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var TgCallback $Webhook
@@ -90,7 +90,7 @@ function Callback_admins():void{
   $mk = new TblMarkupInline();
   $line = 0;
   $col = 0;
-  $mk->ButtonCallback($line, $col++, '🔙', 'admin');
+  $mk->ButtonCallback($line, $col++, '🔙', 'AdminMenu');
   $mk->ButtonCallback($line, $col++, '➕', 'AdminNew');
 
   $Admins = [Admin => 0] + $Db->Admins();
