@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.30.01
+//2022.04.30.02
 
 function LogEvent(string $Event, string $Additional = null):void{
   /** @var TblCmd $Webhook */
@@ -75,7 +75,7 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
   endif;
 }
 
-function UpdateCheck(){
+function UpdateCheck():array{
   $NowHashes = HashDir('sha1', DirSystem);
   $ServerHashes = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/SimpleTelegramBot/main/src.sha1');
   $ServerHashes = explode("\n", $ServerHashes);
