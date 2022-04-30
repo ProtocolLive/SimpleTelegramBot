@@ -19,7 +19,6 @@ f3933af3c8b6909cb00900522ec40c0f3a5484da  src/cron.php
 af8f5ed09805065c849f543f83aa3bdcf0675c88  src/functions/bot.php
 9d81735b3dca96f194b23c2f3a10a4fd9d358448  src/functions/database.php
 b4e107152a5c8a28d386f5947b4f1bc916982525  src/functions/language.php
-48f3ac8ac2d645374bffcaa1b848c7a93c4aee5b  src/functions/modules.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
 cdcf18072058063784c6aa714f69b58b16d57b6b  src/index.php
 78ee7ec966744d1cd9cca60b5f11ad3be86f9567  src/language/en/system.json
@@ -28,5 +27,5 @@ cdcf18072058063784c6aa714f69b58b16d57b6b  src/index.php
 ee11c96fa6555f7f1d511d79bdf751197f4125bd  src/system/functions/basics.php
 18bd9c835c44a4127972fcebb6a3206d01ac35fb  src/system/functions/debug.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
-abd81c1e140bfdd8c07c6a056f2f55d6730482af  src/system/requires.php
+2ca0b9399d9a89a7991768236a564276d075c5f8  src/system/requires.php
 7ccefc83a2a51ffd19dfb68cd3f60f1b7dc447f1  src/system/system.php
