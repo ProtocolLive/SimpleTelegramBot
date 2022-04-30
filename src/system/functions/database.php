@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.30.00
+//2022.04.30.01
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -13,8 +13,6 @@ enum StbDbListeners:string{
 }
 
 class StbDatabaseSys{
-  private readonly string $DirToken;
-
   private const ParamAdmins = 'Admins';
   private const ParamCommands = 'Commands';
   private const ParamModules = 'Modules';
@@ -26,9 +24,9 @@ class StbDatabaseSys{
   private function Open(int $User = null):array{
     DebugTrace();
     if($User === null):
-      $file = $this->DirToken . '/db/system.json';
+      $file = DirDb . '/system.json';
     else:
-      $file = $this->DirToken . '/db/' . $User . '.json';
+      $file = DirDb . '/' . $User . '.json';
     endif;
     if(is_file($file)):
       $db = file_get_contents($file);
@@ -42,9 +40,9 @@ class StbDatabaseSys{
   private function Save(array $Db, int $User = null):void{
     DebugTrace();
     if($User === null):
-      $file = $this->DirToken . '/db/system.json';
+      $file = DirDb . '/system.json';
     else:
-      $file = $this->DirToken . '/db/' . $User . '.json';
+      $file = DirDb . '/' . $User . '.json';
     endif;
     $db = json_encode($Db);
     DirCreate(dirname($file));
@@ -60,11 +58,6 @@ class StbDatabaseSys{
     else:
       return false;
     endif;
-  }
-
-  public function __construct(string $DirToken){
-    DebugTrace();
-    $this->DirToken = $DirToken;
   }
 
   public function ModuleInstall(string $Module):void{
@@ -251,15 +244,14 @@ class StbDatabaseSys{
 }
 
 class StbDatabaseModule{
-  private readonly string $DirToken;
   private readonly string $Module;
 
   private function OpenAll(int $User = null):array{
     DebugTrace();
     if($User === null):
-      $file = $this->DirToken . '/db/system.json';
+      $file = DirDb . '/system.json';
     else:
-      $file = $this->DirToken . '/db/' . $User . '.json';
+      $file = DirDb . '/' . $User . '.json';
     endif;
     if(is_file($file)):
       $db = file_get_contents($file);
@@ -279,9 +271,9 @@ class StbDatabaseModule{
   private function Save(array $Db, int $User = null):void{
     DebugTrace();
     if($User === null):
-      $file = $this->DirToken . '/db/system.json';
+      $file = DirDb . '/system.json';
     else:
-      $file = $this->DirToken . '/db/' . $User . '.json';
+      $file = DirDb . '/' . $User . '.json';
     endif;
     $db = $this->OpenAll($User);
     $db[$this->Module] = $Db;
@@ -290,12 +282,11 @@ class StbDatabaseModule{
     file_put_contents($file, $db);
   }
 
-  public function __construct(string $DirToken, string $Module){
+  public function __construct(string $Module){
     DebugTrace();
     if($Module === 'System'):
       $Module .= 1;
     endif;
-    $this->DirToken = $DirToken;
     $this->Module = $Module;
   }
 
