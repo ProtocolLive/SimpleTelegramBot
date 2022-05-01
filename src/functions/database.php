@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.01.01
+//2022.05.01.02
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -60,35 +60,41 @@ class StbDatabaseSys{
     endif;
   }
 
-  public function ModuleInstall(string $Module):void{
+  public function Admin(
+    int $User
+  ):int|false{
     DebugTrace();
     $db = $this->Open();
-    $db['System'][self::ParamModules][$Module] = time();
-    $this->Save($db);
+    return $db['System'][self::ParamAdmins][$User] ?? false;
   }
 
-  public function ModuleUninstall(string $Module):void{
+  public function AdminAdd(
+    int $User
+  ):bool{
     DebugTrace();
     $db = $this->Open();
-    unset($db['System'][self::ParamModules][$Module]);
-    unset($db[$Module]);
-    $this->Save($db);
-  }
-
-  /**
-   * List all installed modules or get the module installation timestamp
-   * @param string $Module
-   * @return array|int|null
-   */
-  public function Modules(string $Module = null):array|int|null{
-    DebugTrace();
-    $db = $this->Open();
-    $db['System'][self::ParamModules] ??= [];
-    if($Module === null):
-      return $db['System'][self::ParamModules];
-    else:
-      return $db['System'][self::ParamModules][$Module] ?? null;
+    if(isset($db['System'][self::ParamAdmins][$User]) === false):
+      $db['System'][self::ParamAdmins][$User] = time();
+      $this->Save($db);
+      return true;
     endif;
+    return false;
+  }
+
+  public function AdminDel(
+    int $User
+  ):bool{
+    DebugTrace();
+    $db = $this->Open();
+    unset($db['System'][self::ParamAdmins][$User]);
+    $this->Save($db);
+    return true;
+  }
+
+  public function Admins():array{
+    DebugTrace();
+    $db = $this->Open();
+    return $db['System'][self::ParamAdmins] ?? [];
   }
 
   public function CommandAdd(string $Command, string $Module):bool{
@@ -129,18 +135,6 @@ class StbDatabaseSys{
     else:
       return $db['System'][self::ParamCommands][$Command] ?? null;
     endif;
-  }
-
-  /**
-   * List a module commands
-   * @param string $Module
-   * @return array
-   */
-  public function ModuleCommands(string $Module):array{
-    DebugTrace();
-    $db = $this->Open();
-    $db['System'][self::ParamCommands] ??= [];
-    return array_keys($db['System'][self::ParamCommands], $Module);
   }
 
   /**
@@ -192,15 +186,47 @@ class StbDatabaseSys{
     return $db['System'][self::ParamListeners][$Listener->value] ?? [];
   }
 
-  public function VariableSet(
-    string $Name,
-    mixed $Value = null,
-    int $User = null
-  ):void{
+  /**
+   * List a module commands
+   * @param string $Module
+   * @return array
+   */
+  public function ModuleCommands(string $Module):array{
     DebugTrace();
-    $db = $this->Open($User);
-    $db['System'][self::ParamVariables][$Name] = $Value;
-    $this->Save($db, $User);
+    $db = $this->Open();
+    $db['System'][self::ParamCommands] ??= [];
+    return array_keys($db['System'][self::ParamCommands], $Module);
+  }
+
+  public function ModuleInstall(string $Module):void{
+    DebugTrace();
+    $db = $this->Open();
+    $db['System'][self::ParamModules][$Module] = time();
+    $this->Save($db);
+  }
+
+  /**
+   * List all installed modules or get the module installation timestamp
+   * @param string $Module
+   * @return array|int|null
+   */
+  public function Modules(string $Module = null):array|int|null{
+    DebugTrace();
+    $db = $this->Open();
+    $db['System'][self::ParamModules] ??= [];
+    if($Module === null):
+      return $db['System'][self::ParamModules];
+    else:
+      return $db['System'][self::ParamModules][$Module] ?? null;
+    endif;
+  }
+
+  public function ModuleUninstall(string $Module):void{
+    DebugTrace();
+    $db = $this->Open();
+    unset($db['System'][self::ParamModules][$Module]);
+    unset($db[$Module]);
+    $this->Save($db);
   }
 
   public function VariableGet(
@@ -212,41 +238,15 @@ class StbDatabaseSys{
     return $db['System'][self::ParamVariables][$Name] ?? null;
   }
 
-  public function AdminAdd(
-    int $User
-  ):bool{
+  public function VariableSet(
+    string $Name,
+    mixed $Value = null,
+    int $User = null
+  ):void{
     DebugTrace();
-    $db = $this->Open();
-    if(isset($db['System'][self::ParamAdmins][$User]) === false):
-      $db['System'][self::ParamAdmins][$User] = time();
-      $this->Save($db);
-      return true;
-    endif;
-    return false;
-  }
-
-  public function AdminDel(
-    int $User
-  ):bool{
-    DebugTrace();
-    $db = $this->Open();
-    unset($db['System'][self::ParamAdmins][$User]);
-    $this->Save($db);
-    return true;
-  }
-
-  public function Admin(
-    int $User
-  ):int|false{
-    DebugTrace();
-    $db = $this->Open();
-    return $db['System'][self::ParamAdmins][$User] ?? false;
-  }
-
-  public function Admins():array{
-    DebugTrace();
-    $db = $this->Open();
-    return $db['System'][self::ParamAdmins] ?? [];
+    $db = $this->Open($User);
+    $db['System'][self::ParamVariables][$Name] = $Value;
+    $this->Save($db, $User);
   }
 }
 
