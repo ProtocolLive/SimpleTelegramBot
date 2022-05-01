@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.01.00
+//2022.05.01.01
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -183,13 +183,13 @@ class StbDatabaseSys{
   public function ListenerGet(
     StbDbListeners $Listener,
     int $User = null
-  ):array|null{
+  ):array{
     DebugTrace();
     if($this->NoUserListener($Listener)):
       $User = null;
     endif;
     $db = $this->Open($User);
-    return $db['System'][self::ParamListeners][$Listener->value] ?? null;
+    return $db['System'][self::ParamListeners][$Listener->value] ?? [];
   }
 
   public function VariableSet(
