@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.30.02
+//2022.05.01.00
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -144,9 +144,9 @@ class StbDatabaseSys{
   }
 
   /**
-   * @param int $User User ID to associate the listener. Not allowed to checkout listener
+   * @param int $User User ID to associate the listener. Not allowed in checkout and InlineQuery listeners
    */
-  public function ListenerSet(
+  public function ListenerAdd(
     StbDbListeners $Listener,
     callable $Function,
     int $User = null
@@ -156,27 +156,34 @@ class StbDatabaseSys{
       $User = null;
     endif;
     $db = $this->Open($User);
-    $db['System'][self::ParamListeners][$Listener->value] = $Function;
+    $db['System'][self::ParamListeners][$Listener->value][] = $Function;
     $this->Save($db);
   }
 
   public function ListenerDel(
     StbDbListeners $Listener,
+    callable $Function,
     int $User = null
-  ):void{
+  ):bool{
     DebugTrace();
     if($this->NoUserListener($Listener)):
       $User = null;
     endif;
     $db = $this->Open($User);
-    unset($db['System'][self::ParamListeners][$Listener->value]);
-    $this->Save($db);
+    $index = array_search($Function, $db['System'][self::ParamListeners][$Listener->value]);
+    if($index === false):
+      return false;
+    endif;
+    unset($db['System'][self::ParamListeners][$Listener->value][$index]);
+    ArrayDefrag($db['System'][self::ParamListeners][$Listener->value]);
+    $this->Save($db, $User);
+    return true;
   }
 
   public function ListenerGet(
     StbDbListeners $Listener,
     int $User = null
-  ):string|null{
+  ):array|null{
     DebugTrace();
     if($this->NoUserListener($Listener)):
       $User = null;
