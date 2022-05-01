@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.01.02
+//2022.05.01.03
 
 enum StbDbListeners:string{
   case ChatMy = 'ChatMy';
@@ -18,8 +18,16 @@ class StbDatabaseSys{
   private const ParamModules = 'Modules';
   private const ParamVariables = 'Variables';
   private const ParamListeners = 'Listeners';
-  
+
   public const ParamUserDetails = 'UserDetails';
+
+  public const AdminDataCreation = 0;
+  public const AdminDataPerm = 1;
+  public const AdminAll = -1;
+  public const AdminAdmins = 1;
+  public const AdminModules = 2;
+  public const AdminUserCmds = 4;
+  public const AdminStats = 8;
 
   private function Open(int $User = null):array{
     DebugTrace();
@@ -60,21 +68,36 @@ class StbDatabaseSys{
     endif;
   }
 
+  private function AdminSuper(&$Var):void{
+    $Var = [Admin => [
+      self::AdminDataCreation => 0,
+      self::AdminDataPerm => self::AdminAll]
+    ] + ($Var ?? []);
+  }
+
   public function Admin(
     int $User
-  ):int|false{
+  ):array|false{
     DebugTrace();
     $db = $this->Open();
+    $this->AdminSuper($db['System'][self::ParamAdmins]);
     return $db['System'][self::ParamAdmins][$User] ?? false;
   }
 
   public function AdminAdd(
-    int $User
+    int $User,
+    int $Perms
   ):bool{
     DebugTrace();
+    if($User === Admin):
+      return false;
+    endif;
     $db = $this->Open();
     if(isset($db['System'][self::ParamAdmins][$User]) === false):
-      $db['System'][self::ParamAdmins][$User] = time();
+      $db['System'][self::ParamAdmins][$User] = [
+        self::AdminDataCreation => time(),
+        self::AdminDataPerm => $Perms
+      ];
       $this->Save($db);
       return true;
     endif;
@@ -85,8 +108,25 @@ class StbDatabaseSys{
     int $User
   ):bool{
     DebugTrace();
+    if($User === Admin):
+      return false;
+    endif;
     $db = $this->Open();
     unset($db['System'][self::ParamAdmins][$User]);
+    $this->Save($db);
+    return true;
+  }
+
+  public function AdminEdit(
+    int $User,
+    int $Perm
+  ):bool{
+    DebugTrace();
+    if($User === Admin):
+      return false;
+    endif;
+    $db = $this->Open();
+    return $db['System'][self::ParamAdmins][$User][self::AdminDataPerm] = $Perm;
     $this->Save($db);
     return true;
   }
@@ -94,7 +134,8 @@ class StbDatabaseSys{
   public function Admins():array{
     DebugTrace();
     $db = $this->Open();
-    return $db['System'][self::ParamAdmins] ?? [];
+    $this->AdminSuper($db['System'][self::ParamAdmins]);
+    return $db['System'][self::ParamAdmins];
   }
 
   public function CommandAdd(string $Command, string $Module):bool{
