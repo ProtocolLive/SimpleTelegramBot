@@ -1,16 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.27.00
+//2022.05.01.01
 
 function AccentInsensitive(string $Text):string{
-  return strtr($Text, [
-    'ã' => 'a',
-    'á' => 'a',
-    'à' => 'a',
-    'ä' => 'a',
-    'â' => 'a'
-  ]);
+  return iconv('utf-8', 'ascii//TRANSLIT', $Text);
 }
 
 function Equals(string $Text1, string $Text2):bool{
@@ -93,4 +87,8 @@ function HashDir(string $Algo, string $Dir):array{
     endif;
   endforeach;
   return $hash;
+}
+
+function ArrayDefrag(array &$Array):void{
+  $Array = array_values($Array);
 }
