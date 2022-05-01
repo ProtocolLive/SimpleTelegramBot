@@ -1,12 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.00
+//2022.05.01.00
 
 $_GET['a'] ??= '';
-if(basename($_SERVER['SCRIPT_NAME']) !== 'index.php'):
-  vd(basename($_SERVER['SCRIPT_NAME']));
-elseif(function_exists('Action_' . $_GET['a'])):
+if(function_exists('Action_' . $_GET['a'])):
   call_user_func('Action_' . $_GET['a']);
 endif;
 
