@@ -1,13 +1,17 @@
 9ccd6abd6b29bdb66e65686d4cf36f35b6f40993  src/RENAME_WITH_TOKEN/UserCmds/en/dontknow.txt
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/en/index.htm
 5054c3d7f1583aa0a043a72b08d9abf93591802f  src/RENAME_WITH_TOKEN/UserCmds/en/start.txt
 73aec899ddfa259065560495e12d3319ec82ae28  src/RENAME_WITH_TOKEN/UserCmds/en/unknown.txt
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/index.htm
 2b01910efea5e0eaf5b9cf8b3cb262e42eb2403f  src/RENAME_WITH_TOKEN/UserCmds/pt-br/dontknow.txt
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/pt-br/index.htm
 a6bd1dbe6c6fe7249552f794d0b78ba5618e0188  src/RENAME_WITH_TOKEN/UserCmds/pt-br/start.txt
 673be2874cd1daaf48768fe60ce464d7254e9caa  src/RENAME_WITH_TOKEN/UserCmds/pt-br/unknown.txt
 f5f51ff64edcf1f0a48abee53a7d8feb4b743730  src/RENAME_WITH_TOKEN/config.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/db/index.htm
 16ed70afc97c846a86bd6c2d544874e6cc9438c5  src/RENAME_WITH_TOKEN/index.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/logs/index.htm
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/modules/index.htm
 a9d4a8ae1dd29f0c4e4b0f9650cacde16e9a2a20  src/RENAME_WITH_TOKEN/stats.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/tools/index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/tools/info.php
