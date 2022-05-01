@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.01
+//2022.05.01.00
 
 require(__DIR__ . '/system/php.php');
 set_error_handler('error');
@@ -76,6 +76,9 @@ function Action_ok():void{
   echo '<h1>SimpleTelegramBot Install</h1>';
   $token = explode(':', $_POST['token']);
   $token = $token[1];
+  $zip = new ZipArchive;
+  $zip->open(__DIR__ . '/DirToken.zip');
+  $zip->extractTo(__DIR__);
 
   $config = file_get_contents(__DIR__ . '/RENAME_WITH_TOKEN/config.php');
   $config = str_replace('##DATE##', date('Y-m-d H:i:s'), $config);
@@ -92,13 +95,13 @@ function Action_ok():void{
 
   echo '✅ Install complete!';
   $url = dirname($_SERVER['SCRIPT_URI']);
-  $url .= '/' . $token . '/index.php?a=WebhookSet';
+  $url .= '/Bot-' . $_POST['name'] . '-' . $token . '/index.php?a=WebhookSet';
   echo '<p><a href="' . $url . '">Click here to set the webhook</a></p>';
 }
 
 function error():never{
   echo '<p>⚠️ Install error!</p>';
-  $args = func_get_args();
-  echo '<pre>' . $args[1] . '</pre>';
+  echo '<pre>';
+  var_dump(func_get_args());
   die();
 }
