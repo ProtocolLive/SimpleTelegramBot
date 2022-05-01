@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.01.00
+//2022.05.01.01
 
 require(__DIR__ . '/system/php.php');
 set_error_handler('error');
@@ -76,9 +76,11 @@ function Action_ok():void{
   echo '<h1>SimpleTelegramBot Install</h1>';
   $token = explode(':', $_POST['token']);
   $token = $token[1];
-  $zip = new ZipArchive;
-  $zip->open(__DIR__ . '/DirToken.zip');
-  $zip->extractTo(__DIR__);
+  if(is_dir(__DIR__ . '/RENAME_WITH_TOKEN') === false):
+    $zip = new ZipArchive;
+    $zip->open(__DIR__ . '/DirToken.zip');
+    $zip->extractTo(__DIR__);
+  endif;
 
   $config = file_get_contents(__DIR__ . '/RENAME_WITH_TOKEN/config.php');
   $config = str_replace('##DATE##', date('Y-m-d H:i:s'), $config);
