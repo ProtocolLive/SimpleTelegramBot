@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.01.00
+//2022.05.01.01
+
+//This file are included by DirToken/index.php
 
 $_GET['a'] ??= '';
 if(function_exists('Action_' . $_GET['a'])):
@@ -81,50 +83,58 @@ function Action_():void{
 
   if(get_class($Webhook) === 'TgText'):
     /** @var TgText $Webhook */
-    $listener = $Db->ListenerGet(StbDbListeners::Text);
-    if($listener !== null):
-      call_user_func($listener);
-      return;
+    $Run = false;
+    foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
+      $Run = true;
+      if(call_user_func($listener)):
+        return;
+      endif;
+    endforeach;
+    foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Message->User->Id) as $listener):
+      $Run = true;
+      if(call_user_func($listener) === false):
+        return;
+      endif;
+    endforeach;
+    if($Run === false):
+      SendUserCmd('dontknow');
     endif;
-    $listener = $Db->ListenerGet(StbDbListeners::Text, $Webhook->Message->User->Id);
-    if($listener !== null):
-      call_user_func($listener);
-      return;
-    endif;
-    SendUserCmd('dontknow');
     return;
   endif;
 
   if(get_class($Webhook) === 'TgInvoiceCheckout'):
-    $listener = $Db->ListenerGet(StbDbListeners::InvoiceCheckout);
-    if($listener !== null):
-      call_user_func($listener);
-    endif;
+    foreach($Db->ListenerGet(StbDbListeners::InvoiceCheckout) as $listener):
+      if(call_user_func($listener) === false):
+        return;
+      endif;
+    endforeach;
+    return;
   endif;
 
   if(get_class($Webhook) === 'TgInvoiceShipping'):
-    $listener = $Db->ListenerGet(StbDbListeners::InvoiceShipping);
-    if($listener !== null):
-      call_user_func($listener);
-    endif;
+    foreach($Db->ListenerGet(StbDbListeners::InvoiceShipping) as $listener):
+      if(call_user_func($listener) === false):
+        return;
+      endif;
+    endforeach;
     return;
   endif;
 
   if(get_class($Webhook) === 'TgInlineQuery'):
-    /** @var TgInlineQuery $Webhook */
-    $listener = $Db->ListenerGet(StbDbListeners::InlineQuery);
-    if($listener !== null):
-      call_user_func($listener);
-    endif;
+    foreach($Db->ListenerGet(StbDbListeners::InlineQuery) as $listener):
+      if(call_user_func($listener) === false):
+        return;
+      endif;
+    endforeach;
     return;
   endif;
 
   if(get_class($Webhook) === 'TgGroupStatusMy'):
-    /** @var TgInlineQuery $Webhook */
-    $listener = $Db->ListenerGet(StbDbListeners::ChatMy);
-    if($listener !== null):
-      call_user_func($listener);
-    endif;
+    foreach($Db->ListenerGet(StbDbListeners::ChatMy) as $listener):
+      if(call_user_func($listener) === false):
+        return;
+      endif;
+    endforeach;
     return;
   endif;
 }
