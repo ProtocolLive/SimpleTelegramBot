@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.03
+//2022.05.01.00
 
 function Command_id():void{
   /**
@@ -30,47 +30,67 @@ function Callback_AdminMenu():void{
    * @var TelegramBotLibrary $Bot
    * @var TblCmd|TgCallback $Webhook
    * @var StbLanguageSys $Lang
+   * @var StbDatabaseSys $Db
    */
-  global $Bot, $Webhook, $Lang;
+  global $Bot, $Webhook, $Lang, $Db;
   DebugTrace();
-  if(($Webhook->User->Id ?? $Webhook->Message->User->Id) !== Admin):
+  $id = $Webhook->User->Id ?? $Webhook->Message->User->Id;
+  $admins = $Db->Admins();
+  if(isset($admins[$id]) === false):
     $Bot->TextSend(
-      $Webhook->User->Id ?? $Webhook->Message->User->Id,
+      $id,
       $Lang->Get('Denied')
     );
     return;
   endif;
+
   $mk = new TblMarkupInline();
-  $mk->ButtonCallback(
-    0,
-    0,
-    $Lang->Get('AdminsButton', Group: 'Admin'),
-    'Admins'
-  );
-  $mk->ButtonCallback(
-    0,
-    1,
-    $Lang->Get('ModulesButton', Group: 'Admin'),
-    'Modules'
-  );
-  $mk->ButtonCallback(
-    0,
-    2,
-    $Lang->Get('UpdatesButton', Group: 'Admin'),
-    'Updates'
-  );
-  $mk->ButtonWebapp(
-    1,
-    0,
-    $Lang->Get('PhpInfoButton', Group: 'Admin'),
-    dirname($_SERVER['SCRIPT_URI']) . '/tools/info.php'
-  );
-  $mk->ButtonWebapp(
-    1,
-    1,
-    $Lang->Get('StatsButton', Group: 'Admin'),
-    dirname($_SERVER['SCRIPT_URI']) . '/stats.php'
-  );
+  $line = 0;
+  $col = 0;
+  if($admins[$id][StbDatabaseSys::AdminDataPerm] & StbDatabaseSys::AdminAdmins):
+    $mk->ButtonCallback(
+      $line,
+      $col++,
+      $Lang->Get('AdminsButton', Group: 'Admin'),
+      'Admins'
+    );
+  endif;
+  JumpLineCheck($line, $col);
+  if($admins[$id][StbDatabaseSys::AdminDataPerm] & StbDatabaseSys::AdminModules):
+    $mk->ButtonCallback(
+      $line,
+      $col++,
+      $Lang->Get('ModulesButton', Group: 'Admin'),
+      'Modules'
+    );
+  endif;
+  JumpLineCheck($line, $col);
+  if($id === Admin):
+    $mk->ButtonCallback(
+      $line,
+      $col,
+      $Lang->Get('UpdatesButton', Group: 'Admin'),
+      'Updates'
+    );
+  endif;
+  JumpLineCheck($line, $col);
+  if($id === Admin):
+    $mk->ButtonWebapp(
+      1,
+      0,
+      $Lang->Get('PhpInfoButton', Group: 'Admin'),
+      dirname($_SERVER['SCRIPT_URI']) . '/tools/info.php'
+    );
+  endif;
+  JumpLineCheck($line, $col);
+  if($admins[$id][StbDatabaseSys::AdminDataPerm] & StbDatabaseSys::AdminStats):
+    $mk->ButtonWebapp(
+      1,
+      1,
+      $Lang->Get('StatsButton', Group: 'Admin'),
+      dirname($_SERVER['SCRIPT_URI']) . '/stats.php'
+    );
+  endif;
   if(get_class($Webhook) === 'TblCmd'):
     $Bot->TextSend(
       Admin,
@@ -96,7 +116,8 @@ function Callback_Admins():void{
    */
   global $Bot, $Webhook, $Db, $Lang;
   DebugTrace();
-  if($Webhook->User->Id !== Admin):
+  $admins = $Db->Admins();
+  if(($admins[$Webhook->User->Id][StbDatabaseSys::AdminDataPerm] & StbDatabaseSys::AdminAdmins) === false):
     $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('Denied')
@@ -138,10 +159,9 @@ function Callback_Updates():void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var TgCallback $Webhook
-   * @var StbDatabaseSys $Db
    * @var StbLanguageSys $Lang
    */
-  global $Bot, $Webhook, $Db, $Lang;
+  global $Bot, $Webhook, $Lang;
   DebugTrace();
   if($Webhook->User->Id !== Admin):
     $Bot->TextSend(
@@ -165,4 +185,11 @@ function Callback_Updates():void{
     ),
     Markup: $mk
   );
+}
+
+function JumpLineCheck(int &$Line, int &$Col):void{
+  if($Col === 4):
+    $Col = 0;
+    $Line++;
+  endif;
 }
