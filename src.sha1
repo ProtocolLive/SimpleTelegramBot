@@ -18,12 +18,12 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/tools/index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/tools/info.php
 cf565c3fa1e9d8babee3ff57a4ab521d376ede85  src/RENAME_WITH_TOKEN/tools/scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
-c57c21c87a3f35e107fb4760b027850581a62fa1  src/cmds/admin.php
+50f42a6a2dbf2a2aad5d1b30fe0a4624f6f7a45e  src/cmds/admin.php
 e8f686ac349a232e9ca3f793edd55f0aa80e1d53  src/cmds/modules.php
 70ae0c8a073fa891996456690a197ae4942dacaf  src/cron.php
 565dfc630a49e1f2159d0062f90c3e7028009926  src/entry.php
 4d6176d0ba31ff0feb54f8ce1fa528cd662b0389  src/functions/bot.php
-2d21f139784d5740a1fceea2eba7ff828ad9ae3e  src/functions/database.php
+6357913116d971594a8608fdfdd2a66901d2550a  src/functions/database.php
 b4e107152a5c8a28d386f5947b4f1bc916982525  src/functions/language.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
 ecf72dcb0f1d1b4da2199825a4238169687e212a  src/index.php

@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.01.01
+//2022.05.01.02
 
 function Command_id():void{
   /**
@@ -130,15 +130,18 @@ function Callback_Admins():void{
   $mk->ButtonCallback($line, $col++, '🔙', 'AdminMenu');
   $mk->ButtonCallback($line, $col++, '➕', 'AdminNew');
 
-  $Admins = [Admin => 0] + $Db->Admins();
-  foreach($Admins as $admin => $time):
+  $Admins = $Db->Admins();
+  $buttons = [];
+  foreach($Admins as $admin => $data):
     $detail = $Db->VariableGet(StbDatabaseSys::ParamUserDetails, $admin);
     if($detail === null):
       $detail = $admin;
     else:
       $detail = $detail['Name'];
     endif;
+    $buttons[$admin] = [$line, $col];
     $mk->ButtonCallback($line, $col++, $detail, 'Admin ' . $admin);
+    JumpLineCheck($line, $col);
   endforeach;
   $Bot->TextEdit(
     $Webhook->User->Id,
@@ -147,12 +150,25 @@ function Callback_Admins():void{
     Markup: $mk
   );
 
-  foreach($Admins as $admin => $time):
+  $changed = false;
+  foreach($buttons as $admin => $coord):
     $detail = $Bot->ChatGet($admin);
     if($detail !== null):
       $Db->VariableSet(StbDatabaseSys::ParamUserDetails, $detail, $admin);
+      $data = $mk->ButtonGet($coord[0], $coord[1]);
+      if($data['text'] !== $detail->Name):
+        $changed = true;
+        $mk->ButtonCallback($coord[0], $coord[1], $detail->Name, 'Admin ' . $admin);
+      endif;
     endif;
   endforeach;
+  if($changed):
+    $Bot->MarkupEdit(
+      $Webhook->User->Id,
+      $Webhook->Message->Id,
+      Markup: $mk
+    );
+  endif;
 }
 
 function Callback_Updates():void{
