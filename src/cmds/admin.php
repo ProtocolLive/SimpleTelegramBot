@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.01.02
+//2022.05.01.03
 
 function Command_id():void{
   /**
@@ -204,7 +204,7 @@ function Callback_Updates():void{
 }
 
 function JumpLineCheck(int &$Line, int &$Col):void{
-  if($Col === 4):
+  if($Col === 3):
     $Col = 0;
     $Line++;
   endif;
