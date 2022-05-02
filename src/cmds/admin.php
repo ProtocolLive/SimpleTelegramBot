@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.01.00
+//2022.05.01.01
 
 function Command_id():void{
   /**
@@ -93,13 +93,13 @@ function Callback_AdminMenu():void{
   endif;
   if(get_class($Webhook) === 'TblCmd'):
     $Bot->TextSend(
-      Admin,
+      $Webhook->Message->User->Id,
       $Lang->Get('AdminMenu', Group: 'Admin'),
       Markup: $mk
     );
   else:
     $Bot->TextEdit(
-      Admin,
+      $Webhook->User->Id,
       $Webhook->Message->Id,
       $Lang->Get('AdminMenu', Group: 'Admin'),
       Markup: $mk
@@ -141,7 +141,7 @@ function Callback_Admins():void{
     $mk->ButtonCallback($line, $col++, $detail, 'Admin ' . $admin);
   endforeach;
   $Bot->TextEdit(
-    Admin,
+    $Webhook->User->Id,
     $Webhook->Message->Id,
     $Lang->Get('Admins', Group: 'Admin'),
     Markup: $mk
