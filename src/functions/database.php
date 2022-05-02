@@ -1,15 +1,32 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.01.03
+//2022.05.02.00
 
-enum StbDbListeners:string{
-  case ChatMy = 'ChatMy';
-  case Text = 'Text';
-  case InlineQuery = 'InlineQuery';
-  case Invoice = 'Invoice';
-  case InvoiceCheckout = 'InvoiceCheckout';
-  case InvoiceShipping = 'InvoiceShipping';
+enum StbDbListeners{
+  case ChatMy;
+  case Text;
+  case InlineQuery;
+  case Invoice;
+  case InvoiceCheckout;
+  case InvoiceShipping;
+}
+
+abstract class StbDbAdminData{
+  public const Creation = 0;
+  public const Perm = 1;
+}
+
+abstract class StbDbAdminPerm{
+  public const All = -1;
+  public const Admins = 1;
+  public const Modules = 2;
+  public const UserCmds = 4;
+  public const Stats = 8;
+}
+
+abstract class StbDbParam{
+  public const UserDetails = 'UserDetails';
 }
 
 class StbDatabaseSys{
@@ -18,16 +35,6 @@ class StbDatabaseSys{
   private const ParamModules = 'Modules';
   private const ParamVariables = 'Variables';
   private const ParamListeners = 'Listeners';
-
-  public const ParamUserDetails = 'UserDetails';
-
-  public const AdminDataCreation = 0;
-  public const AdminDataPerm = 1;
-  public const AdminAll = -1;
-  public const AdminAdmins = 1;
-  public const AdminModules = 2;
-  public const AdminUserCmds = 4;
-  public const AdminStats = 8;
 
   private function Open(int $User = null):array{
     DebugTrace();
@@ -70,8 +77,8 @@ class StbDatabaseSys{
 
   private function AdminSuper(&$Var):void{
     $Var = [Admin => [
-      self::AdminDataCreation => 0,
-      self::AdminDataPerm => self::AdminAll]
+      StbDbAdminData::Creation => 0,
+      StbDbAdminData::Perm => StbDbAdminPerm::All]
     ] + ($Var ?? []);
   }
 
@@ -95,8 +102,8 @@ class StbDatabaseSys{
     $db = $this->Open();
     if(isset($db['System'][self::ParamAdmins][$User]) === false):
       $db['System'][self::ParamAdmins][$User] = [
-        self::AdminDataCreation => time(),
-        self::AdminDataPerm => $Perms
+        StbDbAdminData::Creation => time(),
+        StbDbAdminData::Perm => $Perms
       ];
       $this->Save($db);
       return true;
@@ -126,7 +133,7 @@ class StbDatabaseSys{
       return false;
     endif;
     $db = $this->Open();
-    return $db['System'][self::ParamAdmins][$User][self::AdminDataPerm] = $Perm;
+    return $db['System'][self::ParamAdmins][$User][StbDbAdminData::Perm] = $Perm;
     $this->Save($db);
     return true;
   }
@@ -183,7 +190,7 @@ class StbDatabaseSys{
    */
   public function ListenerAdd(
     StbDbListeners $Listener,
-    callable $Function,
+    string $Function,
     int $User = null
   ):void{
     DebugTrace();
@@ -191,13 +198,13 @@ class StbDatabaseSys{
       $User = null;
     endif;
     $db = $this->Open($User);
-    $db['System'][self::ParamListeners][$Listener->value][] = $Function;
+    $db['System'][self::ParamListeners][$Listener->name][] = $Function;
     $this->Save($db);
   }
 
   public function ListenerDel(
     StbDbListeners $Listener,
-    callable $Function,
+    string $Function,
     int $User = null
   ):bool{
     DebugTrace();
@@ -205,12 +212,12 @@ class StbDatabaseSys{
       $User = null;
     endif;
     $db = $this->Open($User);
-    $index = array_search($Function, $db['System'][self::ParamListeners][$Listener->value]);
+    $index = array_search($Function, $db['System'][self::ParamListeners][$Listener->name]);
     if($index === false):
       return false;
     endif;
-    unset($db['System'][self::ParamListeners][$Listener->value][$index]);
-    ArrayDefrag($db['System'][self::ParamListeners][$Listener->value]);
+    unset($db['System'][self::ParamListeners][$Listener->name][$index]);
+    ArrayDefrag($db['System'][self::ParamListeners][$Listener->name]);
     $this->Save($db, $User);
     return true;
   }
@@ -224,7 +231,7 @@ class StbDatabaseSys{
       $User = null;
     endif;
     $db = $this->Open($User);
-    return $db['System'][self::ParamListeners][$Listener->value] ?? [];
+    return $db['System'][self::ParamListeners][$Listener->name] ?? [];
   }
 
   /**

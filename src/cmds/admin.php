@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.01.03
+//2022.05.02.00
 
 function Command_id():void{
   /**
@@ -47,7 +47,7 @@ function Callback_AdminMenu():void{
   $mk = new TblMarkupInline();
   $line = 0;
   $col = 0;
-  if($admins[$id][StbDatabaseSys::AdminDataPerm] & StbDatabaseSys::AdminAdmins):
+  if($admins[$id][StbDbAdminData::Perm] & StbDbAdminPerm::Admins):
     $mk->ButtonCallback(
       $line,
       $col++,
@@ -56,7 +56,7 @@ function Callback_AdminMenu():void{
     );
   endif;
   JumpLineCheck($line, $col);
-  if($admins[$id][StbDatabaseSys::AdminDataPerm] & StbDatabaseSys::AdminModules):
+  if($admins[$id][StbDbAdminData::Perm] & StbDbAdminPerm::Modules):
     $mk->ButtonCallback(
       $line,
       $col++,
@@ -83,7 +83,7 @@ function Callback_AdminMenu():void{
     );
   endif;
   JumpLineCheck($line, $col);
-  if($admins[$id][StbDatabaseSys::AdminDataPerm] & StbDatabaseSys::AdminStats):
+  if($admins[$id][StbDbAdminData::Perm] & StbDbAdminPerm::Stats):
     $mk->ButtonWebapp(
       1,
       1,
@@ -117,7 +117,7 @@ function Callback_Admins():void{
   global $Bot, $Webhook, $Db, $Lang;
   DebugTrace();
   $admins = $Db->Admins();
-  if(($admins[$Webhook->User->Id][StbDatabaseSys::AdminDataPerm] & StbDatabaseSys::AdminAdmins) === false):
+  if(($admins[$Webhook->User->Id][StbDbAdminData::Perm] & StbDbAdminPerm::Admins) === false):
     $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('Denied')
@@ -133,7 +133,7 @@ function Callback_Admins():void{
   $Admins = $Db->Admins();
   $buttons = [];
   foreach($Admins as $admin => $data):
-    $detail = $Db->VariableGet(StbDatabaseSys::ParamUserDetails, $admin);
+    $detail = $Db->VariableGet(StbDbParam::UserDetails, $admin);
     if($detail === null):
       $detail = $admin;
     else:
@@ -154,7 +154,7 @@ function Callback_Admins():void{
   foreach($buttons as $admin => $coord):
     $detail = $Bot->ChatGet($admin);
     if($detail !== null):
-      $Db->VariableSet(StbDatabaseSys::ParamUserDetails, $detail, $admin);
+      $Db->VariableSet(StbDbParam::UserDetails, $detail, $admin);
       $data = $mk->ButtonGet($coord[0], $coord[1]);
       if($data['text'] !== $detail->Name):
         $changed = true;
