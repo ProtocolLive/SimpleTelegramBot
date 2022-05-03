@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.01
+//2022.05.03.00
 
 function Callback_Modules():void{
   /**
@@ -67,7 +67,8 @@ function Callback_ModuleAdd():void{
    */
   global $Bot, $Db, $Lang, $Webhook;
   DebugTrace();
-  if($Webhook->User->Id !== Admin):
+  $admin = $Db->Admin($Webhook->User->Id);
+  if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
     $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('Denied')
@@ -83,7 +84,7 @@ function Callback_ModuleAdd():void{
   foreach(glob(DirModules . '/*', GLOB_ONLYDIR) as $file):
     $ModulesFiles[] = basename($file);
   endforeach;
-  foreach($Db->Modules() as $mod):
+  foreach($Db->Modules() as $mod => $time):
     $temp = array_search($mod, $ModulesFiles);
     if($temp !== null):
       unset($ModulesFiles[$temp]);
@@ -126,6 +127,14 @@ function Callback_InsModPic():void{
    */
   global $Bot, $Webhook, $Lang, $Db;
   DebugTrace();
+  $admin = $Db->Admin($Webhook->User->Id);
+  if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
+    $Bot->TextSend(
+      $Webhook->User->Id,
+      $Lang->Get('Denied')
+    );
+    return;
+  endif;
   $module = $Webhook->Parameter;
 
   $mk = new TblMarkupInline;
@@ -175,7 +184,8 @@ function Callback_Mod():void{
    */
   global $Bot, $Db, $Lang, $Webhook;
   DebugTrace();
-  if($Webhook->User->Id !== Admin):
+  $admin = $Db->Admin($Webhook->User->Id);
+  if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
     $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('Denied')
@@ -216,16 +226,19 @@ function Callback_UniModPic1():void{
    * @var TelegramBotLibrary $Bot
    * @var StbLanguageSys $Lang
    * @var TgCallback $Webhook
+   * @var StbDatabaseSys $Db
    */
-  global $Bot, $Lang, $Webhook;
+  global $Bot, $Lang, $Webhook, $Db;
   DebugTrace();
-  if($Webhook->User->Id !== Admin):
+  $admin = $Db->Admin($Webhook->User->Id);
+  if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
     $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('Denied')
     );
     return;
   endif;
+
   $mk = new TblMarkupInline;
   $mk->ButtonCallback(
     0,
@@ -251,8 +264,18 @@ function Callback_UniModPic2():void{
    * @var TelegramBotLibrary $Bot
    * @var TgCallback $Webhook
    * @var StbDatabaseSys $Db
+   * @var StbLanguageSys $Lang
    */
-  global $Bot, $Webhook, $Db;
+  global $Bot, $Webhook, $Db, $Lang;
   DebugTrace();
+  $admin = $Db->Admin($Webhook->User->Id);
+  if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
+    $Bot->TextSend(
+      $Webhook->User->Id,
+      $Lang->Get('Denied')
+    );
+    return;
+  endif;
+
   call_user_func($Webhook->Parameter . '::Uninstall', $Bot, $Webhook, $Db);
 }

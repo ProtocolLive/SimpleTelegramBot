@@ -1,4 +1,4 @@
-5f10bae296bc80bca3f22185036108408d2540e8  src/DirToken.zip
+f75ec0847f50e7c2d82a977d273106608c977e39  src/DirToken.zip
 9ccd6abd6b29bdb66e65686d4cf36f35b6f40993  src/RENAME_WITH_TOKEN/UserCmds/en/dontknow.txt
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/en/index.htm
 5054c3d7f1583aa0a043a72b08d9abf93591802f  src/RENAME_WITH_TOKEN/UserCmds/en/start.txt
@@ -16,10 +16,10 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/modules/index.ht
 a9d4a8ae1dd29f0c4e4b0f9650cacde16e9a2a20  src/RENAME_WITH_TOKEN/stats.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/tools/index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/tools/info.php
-cf565c3fa1e9d8babee3ff57a4ab521d376ede85  src/RENAME_WITH_TOKEN/tools/scope.php
+d3011a22594e56d93c778c495951681716214ce0  src/RENAME_WITH_TOKEN/tools/scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
 f1c0f8d21ad8f56574d76eb10fa3e5f6e507273f  src/cmds/admin.php
-e8f686ac349a232e9ca3f793edd55f0aa80e1d53  src/cmds/modules.php
+e2945c9a81bae221c168288814a20a136936f919  src/cmds/modules.php
 70ae0c8a073fa891996456690a197ae4942dacaf  src/cron.php
 2a04805ae6d9ed65dd3feb2e17bd936f6f11a27a  src/entry.php
 4d6176d0ba31ff0feb54f8ce1fa528cd662b0389  src/functions/bot.php
