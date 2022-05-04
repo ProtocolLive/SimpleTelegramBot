@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.03.00
+//2022.05.03.01
 
 //This file are included by DirToken/index.php
 
@@ -22,7 +22,7 @@ function Action_():void{
   if($Webhook === null):
     return;
   endif;
-  if((Debug & StbDebug::Bot) === StbDebug::Bot):
+  if(Debug & StbDebug::Bot):
     ob_start();
     var_dump($Webhook);
     LogBot(ob_get_contents());
