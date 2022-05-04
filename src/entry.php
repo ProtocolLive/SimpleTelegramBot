@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.02.00
+//2022.05.03.00
 
 //This file are included by DirToken/index.php
 
@@ -86,7 +86,7 @@ function Action_():void{
     $Run = false;
     foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
       $Run = true;
-      if(call_user_func($listener)):
+      if(call_user_func($listener) === false):
         return;
       endif;
     endforeach;
