@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.03.00
+//2022.05.06.00
 
 //This file are included by DirToken/index.php
 
@@ -107,7 +107,8 @@ function Update_Cmd():void{
    * @var TblCmd $Webhook
    */
   global $Bot, $Db, $Webhook, $UserLang;
-  $UserLang = $Webhook->Message->User->Language;
+  //When the sender is a chat/channel, they don't have the language
+  $UserLang = $Webhook->Message->User->Language ?? DefaultLanguage;
 
   //In a group, with many bots, the commands have the target bot.
   //This block check the target and caches the bot name
