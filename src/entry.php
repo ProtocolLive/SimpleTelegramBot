@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.03.01
+//2022.05.03.00
 
 //This file are included by DirToken/index.php
 
@@ -13,10 +13,8 @@ endif;
 function Action_():void{
   /**
    * @var TelegramBotLibrary $Bot
-   * @var StbDatabaseSys $Db
-   * @var string $UserLang
    */
-  global $Bot, $Webhook, $Db, $UserLang;
+  global $Bot, $Webhook;
   DebugTrace();
   $Webhook = $Bot->WebhookGet();
   if($Webhook === null):
@@ -30,112 +28,19 @@ function Action_():void{
   endif;
 
   if(get_class($Webhook) === 'TblCmd'):
-    /** @var TblCmd $Webhook */
-    $UserLang = $Webhook->Message->User->Language;
-
-    //In a group, with many bots, the commands have the target bot.
-    //This block check the target and caches the bot name
-    if($Webhook->Message->Chat->Type !== TgChatType::Private):
-      $name = $Db->VariableGet(StbDbParam::UserDetails);
-      if($name === null):
-        $name = $Bot->MyGet();
-        if($name !== null):
-          $Db->VariableSet(StbDbParam::UserDetails, $name);
-          $name = $name->Nick;
-        endif;
-      else:
-        $name = $name['Nick'];
-      endif;
-      if($Webhook->Target !== $name):
-        return;
-      endif;
-    endif;
-
-    //Internal command
-    $command = 'Command_' . strtolower($Webhook->Command);
-    if(function_exists($command)):
-      call_user_func($command);
-      return;
-    endif;
-
-    //Module command
-    $commands = $Db->Commands();
-    $module = $commands[$Webhook->Command] ?? null;
-    if($module !== null):
-      $command = $module . '::Command_' . $Webhook->Command;
-      call_user_func($command);
-      return;
-    endif;
-
-    if(SendUserCmd($Webhook->Command) === false):
-      SendUserCmd('unknown');
-    endif;
-    return;
-  endif;
-  
-  if(get_class($Webhook) === 'TgCallback'):
-    /** @var TgCallback $Webhook */
-    if(function_exists('Callback_' . $Webhook->Data)):
-      call_user_func('Callback_' . $Webhook->Data);
-    endif;
-    return;
-  endif;
-
-  if(get_class($Webhook) === 'TgText'):
-    /** @var TgText $Webhook */
-    $Run = false;
-    foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
-      $Run = true;
-      if(call_user_func($listener) === false):
-        return;
-      endif;
-    endforeach;
-    foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Message->User->Id) as $listener):
-      $Run = true;
-      if(call_user_func($listener) === false):
-        return;
-      endif;
-    endforeach;
-    if($Run === false):
-      SendUserCmd('dontknow');
-    endif;
-    return;
-  endif;
-
-  if(get_class($Webhook) === 'TgInvoiceCheckout'):
-    foreach($Db->ListenerGet(StbDbListeners::InvoiceCheckout) as $listener):
-      if(call_user_func($listener) === false):
-        return;
-      endif;
-    endforeach;
-    return;
-  endif;
-
-  if(get_class($Webhook) === 'TgInvoiceShipping'):
-    foreach($Db->ListenerGet(StbDbListeners::InvoiceShipping) as $listener):
-      if(call_user_func($listener) === false):
-        return;
-      endif;
-    endforeach;
-    return;
-  endif;
-
-  if(get_class($Webhook) === 'TgInlineQuery'):
-    foreach($Db->ListenerGet(StbDbListeners::InlineQuery) as $listener):
-      if(call_user_func($listener) === false):
-        return;
-      endif;
-    endforeach;
-    return;
-  endif;
-
-  if(get_class($Webhook) === 'TgGroupStatusMy'):
-    foreach($Db->ListenerGet(StbDbListeners::ChatMy) as $listener):
-      if(call_user_func($listener) === false):
-        return;
-      endif;
-    endforeach;
-    return;
+    Update_Cmd();
+  elseif(get_class($Webhook) === 'TgCallback'):
+    Update_Callback();
+  elseif(get_class($Webhook) === 'TgText'):
+    Update_Text();
+  elseif(get_class($Webhook) === 'TgInvoiceCheckout'):
+    Update_InvoiceCheckout();
+  elseif(get_class($Webhook) === 'TgInvoiceShipping'):
+    Update_InvoiceShipping();
+  elseif(get_class($Webhook) === 'TgInlineQuery'):
+    Update_InlineQuery();
+  elseif(get_class($Webhook) === 'TgGroupStatusMy'):
+    Update_GroupStatusMy();
   endif;
 }
 
@@ -193,4 +98,133 @@ function Action_WebhookDel():void{
   $Webhook = new TblWebhook($BotData);
   $Webhook->Del();
   echo $Webhook->ErrorStr;
+}
+
+function Update_Cmd():void{
+  /**
+   * @var TelegramBotLibrary $Bot
+   * @var StbDatabaseSys $Db
+   * @var TblCmd $Webhook
+   */
+  global $Bot, $Db, $Webhook, $UserLang;
+  $UserLang = $Webhook->Message->User->Language;
+
+  //In a group, with many bots, the commands have the target bot.
+  //This block check the target and caches the bot name
+  if($Webhook->Message->Chat->Type !== TgChatType::Private):
+    $name = $Db->VariableGet(StbDbParam::UserDetails);
+    if($name === null):
+      $name = $Bot->MyGet();
+      if($name !== null):
+        $Db->VariableSet(StbDbParam::UserDetails, $name);
+        $name = $name->Nick;
+      endif;
+    else:
+      $name = $name['Nick'];
+    endif;
+    if($Webhook->Target !== $name):
+      return;
+    endif;
+  endif;
+
+  //Internal command
+  $command = 'Command_' . strtolower($Webhook->Command);
+  if(function_exists($command)):
+    call_user_func($command);
+    return;
+  endif;
+
+  //Module command
+  $commands = $Db->Commands();
+  $module = $commands[$Webhook->Command] ?? null;
+  if($module !== null):
+    $command = $module . '::Command_' . $Webhook->Command;
+    call_user_func($command);
+    return;
+  endif;
+
+  if(SendUserCmd($Webhook->Command) === false):
+    SendUserCmd('unknown');
+  endif;
+}
+
+function Update_Callback():void{
+  /** @var TgCallback $Webhook */
+  global $Webhook;
+  if(function_exists('Callback_' . $Webhook->Data)):
+    call_user_func('Callback_' . $Webhook->Data);
+  endif;
+}
+
+function Update_Text():void{
+  /**
+   * @var TgText $Webhook
+   * @var StbDatabaseSys $Db
+   */
+  global $Db, $Webhook;
+  $Run = false;
+  foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
+    $Run = true;
+    if(call_user_func($listener) === false):
+      return;
+    endif;
+  endforeach;
+  foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Message->User->Id) as $listener):
+    $Run = true;
+    if(call_user_func($listener) === false):
+      return;
+    endif;
+  endforeach;
+  if($Run === false):
+    SendUserCmd('dontknow');
+  endif;
+  return;
+}
+
+function Update_InvoiceCheckout():void{
+  /**
+   * @var StbDatabaseSys $Db
+   */
+  global $Db;
+  foreach($Db->ListenerGet(StbDbListeners::InvoiceCheckout) as $listener):
+    if(call_user_func($listener) === false):
+      return;
+    endif;
+  endforeach;
+}
+
+function Update_InvoiceShipping():void{
+  /**
+   * @var StbDatabaseSys $Db
+   */
+  global $Db;
+  foreach($Db->ListenerGet(StbDbListeners::InvoiceShipping) as $listener):
+    if(call_user_func($listener) === false):
+      return;
+    endif;
+  endforeach;
+}
+
+function Update_InlineQuery():void{
+  /**
+   * @var StbDatabaseSys $Db
+   */
+  global $Db;
+  foreach($Db->ListenerGet(StbDbListeners::InlineQuery) as $listener):
+    if(call_user_func($listener) === false):
+      return;
+    endif;
+  endforeach;
+}
+
+function Update_GroupStatusMy():void{
+  /**
+   * @var StbDatabaseSys $Db
+   */
+  global $Db;
+  foreach($Db->ListenerGet(StbDbListeners::ChatMy) as $listener):
+    if(call_user_func($listener) === false):
+      return;
+    endif;
+  endforeach;
 }
