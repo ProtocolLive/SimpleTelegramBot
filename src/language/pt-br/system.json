@@ -16,18 +16,24 @@
     "UninstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de desinstalação"
   },
   "Admin":{
+    "AdminNewId": "Digite o ID do novo administrador:",
     "AdminMenu": "⚙️ Menu de administração",
     "Admins": "🎖️ Administradores:",
     "AdminsButton": "🎖️ Administradores",
     "ModulesButton": "🧩 Módulos",
-    "MyId": "Seu ID é %s",
     "PhpInfoButton": "🔍 Detalhes do servidor",
     "StatsButton": "📊 Estatísticas",
     "Updates": "Arquivos desatualizados:\n\n%s",
-    "UpdatesButton": "📡 Atualizações"
+    "UpdatesButton": "📡 Atualizações",
+    "UserFound": "Usuário encontrado: %s"
+  },
+  "Errors":{
+    "ChatNull": "Não foi possível obter as informações do chat",
+    "Denied": "⛔ Acesso negado",
+    "UserNull": "Não foi possível obter as informações do usuário"
   },
   "Add": "➕",
   "Back": "🔙",
-  "Denied": "⛔ Acesso negado",
+  "MyId": "Seu ID é %s",
   "Yes": "✅"
 }

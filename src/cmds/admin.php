@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.02.00
+//2022.05.03.00
 
 function Command_id():void{
   /**
@@ -14,7 +14,7 @@ function Command_id():void{
   $Bot->TextSend(
     $Webhook->Message->User->Id,
     sprintf(
-      $Lang->Get('MyId', Group: 'Admin'),
+      $Lang->Get('MyId'),
       $Webhook->Message->User->Id,
     )
   );
