@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.03.00
+//2022.05.13.00
 
 function Command_id():void{
   /**
@@ -191,7 +191,7 @@ function Callback_Updates():void{
   $col = 0;
   $mk->ButtonCallback($line, $col++, '🔙', 'AdminMenu');
   $files = UpdateCheck();
-  $files = implode("\n", $files);
+  $files = implode(PHP_EOL, $files);
   $Bot->TextEdit(
     Admin,
     $Webhook->Message->Id,

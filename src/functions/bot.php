@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.06.00
+//2022.05.13.00
 
 function LogEvent(string $Event, string $Additional = null):void{
   /** @var TblCmd $Webhook */
@@ -21,15 +21,15 @@ function LogEvent(string $Event, string $Additional = null):void{
   if($Additional !== null):
     $temp .= "\t" . $Additional;
   endif;
-  $temp .= "\n";
+  $temp .= PHP_EOL;
   file_put_contents(DirLogs . '/usage.log', $temp, FILE_APPEND);
 }
 
 function LogBot(string $Msg, bool $NewLine = true):void{
   DebugTrace();
-  $Msg = date('Y-m-d H:i:s') . "\n" . $Msg . "\n";
+  $Msg = date('Y-m-d H:i:s') . PHP_EOL . $Msg . PHP_EOL;
   if($NewLine):
-    $Msg .= "\n";
+    $Msg .= PHP_EOL;
   endif;
   file_put_contents(DirLogs . '/bot.log', $Msg, FILE_APPEND);
 }
@@ -81,7 +81,7 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
 function UpdateCheck():array{
   $NowHashes = HashDir('sha1', DirSystem);
   $ServerHashes = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/SimpleTelegramBot/main/src.sha1');
-  $ServerHashes = explode("\n", $ServerHashes);
+  $ServerHashes = explode(PHP_EOL, $ServerHashes);
   array_pop($ServerHashes);
   foreach($ServerHashes as $sh):
     $sh = explode('  ', $sh);
@@ -95,7 +95,7 @@ function UpdateCheck():array{
     endif;
   endforeach;
   $ServerHashes = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/TelegramBotLibrary/main/src.sha1');
-  $ServerHashes = explode("\n", $ServerHashes);
+  $ServerHashes = explode(PHP_EOL, $ServerHashes);
   array_pop($ServerHashes);
   foreach($ServerHashes as $sh):
     $sh = explode('  ', $sh);
