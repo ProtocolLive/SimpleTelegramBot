@@ -1,15 +1,18 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.03.00
+//2022.05.14.00
 
 enum StbDbListeners{
   case ChatMy;
+  case Document;
   case Text;
   case InlineQuery;
   case Invoice;
   case InvoiceCheckout;
   case InvoiceShipping;
+  case Photo;
+  case Voice;
 }
 
 abstract class StbDbAdminData{
