@@ -21,9 +21,9 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
 eff476e6a8ed60474c45b0b2b79f64a204206af3  src/cmds/admin.php
 e2945c9a81bae221c168288814a20a136936f919  src/cmds/modules.php
 70ae0c8a073fa891996456690a197ae4942dacaf  src/cron.php
-9d7bfc42a998e416185410a6f797c30f9f0fb878  src/entry.php
+98dae911de115ee449da0d45c3df9c1c8c10c605  src/entry.php
 afe784c60f1319680b4ea871d2de92aad15b2b65  src/functions/bot.php
-a54ff56de6aaee5d4b2ebf93c99f579b8fd80040  src/functions/database.php
+bd3d44e58438a3d6984d3159ff938edb498d47ae  src/functions/database.php
 b4e107152a5c8a28d386f5947b4f1bc916982525  src/functions/language.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
 254fba190adbb4f5ad5e1feff34661e4f805f622  src/index.php

@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.10.01
+//2022.05.14.00
 
 //This file are included by DirToken/index.php
 
@@ -33,6 +33,8 @@ function Action_():void{
     Update_Callback();
   elseif(get_class($Webhook) === 'TgText'):
     Update_Text();
+  elseif(get_class($Webhook) === 'TgPhoto'):
+    Update_Photo();
   elseif(get_class($Webhook) === 'TgInvoiceCheckout'):
     Update_InvoiceCheckout();
   elseif(get_class($Webhook) === 'TgInvoiceShipping'):
@@ -178,6 +180,25 @@ function Update_Text():void{
   if($Run === false):
     SendUserCmd('dontknow');
   endif;
+  return;
+}
+
+function Update_Photo():void{
+  /**
+   * @var TgPhoto $Webhook
+   * @var StbDatabaseSys $Db
+   */
+  global $Db, $Webhook;
+  foreach($Db->ListenerGet(StbDbListeners::Photo) as $listener):
+    if(call_user_func($listener) === false):
+      return;
+    endif;
+  endforeach;
+  foreach($Db->ListenerGet(StbDbListeners::Photo, $Webhook->Message->User->Id) as $listener):
+    if(call_user_func($listener) === false):
+      return;
+    endif;
+  endforeach;
   return;
 }
 
