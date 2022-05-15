@@ -1,9 +1,12 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.13.00
+//2022.05.15.00
 
-function LogEvent(string $Event, string $Additional = null):void{
+/**
+ * Log an event in usage file
+ */
+function LogUsage(string $Event, string $Additional = null):void{
   /** @var TblCmd $Webhook */
   global $Webhook;
   DebugTrace();
@@ -25,6 +28,9 @@ function LogEvent(string $Event, string $Additional = null):void{
   file_put_contents(DirLogs . '/usage.log', $temp, FILE_APPEND);
 }
 
+/**
+ * Log an event in bot file
+ */
 function LogBot(string $Msg, bool $NewLine = true):void{
   DebugTrace();
   $Msg = date('Y-m-d H:i:s') . PHP_EOL . $Msg . PHP_EOL;
@@ -71,7 +77,7 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
   endif;
 
   if($Photo or $Text):
-    LogEvent($Command, $EventAdditional);
+    LogUsage($Command, $EventAdditional);
     return true;
   else:
     return false;

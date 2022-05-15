@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.13.00
+//2022.05.15.00
 
 function Command_id():void{
   /**
@@ -18,7 +18,7 @@ function Command_id():void{
       $Webhook->Message->User->Id,
     )
   );
-  LogEvent('id');
+  LogUsage('id');
 }
 
 function Command_admin():void{
