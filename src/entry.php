@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.14.00
+//2022.05.15.00
 
 //This file are included by DirToken/index.php
 
@@ -167,12 +167,14 @@ function Update_Text():void{
   $Run = false;
   foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
     $Run = true;
+    StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
     endif;
   endforeach;
   foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Message->User->Id) as $listener):
     $Run = true;
+    StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
     endif;
@@ -190,11 +192,13 @@ function Update_Photo():void{
    */
   global $Db, $Webhook;
   foreach($Db->ListenerGet(StbDbListeners::Photo) as $listener):
+    StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
     endif;
   endforeach;
   foreach($Db->ListenerGet(StbDbListeners::Photo, $Webhook->Message->User->Id) as $listener):
+    StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
     endif;
@@ -208,6 +212,7 @@ function Update_InvoiceCheckout():void{
    */
   global $Db;
   foreach($Db->ListenerGet(StbDbListeners::InvoiceCheckout) as $listener):
+    StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
     endif;
@@ -220,6 +225,7 @@ function Update_InvoiceShipping():void{
    */
   global $Db;
   foreach($Db->ListenerGet(StbDbListeners::InvoiceShipping) as $listener):
+    StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
     endif;
@@ -232,6 +238,7 @@ function Update_InlineQuery():void{
    */
   global $Db;
   foreach($Db->ListenerGet(StbDbListeners::InlineQuery) as $listener):
+    StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
     endif;
@@ -244,6 +251,7 @@ function Update_GroupStatusMy():void{
    */
   global $Db;
   foreach($Db->ListenerGet(StbDbListeners::ChatMy) as $listener):
+    StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
     endif;
