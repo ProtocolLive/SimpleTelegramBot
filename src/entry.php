@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.15.00
+//2022.05.15.01
 
 //This file are included by DirToken/index.php
 
@@ -151,11 +151,12 @@ function Update_Cmd():void{
 }
 
 function Update_Callback():void{
-  /** @var TgCallback $Webhook */
-  global $Webhook;
-  if(function_exists('Callback_' . $Webhook->Data)):
-    call_user_func('Callback_' . $Webhook->Data);
-  endif;
+  /**
+   * @var TgCallback $Webhook
+   * @var StbDatabaseSys $Db
+   */
+  global $Webhook, $Db;
+  $Db->CallBackHashRun($Webhook->Data);
 }
 
 function Update_Text():void{
