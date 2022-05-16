@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.15.01
+//2022.05.15.02
 
 //This file are included by DirToken/index.php
 
@@ -43,6 +43,8 @@ function Action_():void{
     Update_InlineQuery();
   elseif(get_class($Webhook) === 'TgGroupStatusMy'):
     Update_GroupStatusMy();
+  elseif(get_class($Webhook) === 'TgChatTitle'):
+    Update_Chat();
   endif;
 }
 
@@ -252,6 +254,19 @@ function Update_GroupStatusMy():void{
    */
   global $Db;
   foreach($Db->ListenerGet(StbDbListeners::ChatMy) as $listener):
+    StbModuleLoad($listener);
+    if(call_user_func($listener) === false):
+      return;
+    endif;
+  endforeach;
+}
+
+function Update_Chat():void{
+  /**
+   * @var StbDatabaseSys $Db
+   */
+  global $Db;
+  foreach($Db->ListenerGet(StbDbListeners::Chat) as $listener):
     StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;

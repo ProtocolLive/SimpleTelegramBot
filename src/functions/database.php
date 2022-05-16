@@ -1,9 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.15.03
+//2022.05.15.04
 
 enum StbDbListeners{
+  case Chat;
   case ChatMy;
   case Document;
   case Text;
