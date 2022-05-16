@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.13.00
+//2022.05.15.00
 
 function HandlerError(
   int $errno,
@@ -78,7 +78,7 @@ function DebugTrace():void{
   $temp .= $trace[1]['function'];
   $temp .= ' in ' . ($trace[1]['file'] ?? 'unknown');
   $temp .= ' line ' . ($trace[1]['line'] ?? 'unknown') . PHP_EOL;
-  if(count($trace[1]['args']) > 0):
+  if(count($trace[1]['args'] ?? []) > 0):
     ob_start();
     var_dump($trace[1]['args']);
     $temp .= ob_get_contents() . PHP_EOL;
