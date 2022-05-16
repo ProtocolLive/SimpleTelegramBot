@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.15.02
+//2022.05.15.03
 
 enum StbDbListeners{
   case ChatMy;
@@ -147,15 +147,6 @@ class StbDatabaseSys{
     $db = $this->Open();
     $this->AdminSuper($db['System'][self::ParamAdmins]);
     return $db['System'][self::ParamAdmins];
-  }
-
-  public function CallBackHashDel(
-    string $Function
-  ):void{
-    DebugTrace();
-    $db = $this->Open();
-    unset($db['System'][self::ParamCallBackHash][md5($Function)]);
-    $this->Save($db);
   }
 
   /**
@@ -324,6 +315,11 @@ class StbDatabaseSys{
           unset($db['System'][self::ParamListeners][$listener][$id]);
         endif;
       endforeach;
+    endforeach;
+    foreach($db['System'][self::ParamCallBackHash] as $hash => $function):
+      if(strpos($function, $Module) !== false):
+        unset($db['System'][self::ParamCallBackHash][$hash]);
+      endif;
     endforeach;
     unset($db[$Module]);
     $this->Save($db);
