@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.15.00
+//2022.05.15.01
 
 function Command_id():void{
   /**
@@ -52,7 +52,7 @@ function Callback_AdminMenu():void{
       $line,
       $col++,
       $Lang->Get('AdminsButton', Group: 'Admin'),
-      'Admins'
+      $Db->CallBackHashSet('Callback_Admins();')
     );
   endif;
   JumpLineCheck($line, $col);
@@ -61,7 +61,7 @@ function Callback_AdminMenu():void{
       $line,
       $col++,
       $Lang->Get('ModulesButton', Group: 'Admin'),
-      'Modules'
+      $Db->CallBackHashSet('Callback_Modules();')
     );
   endif;
   JumpLineCheck($line, $col);
@@ -70,7 +70,7 @@ function Callback_AdminMenu():void{
       $line,
       $col,
       $Lang->Get('UpdatesButton', Group: 'Admin'),
-      'Updates'
+      $Db->CallBackHashSet('Callback_Updates();')
     );
   endif;
   JumpLineCheck($line, $col);
@@ -125,11 +125,20 @@ function Callback_Admins():void{
     return;
   endif;
   $mk = new TblMarkupInline();
-  $line = 0;
+  $mk->ButtonCallback(
+    0,
+    0,
+    '🔙',
+    $Db->CallBackHashSet('Callback_AdminMenu();')
+  );
+  $mk->ButtonCallback(
+    0,
+    1,
+    '➕',
+    $Db->CallBackHashSet('Callback_AdminNew();')
+  );
+  $line = 1;
   $col = 0;
-  $mk->ButtonCallback($line, $col++, '🔙', 'AdminMenu');
-  $mk->ButtonCallback($line, $col++, '➕', 'AdminNew');
-
   $Admins = $Db->Admins();
   $buttons = [];
   foreach($Admins as $admin => $data):
@@ -140,7 +149,12 @@ function Callback_Admins():void{
       $detail = $detail['Name'];
     endif;
     $buttons[$admin] = [$line, $col];
-    $mk->ButtonCallback($line, $col++, $detail, 'Admin ' . $admin);
+    $mk->ButtonCallback(
+      $line,
+      $col++,
+      $detail,
+      $Db->CallBackHashSet("Callback_Admin($admin);")
+    );
     JumpLineCheck($line, $col);
   endforeach;
   $Bot->TextEdit(
@@ -158,7 +172,12 @@ function Callback_Admins():void{
       $data = $mk->ButtonGet($coord[0], $coord[1]);
       if($data['text'] !== $detail->Name):
         $changed = true;
-        $mk->ButtonCallback($coord[0], $coord[1], $detail->Name, 'Admin ' . $admin);
+        $mk->ButtonCallback(
+          $coord[0],
+          $coord[1],
+          $detail->Name,
+          $Db->CallBackHashSet("Callback_Admin($admin)")
+        );
       endif;
     endif;
   endforeach;
@@ -176,8 +195,9 @@ function Callback_Updates():void{
    * @var TelegramBotLibrary $Bot
    * @var TgCallback $Webhook
    * @var StbLanguageSys $Lang
+   * @var StbDatabaseSys $Db
    */
-  global $Bot, $Webhook, $Lang;
+  global $Bot, $Webhook, $Lang, $Db;
   DebugTrace();
   if($Webhook->User->Id !== Admin):
     $Bot->TextSend(
@@ -189,7 +209,12 @@ function Callback_Updates():void{
   $mk = new TblMarkupInline();
   $line = 0;
   $col = 0;
-  $mk->ButtonCallback($line, $col++, '🔙', 'AdminMenu');
+  $mk->ButtonCallback(
+    $line,
+    $col++,
+    '🔙',
+    $Db->CallBackHashSet('Callback_AdminMenu();')
+  );
   $files = UpdateCheck();
   $files = implode(PHP_EOL, $files);
   $Bot->TextEdit(
