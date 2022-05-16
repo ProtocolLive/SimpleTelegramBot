@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.14.00
+//2022.05.15.00
 
 enum StbDbListeners{
   case ChatMy;
@@ -38,6 +38,7 @@ class StbDatabaseSys{
   private const ParamModules = 'Modules';
   private const ParamVariables = 'Variables';
   private const ParamListeners = 'Listeners';
+  private const ParamCallBackHash = 'CallBackHash';
 
   private function Open(int $User = null):array{
     DebugTrace();
@@ -146,6 +147,44 @@ class StbDatabaseSys{
     $db = $this->Open();
     $this->AdminSuper($db['System'][self::ParamAdmins]);
     return $db['System'][self::ParamAdmins];
+  }
+
+  public function CallBackHashDel(
+    string $Function
+  ):void{
+    DebugTrace();
+    $db = $this->Open();
+    unset($db['System'][self::ParamCallBackHash][md5($Function)]);
+    $this->Save($db);
+  }
+
+  /**
+   * The callback data are limited to 64 bytes. This function hash the function to be called
+   */
+  public function CallBackHashSet(
+    string $Function
+  ):string|false{
+    DebugTrace();
+    if(substr($Function, -1) !== ';'):
+      return false;
+    endif;
+    $hash = md5($Function);
+    $db = $this->Open();
+    $db['System'][self::ParamCallBackHash][$hash] = $Function;
+    $this->Save($db);
+    return $hash;
+  }
+
+  public function CallBackHashRun(
+    string $Hash
+  ):bool{
+    DebugTrace();
+    $db = $this->Open();
+    if(isset($db['System'][self::ParamCallBackHash][$Hash]) === false):
+      return false;
+    endif;
+    eval($db['System'][self::ParamCallBackHash][$Hash]);
+    return true;
   }
 
   public function CommandAdd(string $Command, string $Module):bool{
