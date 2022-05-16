@@ -20,7 +20,7 @@ d3011a22594e56d93c778c495951681716214ce0  src/RENAME_WITH_TOKEN/tools/scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
 e415a9dae94a7822faa402d6c677f1523774ce60  src/cmds/admin.php
 339a5c4f1aa171329b4e853aa64ce758d4130abe  src/cmds/modules.php
-70ae0c8a073fa891996456690a197ae4942dacaf  src/cron.php
+9a678e9207600abcaa6332f16d01215a0986716a  src/cron.php
 b927809feed7d1de4b8dc2f081fd0c8d3b200a08  src/entry.php
 6b3aa507db090eeed537e689871c255d2e5076d9  src/functions/bot.php
 986315dacca2bac165c667641b3cc1e689eccdb5  src/functions/database.php
