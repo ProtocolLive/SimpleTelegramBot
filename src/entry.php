@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.15.02
+//2022.05.15.03
 
 //This file are included by DirToken/index.php
 
@@ -34,17 +34,17 @@ function Action_():void{
   elseif(get_class($Webhook) === 'TgText'):
     Update_Text();
   elseif(get_class($Webhook) === 'TgPhoto'):
-    Update_Photo();
+    Update_ListenerDual(StbDbListeners::Photo);
   elseif(get_class($Webhook) === 'TgInvoiceCheckout'):
-    Update_InvoiceCheckout();
+    Update_ListenerSimple(StbDbListeners::InvoiceCheckout);
   elseif(get_class($Webhook) === 'TgInvoiceShipping'):
-    Update_InvoiceShipping();
+    Update_ListenerSimple(StbDbListeners::InvoiceShipping);
   elseif(get_class($Webhook) === 'TgInlineQuery'):
-    Update_InlineQuery();
+    Update_ListenerSimple(StbDbListeners::InlineQuery);
   elseif(get_class($Webhook) === 'TgGroupStatusMy'):
-    Update_GroupStatusMy();
+    Update_ListenerSimple(StbDbListeners::ChatMy);
   elseif(get_class($Webhook) === 'TgChatTitle'):
-    Update_Chat();
+    Update_ListenerSimple(StbDbListeners::Chat);
   endif;
 }
 
@@ -188,19 +188,19 @@ function Update_Text():void{
   return;
 }
 
-function Update_Photo():void{
+function Update_ListenerDual(StbDbListeners $Listener):void{
   /**
    * @var TgPhoto $Webhook
    * @var StbDatabaseSys $Db
    */
   global $Db, $Webhook;
-  foreach($Db->ListenerGet(StbDbListeners::Photo) as $listener):
+  foreach($Db->ListenerGet($Listener) as $listener):
     StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
     endif;
   endforeach;
-  foreach($Db->ListenerGet(StbDbListeners::Photo, $Webhook->Message->User->Id) as $listener):
+  foreach($Db->ListenerGet($Listener, $Webhook->Message->User->Id) as $listener):
     StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
@@ -209,64 +209,12 @@ function Update_Photo():void{
   return;
 }
 
-function Update_InvoiceCheckout():void{
+function Update_ListenerSimple(StbDbListeners $Listener):void{
   /**
    * @var StbDatabaseSys $Db
    */
   global $Db;
-  foreach($Db->ListenerGet(StbDbListeners::InvoiceCheckout) as $listener):
-    StbModuleLoad($listener);
-    if(call_user_func($listener) === false):
-      return;
-    endif;
-  endforeach;
-}
-
-function Update_InvoiceShipping():void{
-  /**
-   * @var StbDatabaseSys $Db
-   */
-  global $Db;
-  foreach($Db->ListenerGet(StbDbListeners::InvoiceShipping) as $listener):
-    StbModuleLoad($listener);
-    if(call_user_func($listener) === false):
-      return;
-    endif;
-  endforeach;
-}
-
-function Update_InlineQuery():void{
-  /**
-   * @var StbDatabaseSys $Db
-   */
-  global $Db;
-  foreach($Db->ListenerGet(StbDbListeners::InlineQuery) as $listener):
-    StbModuleLoad($listener);
-    if(call_user_func($listener) === false):
-      return;
-    endif;
-  endforeach;
-}
-
-function Update_GroupStatusMy():void{
-  /**
-   * @var StbDatabaseSys $Db
-   */
-  global $Db;
-  foreach($Db->ListenerGet(StbDbListeners::ChatMy) as $listener):
-    StbModuleLoad($listener);
-    if(call_user_func($listener) === false):
-      return;
-    endif;
-  endforeach;
-}
-
-function Update_Chat():void{
-  /**
-   * @var StbDatabaseSys $Db
-   */
-  global $Db;
-  foreach($Db->ListenerGet(StbDbListeners::Chat) as $listener):
+  foreach($Db->ListenerGet($Listener) as $listener):
     StbModuleLoad($listener);
     if(call_user_func($listener) === false):
       return;
