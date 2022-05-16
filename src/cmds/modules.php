@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.03.00
+//2022.05.15.00
 
 function Callback_Modules():void{
   /**
@@ -28,21 +28,22 @@ function Callback_Modules():void{
     $line,
     $col++,
     $Lang->Get('Back'),
-    'AdminMenu'
+    $Db->CallBackHashSet('Callback_AdminMenu();')
   );
   $mk->ButtonCallback(
     $line,
     $col++,
     $Lang->Get('Add'),
-    'ModuleAdd'
+    $Db->CallBackHashSet('Callback_ModuleAdd();')
   );
-
+  $line = 1;
+  $col = 0;
   foreach($mods as $mod => $time):
     $mk->ButtonCallback(
       $line,
       $col++,
       $mod,
-      'Mod ' . $mod
+      $Db->CallBackHashSet("Callback_Mod('$mod');")
     );
     if($col === 4):
       $col = 0;
@@ -95,14 +96,14 @@ function Callback_ModuleAdd():void{
     $line,
     $col++,
     $Lang->Get('Back'),
-    'Modules'
+    $Db->CallBackHashSet('Callback_Modules();')
   );
   foreach($ModulesFiles as $mod):
     $mk->ButtonCallback(
       $line,
       $col++,
       $mod,
-      'InsModPic ' . $mod
+      $Db->CallBackHashSet("Callback_InsModPic('$mod');")
     );
     if($col === 4):
       $line++;
@@ -118,7 +119,7 @@ function Callback_ModuleAdd():void{
   );
 }
 
-function Callback_InsModPic():void{
+function Callback_InsModPic(string $Module):void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var TgCallback $Webhook
@@ -135,19 +136,18 @@ function Callback_InsModPic():void{
     );
     return;
   endif;
-  $module = $Webhook->Parameter;
 
   $mk = new TblMarkupInline;
   $line = 0;
   $col = 0;
 
-  require(DirModules . '/' . $module . '/index.php');
-  if(method_exists($module, 'Install') === false):
+  require(DirModules . '/' . $Module . '/index.php');
+  if(method_exists($Module, 'Install') === false):
     $mk->ButtonCallback(
       $line,
       $col++,
       $Lang->Get('Back'),
-      'ModuleAdd'
+      $Db->CallBackHashSet('Callback_ModuleAdd();')
     );
     $Bot->TextEdit(
       Admin,
@@ -157,12 +157,12 @@ function Callback_InsModPic():void{
     );
     return;
   endif;
-  if(method_exists($module, 'Uninstall') === false):
+  if(method_exists($Module, 'Uninstall') === false):
     $mk->ButtonCallback(
       $line,
       $col++,
       $Lang->Get('Back'),
-      'ModuleAdd'
+      $Db->CallBackHashSet('Callback_ModuleAdd();')
     );
     $Bot->TextEdit(
       Admin,
@@ -172,10 +172,10 @@ function Callback_InsModPic():void{
     );
     return;
   endif;
-  call_user_func($module . '::Install', $Bot, $Webhook, $Db);
+  call_user_func($Module . '::Install', $Bot, $Webhook, $Db);
 }
 
-function Callback_Mod():void{
+function Callback_Mod(string $Module):void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var StbDatabaseSys $Db
@@ -196,32 +196,32 @@ function Callback_Mod():void{
   $mk = new TblMarkupInline;
   $line = 0;
   $col = 0;
-  $date = $Db->Modules($Webhook->Parameter);
+  $date = $Db->Modules($Module);
   $mk->ButtonCallback(
     $line,
     $col++,
     $Lang->Get('Back'),
-    'Modules'
+    $Db->CallBackHashSet('Callback_Modules();')
   );
   $mk->ButtonCallback(
     $line,
     $col++,
     $Lang->Get('UninstallButton', Group: 'Module'),
-    'UniModPic1 ' . $Webhook->Parameter
+    $Db->CallBackHashSet("Callback_UniModPic1('$Module');")
   );
   $Bot->TextEdit(
     Admin,
     $Webhook->Message->Id,
     sprintf(
       $Lang->Get('Module', Group: 'Module'),
-      $Webhook->Parameter,
+      $Module,
       date('Y-m-d H:i:s', $date)
     ),
     Markup: $mk
   );
 }
 
-function Callback_UniModPic1():void{
+function Callback_UniModPic1(string $Module):void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var StbLanguageSys $Lang
@@ -244,13 +244,13 @@ function Callback_UniModPic1():void{
     0,
     0,
     $Lang->Get('Back'),
-    'Module ' . $Webhook->Parameter
+    $Db->CallBackHashSet("Callback_Mod('$Module');")
   );
   $mk->ButtonCallback(
     0,
     1,
     $Lang->Get('Yes'),
-    'UniModPic2 ' . $Webhook->Parameter
+    $Db->CallBackHashSet("Callback_UniModPic2('$Module');")
   );
   $Bot->MarkupEdit(
     Admin,
@@ -259,7 +259,7 @@ function Callback_UniModPic1():void{
   );
 }
 
-function Callback_UniModPic2():void{
+function Callback_UniModPic2(string $Module):void{
   /**
    * @var TelegramBotLibrary $Bot
    * @var TgCallback $Webhook
@@ -276,6 +276,6 @@ function Callback_UniModPic2():void{
     );
     return;
   endif;
-
-  call_user_func($Webhook->Parameter . '::Uninstall', $Bot, $Webhook, $Db);
+  require(DirModules . '/' . $Module . '/index.php');
+  call_user_func($Module . '::Uninstall', $Bot, $Webhook, $Db);
 }
