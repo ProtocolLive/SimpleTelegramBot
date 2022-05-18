@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.15.04
+//2022.05.17.00
 
 enum StbDbListeners{
   case Chat;
@@ -224,7 +224,7 @@ class StbDatabaseSys{
    */
   public function ListenerAdd(
     StbDbListeners $Listener,
-    string $Function,
+    string $Class,
     int $User = null
   ):void{
     DebugTrace();
@@ -232,16 +232,16 @@ class StbDatabaseSys{
       $User = null;
     endif;
     $db = $this->Open($User);
-    if(in_array($Function, $db['System'][self::ParamListeners][$Listener->name])):
+    if(in_array($Class, $db['System'][self::ParamListeners][$Listener->name])):
       return;
     endif;
-    $db['System'][self::ParamListeners][$Listener->name][] = $Function;
+    $db['System'][self::ParamListeners][$Listener->name][] = $Class;
     $this->Save($db, $User);
   }
 
   public function ListenerDel(
     StbDbListeners $Listener,
-    string $Function,
+    string $Class,
     int $User = null
   ):bool{
     DebugTrace();
@@ -249,7 +249,7 @@ class StbDatabaseSys{
       $User = null;
     endif;
     $db = $this->Open($User);
-    $index = array_search($Function, $db['System'][self::ParamListeners][$Listener->name]);
+    $index = array_search($Class, $db['System'][self::ParamListeners][$Listener->name]);
     if($index === false):
       return false;
     endif;
@@ -306,10 +306,12 @@ class StbDatabaseSys{
     endif;
   }
 
+  /**
+   * Removes listeners, callback hashes and module data before uninstall
+   */
   public function ModuleUninstall(string $Module):void{
     DebugTrace();
     $db = $this->Open();
-    unset($db['System'][self::ParamModules][$Module]);
     foreach($db['System'][self::ParamListeners] as $listener => $functions):
       foreach($functions as $id => $name):
         if(strpos($name, $Module) === 0):
@@ -323,6 +325,7 @@ class StbDatabaseSys{
       endif;
     endforeach;
     unset($db[$Module]);
+    unset($db['System'][self::ParamModules][$Module]);
     $this->Save($db);
   }
 
