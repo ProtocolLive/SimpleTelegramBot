@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.15.04
+//2022.05.17.00
 
 //This file are included by DirToken/index.php
 
@@ -143,7 +143,7 @@ function Update_Cmd():void{
   //Module command
   $module = $Db->Commands($Webhook->Command);
   if($module !== null):
-    StbModuleLoad($module . '::Command_' . $Webhook->Command);
+    StbModuleLoad($module);
     call_user_func($module . '::Command_' . $Webhook->Command);
     return;
   endif;
@@ -172,14 +172,14 @@ function Update_Text():void{
   foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
     $Run = true;
     StbModuleLoad($listener);
-    if(call_user_func($listener) === false):
+    if(call_user_func($listener . '::Listener_Text') === false):
       return;
     endif;
   endforeach;
   foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Message->User->Id) as $listener):
     $Run = true;
     StbModuleLoad($listener);
-    if(call_user_func($listener) === false):
+    if(call_user_func($listener . '::Listener_Text') === false):
       return;
     endif;
   endforeach;
@@ -197,13 +197,13 @@ function Update_ListenerDual(StbDbListeners $Listener):void{
   global $Db, $Webhook;
   foreach($Db->ListenerGet($Listener) as $listener):
     StbModuleLoad($listener);
-    if(call_user_func($listener) === false):
+    if(call_user_func($listener . '::Listener_' . $Listener->name) === false):
       return;
     endif;
   endforeach;
   foreach($Db->ListenerGet($Listener, $Webhook->Message->User->Id) as $listener):
     StbModuleLoad($listener);
-    if(call_user_func($listener) === false):
+    if(call_user_func($listener . '::Listener_' . $Listener->name) === false):
       return;
     endif;
   endforeach;
@@ -217,7 +217,7 @@ function Update_ListenerSimple(StbDbListeners $Listener):void{
   global $Db;
   foreach($Db->ListenerGet($Listener) as $listener):
     StbModuleLoad($listener);
-    if(call_user_func($listener) === false):
+    if(call_user_func($listener . '::Listener_' . $Listener->name) === false):
       return;
     endif;
   endforeach;

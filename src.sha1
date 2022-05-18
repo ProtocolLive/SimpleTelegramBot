@@ -1,4 +1,4 @@
-f75ec0847f50e7c2d82a977d273106608c977e39  src/DirToken.zip
+0c7f6d3a8820dcae24a664dbec069d92a3b68b5b  src/DirToken.zip
 9ccd6abd6b29bdb66e65686d4cf36f35b6f40993  src/RENAME_WITH_TOKEN/UserCmds/en/dontknow.txt
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/en/index.htm
 5054c3d7f1583aa0a043a72b08d9abf93591802f  src/RENAME_WITH_TOKEN/UserCmds/en/start.txt
@@ -9,6 +9,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/pt-br/i
 a6bd1dbe6c6fe7249552f794d0b78ba5618e0188  src/RENAME_WITH_TOKEN/UserCmds/pt-br/start.txt
 673be2874cd1daaf48768fe60ce464d7254e9caa  src/RENAME_WITH_TOKEN/UserCmds/pt-br/unknown.txt
 f5f51ff64edcf1f0a48abee53a7d8feb4b743730  src/RENAME_WITH_TOKEN/config.php
+930420f5c24a6e6bde5bd546bfe669b5a343d9a7  src/RENAME_WITH_TOKEN/db/db.json
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/db/index.htm
 16ed70afc97c846a86bd6c2d544874e6cc9438c5  src/RENAME_WITH_TOKEN/index.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/logs/index.htm
@@ -18,14 +19,14 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/tools/index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/tools/info.php
 d3011a22594e56d93c778c495951681716214ce0  src/RENAME_WITH_TOKEN/tools/scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
-e415a9dae94a7822faa402d6c677f1523774ce60  src/cmds/admin.php
-339a5c4f1aa171329b4e853aa64ce758d4130abe  src/cmds/modules.php
+3dfbf59d534f0e995cf6f3d93623725ca654418e  src/cmds/admin.php
+839344963b9f2be7c232679009f55132cf84c9f1  src/cmds/modules.php
 9a678e9207600abcaa6332f16d01215a0986716a  src/cron.php
-b927809feed7d1de4b8dc2f081fd0c8d3b200a08  src/entry.php
+22e13f87a307b4ab43e1ceb025e48fbff00670db  src/entry.php
 6b3aa507db090eeed537e689871c255d2e5076d9  src/functions/bot.php
-986315dacca2bac165c667641b3cc1e689eccdb5  src/functions/database.php
+4f12771893b597c74b12b7b3ff047c3524a8982a  src/functions/database.php
 b4e107152a5c8a28d386f5947b4f1bc916982525  src/functions/language.php
-463225843de8b68f96342cc8cc8d4bc673f4df67  src/functions/module.php
+259e443bde3b20db860ef3258d0d4d6c939f6960  src/functions/module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
 254fba190adbb4f5ad5e1feff34661e4f805f622  src/index.php
 9fd4d6c917ac1e00957e19e7de6e51bd6ba0ddce  src/language/en/system.json
