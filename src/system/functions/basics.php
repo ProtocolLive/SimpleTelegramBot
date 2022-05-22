@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.20.01
+//2022.05.21.00
 
 enum WeekDay:int{
   case Sunday = 1;
@@ -71,7 +71,7 @@ function GlobRecursive(string $Dir, int $Flags = 0){
   $files = [];
   foreach(glob($Dir . '/*', $Flags) as $file):
     if(is_dir($file)):
-      $files[] = GlobRecursive($file, $Flags);
+      $files = array_merge($files, GlobRecursive($file, $Flags));
     else:
       $files[] = $file;
     endif;
