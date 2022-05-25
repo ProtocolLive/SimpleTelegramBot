@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.03.00
+//2022.05.25.00
 
 define('DirToken', dirname(__DIR__, 1));
 require(dirname(__DIR__, 2) . '/system/system.php');
@@ -17,7 +17,7 @@ $lang = substr(DefaultLanguage, 0, 2);?>
   <?php var_dump($Bot->MyCmdGet(TgCmdScope::Default));?>
 </p>
 <p>
-  Default + language<br>
+  Default + <?php echo $lang;?><br>
   <?php var_dump($Bot->MyCmdGet(TgCmdScope::Default, $lang));?>
 </p>
 <p>
@@ -25,15 +25,15 @@ $lang = substr(DefaultLanguage, 0, 2);?>
   <?php var_dump($Bot->MyCmdGet(TgCmdScope::Users));?>
 </p>
 <p>
-  Users + language<br>
-  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Users, $lang));?>
+  Users + <?php echo $lang;?><br>
+  <?php var_dump($Bot->MyCmdClear(TgCmdScope::Users, $lang));?>
 </p>
 <p>
   Groups<br>
   <?php var_dump($Bot->MyCmdGet(TgCmdScope::Groups));?>
 </p>
 <p>
-  Groups + language<br>
+  Groups + <?php echo $lang;?><br>
   <?php var_dump($Bot->MyCmdGet(TgCmdScope::Groups, $lang));?>
 </p>
 <p>
@@ -41,7 +41,7 @@ $lang = substr(DefaultLanguage, 0, 2);?>
   <?php var_dump($Bot->MyCmdGet(TgCmdScope::GroupsAdmins));?>
 </p>
 <p>
-  Groups Admins + language<br>
+  Groups Admins + <?php echo $lang;?><br>
   <?php var_dump($Bot->MyCmdGet(TgCmdScope::GroupsAdmins, $lang));?>
 </p>
 <p>
@@ -49,6 +49,6 @@ $lang = substr(DefaultLanguage, 0, 2);?>
   <?php var_dump($Bot->MyCmdGet(TgCmdScope::Chat, null, Admin));?>
 </p>
 <p>
-  Main admin + language<br>
-  <?php var_dump($Bot->MyCmdGet(TgCmdScope::Chat, $lang, Admin));?>
+  Main admin + <?php echo $lang;?><br>
+  <?php var_dump($Bot->MyCmdClear(TgCmdScope::Chat, $lang, Admin));?>
 </p>
