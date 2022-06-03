@@ -32,7 +32,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
 9fd4d6c917ac1e00957e19e7de6e51bd6ba0ddce  src/language/en/system.json
 a41a8c078f566b159e6ad4909b9f74b28538b5d4  src/language/pt-br/system.json
 4eb252d9275dd332bcb2758d57b867e0fc984048  src/system/constants.php
-65da676155d5154f6cdd72b8609435fd30541047  src/system/functions/basics.php
+8fbbb9d59ca541847f4a61df73406ad4ae7150df  src/system/functions/basics.php
 bf4c37d6314fa21bed64148bf2a43360aec74370  src/system/functions/debug.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
 7281bf142e6980c0535bee35ffcfcc3b963dd4d3  src/system/requires.php
