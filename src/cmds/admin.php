@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.17.00
+//2022.06.08.00
 
 class Admin{
   static private function JumpLineCheck(
@@ -164,7 +164,7 @@ class Admin{
         $line,
         $col++,
         $detail,
-        $Db->CallBackHashSet("Callback_Admin($admin);")
+        $Db->CallBackHashSet("Admin::Callback_Admin($admin);")
       );
       self::JumpLineCheck($line, $col);
     endforeach;
