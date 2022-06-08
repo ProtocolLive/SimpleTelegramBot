@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.06.08.00
+//2022.06.08.01
 
 enum StbDbListeners{
   case Chat;
@@ -85,6 +85,15 @@ class StbDatabaseSys{
       StbDbAdminData::Creation => 0,
       StbDbAdminData::Perm => StbDbAdminPerm::All]
     ] + ($Var ?? []);
+  }
+
+  private function ModuleRestricted(string $Module):bool{
+    if(substr($Module, 0, 3) === 'Stb'
+    or substr($Module, 0, 3) === 'Tbl'
+    or substr($Module, 0, 2) === 'Tg'):
+      return true;
+    endif;
+    return false;
   }
 
   public function Admin(
@@ -283,11 +292,15 @@ class StbDatabaseSys{
     return array_keys($db['System'][self::ParamCommands], $Module);
   }
 
-  public function ModuleInstall(string $Module):void{
+  public function ModuleInstall(string $Module):bool{
     DebugTrace();
+    if($this->ModuleRestricted($Module)):
+      return false;
+    endif;
     $db = $this->Open();
     $db['System'][self::ParamModules][$Module] = time();
     $this->Save($db);
+    return true;
   }
 
   /**

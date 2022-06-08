@@ -1,4 +1,4 @@
-3ccbc97bc852b28f2ef2d6641c1b0bbb8a096b59  src/DirToken.zip
+9e783a8d7eaba0e28f9f23789adebae81e8cdc67  src/DirToken.zip
 9ccd6abd6b29bdb66e65686d4cf36f35b6f40993  src/RENAME_WITH_TOKEN/UserCmds/en/dontknow.txt
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/en/index.htm
 5054c3d7f1583aa0a043a72b08d9abf93591802f  src/RENAME_WITH_TOKEN/UserCmds/en/start.txt
@@ -9,7 +9,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/pt-br/i
 a6bd1dbe6c6fe7249552f794d0b78ba5618e0188  src/RENAME_WITH_TOKEN/UserCmds/pt-br/start.txt
 673be2874cd1daaf48768fe60ce464d7254e9caa  src/RENAME_WITH_TOKEN/UserCmds/pt-br/unknown.txt
 f5f51ff64edcf1f0a48abee53a7d8feb4b743730  src/RENAME_WITH_TOKEN/config.php
-930420f5c24a6e6bde5bd546bfe669b5a343d9a7  src/RENAME_WITH_TOKEN/db/db.json
+cc0f7feb2d9ed54ebd3937112b2e9a591692b574  src/RENAME_WITH_TOKEN/db/db.json
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/db/index.htm
 16ed70afc97c846a86bd6c2d544874e6cc9438c5  src/RENAME_WITH_TOKEN/index.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/logs/index.htm
@@ -19,14 +19,14 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/tools/index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/tools/info.php
 7194cfdc783a8ad37a46517b01b73048cbbd4d56  src/RENAME_WITH_TOKEN/tools/scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
-3dfbf59d534f0e995cf6f3d93623725ca654418e  src/cmds/admin.php
-839344963b9f2be7c232679009f55132cf84c9f1  src/cmds/modules.php
+ae567bf44e8cabb08fa739e6464ff1891037d29d  src/cmds/admin.php
+8f2b55d455e228611970f1f906301b1f1eafccaf  src/cmds/modules.php
 4a7862741c48b03cee6ed76b2fb7e76bb8b5d40a  src/cron.php
-22e13f87a307b4ab43e1ceb025e48fbff00670db  src/entry.php
+6127e84f32d15f34fe7cff7957de289bbdfa8942  src/entry.php
 6b3aa507db090eeed537e689871c255d2e5076d9  src/functions/bot.php
-4f12771893b597c74b12b7b3ff047c3524a8982a  src/functions/database.php
+1eba5fa7cc375a2845eb8383627cf5dba3d3e93b  src/functions/database.php
 b4e107152a5c8a28d386f5947b4f1bc916982525  src/functions/language.php
-259e443bde3b20db860ef3258d0d4d6c939f6960  src/functions/module.php
+f39b8f542fbb57d067b2ba0d47903c1d5cdd4c5d  src/functions/module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
 254fba190adbb4f5ad5e1feff34661e4f805f622  src/index.php
 9fd4d6c917ac1e00957e19e7de6e51bd6ba0ddce  src/language/en/system.json
