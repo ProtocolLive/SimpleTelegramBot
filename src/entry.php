@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.17.00
+//2022.06.08.00
 
 //This file are included by DirToken/index.php
 
@@ -131,13 +131,6 @@ function Update_Cmd():void{
     and $Webhook->Target !== $name):
       return;
     endif;
-  endif;
-
-  //Internal command
-  $command = 'Command_' . strtolower($Webhook->Command);
-  if(function_exists($command)):
-    call_user_func($command);
-    return;
   endif;
 
   //Module command
