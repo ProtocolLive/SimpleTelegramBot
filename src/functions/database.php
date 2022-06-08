@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.17.00
+//2022.06.08.00
 
 enum StbDbListeners{
   case Chat;
@@ -160,7 +160,7 @@ class StbDatabaseSys{
     if(substr($Function, -1) !== ';'):
       return false;
     endif;
-    $hash = md5($Function);
+    $hash = sha1($Function);
     $db = $this->Open();
     $db['System'][self::ParamCallBackHash][$hash] = $Function;
     $this->Save($db);
