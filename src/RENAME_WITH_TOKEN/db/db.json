@@ -1,8 +1,8 @@
 {
   "System":{
     "Commands": {
-      "id": "Admin",
-      "admin": "Admin"
+      "id": "StbAdmin",
+      "admin": "StbAdmin"
     }
   }
 }

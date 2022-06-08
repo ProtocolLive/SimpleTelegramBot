@@ -1,9 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.08.00
+//2022.06.08.01
 
-class Admin{
+class StbAdmin{
   static private function JumpLineCheck(
     int &$Line,
     int &$Col
@@ -63,7 +63,7 @@ class Admin{
         $line,
         $col++,
         $Lang->Get('AdminsButton', Group: 'Admin'),
-        $Db->CallBackHashSet('Admin::Callback_Admins();')
+        $Db->CallBackHashSet('StbAdmin::Callback_Admins();')
       );
     endif;
     self::JumpLineCheck($line, $col);
@@ -81,7 +81,7 @@ class Admin{
         $line,
         $col,
         $Lang->Get('UpdatesButton', Group: 'Admin'),
-        $Db->CallBackHashSet('Admin::Callback_Updates();')
+        $Db->CallBackHashSet('StbAdmin::Callback_Updates();')
       );
     endif;
     self::JumpLineCheck($line, $col);
@@ -140,13 +140,13 @@ class Admin{
       0,
       0,
       '🔙',
-      $Db->CallBackHashSet('Admin::Callback_AdminMenu();')
+      $Db->CallBackHashSet('StbAdmin::Callback_AdminMenu();')
     );
     $mk->ButtonCallback(
       0,
       1,
       '➕',
-      $Db->CallBackHashSet('Admin::Callback_AdminNew();')
+      $Db->CallBackHashSet('StbAdmin::Callback_AdminNew();')
     );
     $line = 1;
     $col = 0;
@@ -164,7 +164,7 @@ class Admin{
         $line,
         $col++,
         $detail,
-        $Db->CallBackHashSet("Admin::Callback_Admin($admin);")
+        $Db->CallBackHashSet("StbAdmin::Callback_Admin($admin);")
       );
       self::JumpLineCheck($line, $col);
     endforeach;
@@ -250,7 +250,7 @@ class Admin{
       $line,
       $col++,
       '🔙',
-      $Db->CallBackHashSet('Admin::Callback_AdminMenu();')
+      $Db->CallBackHashSet('StbAdmin::Callback_AdminMenu();')
     );
     $files = UpdateCheck();
     $files = implode(PHP_EOL, $files);

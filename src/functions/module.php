@@ -1,10 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.17.00
+//2022.06.08.00
 
 function StbModuleSystem():array{
-  return ['Admin', 'Modules'];
+  return ['StbAdmin', 'StbModules'];
 }
 
 function StbModuleLoad(string $Module):void{
