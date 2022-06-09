@@ -22,7 +22,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
 ae567bf44e8cabb08fa739e6464ff1891037d29d  src/cmds/admin.php
 8f2b55d455e228611970f1f906301b1f1eafccaf  src/cmds/modules.php
 4a7862741c48b03cee6ed76b2fb7e76bb8b5d40a  src/cron.php
-6127e84f32d15f34fe7cff7957de289bbdfa8942  src/entry.php
+e9bf53d4409008199f7a306d09960f6fb144a55f  src/entry.php
 6b3aa507db090eeed537e689871c255d2e5076d9  src/functions/bot.php
 1eba5fa7cc375a2845eb8383627cf5dba3d3e93b  src/functions/database.php
 b4e107152a5c8a28d386f5947b4f1bc916982525  src/functions/language.php
