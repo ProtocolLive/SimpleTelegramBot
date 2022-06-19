@@ -1,14 +1,15 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.08.01
+//2022.06.18.00
 
 class StbAdmin{
   static private function JumpLineCheck(
     int &$Line,
-    int &$Col
+    int &$Col,
+    int $PerLine = 3
   ):void{
-    if($Col === 3):
+    if($Col === $PerLine):
       $Col = 0;
       $Line++;
     endif;
