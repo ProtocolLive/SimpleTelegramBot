@@ -1,9 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.18.01
+//2022.06.18.02
 
-class StbModules{
+class StbAdminModules{
   static public function Callback_Modules():void{
     /**
      * @var TelegramBotLibrary $Bot

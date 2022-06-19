@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.18.02
+//2022.06.18.03
 
 class StbAdmin{
   static private function JumpLineCheck(
@@ -73,7 +73,7 @@ class StbAdmin{
         $line,
         $col++,
         $Lang->Get('ModulesButton', Group: 'Admin'),
-        $Db->CallBackHashSet('Modules::Callback_Modules();')
+        $Db->CallBackHashSet('StbAdminModules::Callback_Modules();')
       );
     endif;
     self::JumpLineCheck($line, $col);
