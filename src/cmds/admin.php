@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.18.03
+//2022.06.18.04
 
 class StbAdmin{
   static private function JumpLineCheck(
@@ -80,7 +80,7 @@ class StbAdmin{
     if($id === Admin):
       $mk->ButtonCallback(
         $line,
-        $col,
+        $col++,
         $Lang->Get('UpdatesButton', Group: 'Admin'),
         $Db->CallBackHashSet(get_class() . '::Callback_Updates();')
       );
@@ -88,8 +88,8 @@ class StbAdmin{
     self::JumpLineCheck($line, $col);
     if($id === Admin):
       $mk->ButtonWebapp(
-        1,
-        0,
+        $line,
+        $col++,
         $Lang->Get('PhpInfoButton', Group: 'Admin'),
         dirname($_SERVER['SCRIPT_URI']) . '/tools/info.php'
       );
@@ -97,8 +97,8 @@ class StbAdmin{
     self::JumpLineCheck($line, $col);
     if($admins[$id]->Perms->value & StbDbAdminPerm::Stats->value):
       $mk->ButtonWebapp(
-        1,
-        1,
+        $line,
+        $col++,
         $Lang->Get('StatsButton', Group: 'Admin'),
         dirname($_SERVER['SCRIPT_URI']) . '/stats.php'
       );
