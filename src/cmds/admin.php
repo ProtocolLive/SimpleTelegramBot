@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.18.00
+//2022.06.18.01
 
 class StbAdmin{
   static private function JumpLineCheck(
@@ -64,7 +64,7 @@ class StbAdmin{
         $line,
         $col++,
         $Lang->Get('AdminsButton', Group: 'Admin'),
-        $Db->CallBackHashSet('StbAdmin::Callback_Admins();')
+        $Db->CallBackHashSet(get_class() . '::Callback_Admins();')
       );
     endif;
     self::JumpLineCheck($line, $col);
@@ -82,7 +82,7 @@ class StbAdmin{
         $line,
         $col,
         $Lang->Get('UpdatesButton', Group: 'Admin'),
-        $Db->CallBackHashSet('StbAdmin::Callback_Updates();')
+        $Db->CallBackHashSet(get_class() . '::Callback_Updates();')
       );
     endif;
     self::JumpLineCheck($line, $col);
@@ -141,13 +141,13 @@ class StbAdmin{
       0,
       0,
       '🔙',
-      $Db->CallBackHashSet('StbAdmin::Callback_AdminMenu();')
+      $Db->CallBackHashSet(get_class() . '::Callback_AdminMenu();')
     );
     $mk->ButtonCallback(
       0,
       1,
       '➕',
-      $Db->CallBackHashSet('StbAdmin::Callback_AdminNew();')
+      $Db->CallBackHashSet(get_class() . '::Callback_AdminNew();')
     );
     $line = 1;
     $col = 0;
@@ -165,7 +165,7 @@ class StbAdmin{
         $line,
         $col++,
         $detail,
-        $Db->CallBackHashSet("StbAdmin::Callback_Admin($admin);")
+        $Db->CallBackHashSet(get_class() . "::Callback_Admin($admin);")
       );
       self::JumpLineCheck($line, $col);
     endforeach;
@@ -251,7 +251,7 @@ class StbAdmin{
       $line,
       $col++,
       '🔙',
-      $Db->CallBackHashSet('StbAdmin::Callback_AdminMenu();')
+      $Db->CallBackHashSet(get_class() . '::Callback_AdminMenu();')
     );
     $files = UpdateCheck();
     $files = implode(PHP_EOL, $files);

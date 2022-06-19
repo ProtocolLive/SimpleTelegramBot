@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.08.00
+//2022.06.18.00
 
 class StbModules{
   static public function Callback_Modules():void{
@@ -35,7 +35,7 @@ class StbModules{
       $line,
       $col++,
       $Lang->Get('Add'),
-      $Db->CallBackHashSet('Modules::Callback_ModuleAdd();')
+      $Db->CallBackHashSet(get_class() . '::Callback_ModuleAdd();')
     );
     $line = 1;
     $col = 0;
@@ -101,7 +101,7 @@ class StbModules{
       $line,
       $col++,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet('Modules::Callback_Modules();')
+      $Db->CallBackHashSet(get_class() . '::Callback_Modules();')
     );
     foreach($ModulesFiles as $mod):
       $mk->ButtonCallback(
@@ -152,7 +152,7 @@ class StbModules{
         $line,
         $col++,
         $Lang->Get('Back'),
-        $Db->CallBackHashSet('Modules::Callback_ModuleAdd();')
+        $Db->CallBackHashSet(get_class() . '::Callback_ModuleAdd();')
       );
       $Bot->TextEdit(
         Admin,
@@ -167,7 +167,7 @@ class StbModules{
         $line,
         $col++,
         $Lang->Get('Back'),
-        $Db->CallBackHashSet('Modules::Callback_ModuleAdd();')
+        $Db->CallBackHashSet(get_class() . '::Callback_ModuleAdd();')
       );
       $Bot->TextEdit(
         Admin,
@@ -206,7 +206,7 @@ class StbModules{
       $line,
       $col++,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet('Modules::Callback_Modules();')
+      $Db->CallBackHashSet(get_class() . '::Callback_Modules();')
     );
     $mk->ButtonCallback(
       $line,
