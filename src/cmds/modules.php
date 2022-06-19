@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.18.00
+//2022.06.18.01
 
 class StbModules{
   static public function Callback_Modules():void{
@@ -70,7 +70,7 @@ class StbModules{
     global $Bot, $Db, $Lang, $Webhook;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
+    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -134,7 +134,7 @@ class StbModules{
     global $Bot, $Webhook, $Lang, $Db;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
+    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -190,7 +190,7 @@ class StbModules{
     global $Bot, $Db, $Lang, $Webhook;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
+    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -236,7 +236,7 @@ class StbModules{
     global $Bot, $Lang, $Webhook, $Db;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
+    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -274,7 +274,7 @@ class StbModules{
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin[StbDbAdminData::Perm] & StbDbAdminPerm::Modules) === false):
+    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')

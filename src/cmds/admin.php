@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.18.01
+//2022.06.18.02
 
 class StbAdmin{
   static private function JumpLineCheck(
@@ -59,7 +59,7 @@ class StbAdmin{
     $mk = new TblMarkupInline();
     $line = 0;
     $col = 0;
-    if($admins[$id][StbDbAdminData::Perm] & StbDbAdminPerm::Admins):
+    if($admins[$id]->Perms->value & StbDbAdminPerm::Admins->value):
       $mk->ButtonCallback(
         $line,
         $col++,
@@ -68,7 +68,7 @@ class StbAdmin{
       );
     endif;
     self::JumpLineCheck($line, $col);
-    if($admins[$id][StbDbAdminData::Perm] & StbDbAdminPerm::Modules):
+    if($admins[$id]->Perms->value & StbDbAdminPerm::Modules->value):
       $mk->ButtonCallback(
         $line,
         $col++,
@@ -95,7 +95,7 @@ class StbAdmin{
       );
     endif;
     self::JumpLineCheck($line, $col);
-    if($admins[$id][StbDbAdminData::Perm] & StbDbAdminPerm::Stats):
+    if($admins[$id]->Perms->value & StbDbAdminPerm::Stats->value):
       $mk->ButtonWebapp(
         1,
         1,
@@ -129,7 +129,7 @@ class StbAdmin{
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     $admins = $Db->Admins();
-    if(($admins[$Webhook->User->Id][StbDbAdminData::Perm] & StbDbAdminPerm::Admins) === false):
+    if(($admins[$Webhook->User->Id]->Perms & StbDbAdminPerm::Admins->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -154,7 +154,7 @@ class StbAdmin{
     $Admins = $Db->Admins();
     $buttons = [];
     foreach($Admins as $admin => $data):
-      $detail = $Db->VariableGet(StbDbParam::UserDetails, $admin);
+      $detail = $Db->VariableGet(StbDbParam::UserDetails->value, $admin);
       if($detail === null):
         $detail = $admin;
       else:
@@ -180,7 +180,7 @@ class StbAdmin{
     foreach($buttons as $admin => $coord):
       $detail = $Bot->ChatGet($admin);
       if($detail !== null):
-        $Db->VariableSet(StbDbParam::UserDetails, $detail, $admin);
+        $Db->VariableSet(StbDbParam::UserDetails->value, $detail, $admin);
         $data = $mk->ButtonGet($coord[0], $coord[1]);
         if($data['text'] !== $detail->Name):
           $changed = true;
@@ -296,7 +296,7 @@ class StbAdmin{
       );
       return false;
     endif;
-    $Db->VariableSet(StbDbParam::UserDetails, $details, $Webhook->Text);
+    $Db->VariableSet(StbDbParam::UserDetails->value, $details, $Webhook->Text);
     $Bot->TextSend(
       $Webhook->Message->User->Id,
       sprintf(

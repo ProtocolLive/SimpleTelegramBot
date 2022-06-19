@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.09.00
+//2022.06.18.00
 
 //This file are included by DirToken/index.php
 
@@ -120,11 +120,11 @@ function Update_Cmd():void{
   //In a group, with many bots, the commands have the target bot.
   //This block check the target and caches the bot name
   if($Webhook->Message->Chat->Type !== TgChatType::Private):
-    $name = $Db->VariableGet(StbDbParam::UserDetails);
+    $name = $Db->VariableGet(StbDbParam::UserDetails->value);
     if($name === null):
       $name = $Bot->MyGet();
       if($name !== null):
-        $Db->VariableSet(StbDbParam::UserDetails, $name);
+        $Db->VariableSet(StbDbParam::UserDetails->value, $name);
         $name = $name->Nick;
       endif;
     else:

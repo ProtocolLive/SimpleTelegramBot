@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.06.08.01
+//2022.06.18.00
 
 enum StbDbListeners{
   case Chat;
@@ -16,21 +16,25 @@ enum StbDbListeners{
   case Voice;
 }
 
-abstract class StbDbAdminData{
-  public const Creation = 0;
-  public const Perm = 1;
+enum StbDbAdminPerm:int{
+  case All = 15;
+  case None = 0;
+  case Admins = 1;
+  case Modules = 2;
+  case UserCmds = 4;
+  case Stats = 8;
 }
 
-abstract class StbDbAdminPerm{
-  public const All = -1;
-  public const Admins = 1;
-  public const Modules = 2;
-  public const UserCmds = 4;
-  public const Stats = 8;
+enum StbDbParam:string{
+  case UserDetails = 'UserDetails';
 }
 
-abstract class StbDbParam{
-  public const UserDetails = 'UserDetails';
+class StbDbAdminData{
+  public function __construct(
+    public readonly int $Id,
+    public readonly int $Creation,
+    public readonly int $Perms
+  ){}
 }
 
 class StbDatabaseSys{
@@ -40,6 +44,8 @@ class StbDatabaseSys{
   private const ParamVariables = 'Variables';
   private const ParamListeners = 'Listeners';
   private const ParamCallBackHash = 'CallBackHash';
+  private const AdminDataArrayCreation = 0;
+  private const AdminDataArrayPerm = 1;
 
   private function Open(int $User = null):array{
     DebugTrace();
@@ -64,7 +70,7 @@ class StbDatabaseSys{
     else:
       $file = DirDb . '/' . $User . '.json';
     endif;
-    $db = json_encode($Db);
+    $db = json_encode($Db, JSON_PRETTY_PRINT);
     DirCreate(dirname($file));
     file_put_contents($file, $db);
   }
@@ -80,11 +86,15 @@ class StbDatabaseSys{
     endif;
   }
 
-  private function AdminSuper(&$Var):void{
-    $Var = [Admin => [
-      StbDbAdminData::Creation => 0,
-      StbDbAdminData::Perm => StbDbAdminPerm::All]
-    ] + ($Var ?? []);
+  private function AdminSuper(array $Var = null):array{
+    $Var ??= [];
+    $Var = [
+      Admin => [
+        self::AdminDataArrayCreation => 0,
+        self::AdminDataArrayPerm => StbDbAdminPerm::All->value
+      ]
+    ] + $Var;
+    return $Var;
   }
 
   private function ModuleRestricted(string $Module):bool{
@@ -98,11 +108,20 @@ class StbDatabaseSys{
 
   public function Admin(
     int $User
-  ):array|false{
+  ):StbDbAdminData|false{
     DebugTrace();
     $db = $this->Open();
-    $this->AdminSuper($db['System'][self::ParamAdmins]);
-    return $db['System'][self::ParamAdmins][$User] ?? false;
+    $admins = $db['System'][self::ParamAdmins];
+    $admins = $this->AdminSuper($admins);
+    if(isset($admins[$User])):
+      return new StbDbAdminData(
+        $User,
+        $admins[$User][self::AdminDataArrayCreation],
+        $admins[$User][self::AdminDataArrayPerm]
+      );
+    else:
+      return false;
+    endif;
   }
 
   public function AdminAdd(
@@ -116,8 +135,8 @@ class StbDatabaseSys{
     $db = $this->Open();
     if(isset($db['System'][self::ParamAdmins][$User]) === false):
       $db['System'][self::ParamAdmins][$User] = [
-        StbDbAdminData::Creation => time(),
-        StbDbAdminData::Perm => $Perms
+        self::AdminDataArrayCreation => time(),
+        self::AdminDataArrayPerm => $Perms
       ];
       $this->Save($db);
       return true;
@@ -147,7 +166,7 @@ class StbDatabaseSys{
       return false;
     endif;
     $db = $this->Open();
-    return $db['System'][self::ParamAdmins][$User][StbDbAdminData::Perm] = $Perm;
+    $db['System'][self::ParamAdmins][$User][self::AdminDataArrayPerm] = $Perm;
     $this->Save($db);
     return true;
   }
@@ -155,8 +174,16 @@ class StbDatabaseSys{
   public function Admins():array{
     DebugTrace();
     $db = $this->Open();
-    $this->AdminSuper($db['System'][self::ParamAdmins]);
-    return $db['System'][self::ParamAdmins];
+    $admins = $db['System'][self::ParamAdmins];
+    $admins = $this->AdminSuper($admins);
+    foreach($admins as $id => &$admin):
+      $admin = new StbDbAdminData(
+        $id,
+        $admin[self::AdminDataArrayCreation],
+        $admin[self::AdminDataArrayPerm]
+      );
+    endforeach;
+    return $admins;
   }
 
   /**
