@@ -18,9 +18,14 @@
   "Admin":{
     "AdminNewId": "Type the new administrator ID:",
     "AdminMenu": "⚙️ Administration menu",
+    "Admin": "Administrator: %1$s\nAdded: %2$s",
     "Admins": "🎖️ Administrators:",
     "AdminsButton": "🎖️ Administrators",
     "ModulesButton": "🧩 Modules",
+    "PermAdmins": " Administradores",
+    "PermModules": " Módulos",
+    "PermUserCmds": " Comandos",
+    "PermStats": " Estatísticas",
     "PhpInfoButton": "🔍 Server info",
     "StatsButton": "📊 Statistics",
     "Updates": "Outdated files:\n\n%s",
@@ -34,6 +39,7 @@
   },
   "Add": "➕",
   "Back": "🔙",
+  "DateTime":"m/d/Y h:i:s a",
   "MyId": "Your ID is %s",
   "Yes": "✅"
 }
