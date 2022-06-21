@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.15.00
+//2022.06.21.00
 
 require(__DIR__ . '/php.php');
 require(__DIR__ . '/requires.php');
@@ -16,6 +16,7 @@ $DebugTraceFolder = DirLogs;
 $BotData = new TblData(
   Token,
   DirLogs,
+  TokenWebhook,
   Debug,
   TestServer
 );
