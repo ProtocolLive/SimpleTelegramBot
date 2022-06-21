@@ -1,4 +1,4 @@
-9e783a8d7eaba0e28f9f23789adebae81e8cdc67  src/DirToken.zip
+9507b8392cd3547cf22ef85d3349bbd80f55fcb4  src/DirToken.zip
 9ccd6abd6b29bdb66e65686d4cf36f35b6f40993  src/RENAME_WITH_TOKEN/UserCmds/en/dontknow.txt
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/en/index.htm
 5054c3d7f1583aa0a043a72b08d9abf93591802f  src/RENAME_WITH_TOKEN/UserCmds/en/start.txt
@@ -8,7 +8,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/index.h
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/pt-br/index.htm
 a6bd1dbe6c6fe7249552f794d0b78ba5618e0188  src/RENAME_WITH_TOKEN/UserCmds/pt-br/start.txt
 673be2874cd1daaf48768fe60ce464d7254e9caa  src/RENAME_WITH_TOKEN/UserCmds/pt-br/unknown.txt
-f5f51ff64edcf1f0a48abee53a7d8feb4b743730  src/RENAME_WITH_TOKEN/config.php
+6cca255f9b868c510ec77928629c55964d3be7bd  src/RENAME_WITH_TOKEN/config.php
 cc0f7feb2d9ed54ebd3937112b2e9a591692b574  src/RENAME_WITH_TOKEN/db/db.json
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/db/index.htm
 16ed70afc97c846a86bd6c2d544874e6cc9438c5  src/RENAME_WITH_TOKEN/index.php
@@ -21,14 +21,14 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/tools/index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
 28161dacc4fbd7f2375a99637e9c04f7582cdb44  src/cmds/admin.php
 1f5c08f340ba09daa60b397b14c44b0039eac901  src/cmds/modules.php
-4a7862741c48b03cee6ed76b2fb7e76bb8b5d40a  src/cron.php
-2eefac76fae8fd1a978c494d56444f900c5c3ca7  src/entry.php
+21acef3798859c08f2a708e865900d7d6443e575  src/cron.php
+e22c539b5ec45156ae0e89c240b9e0b830a6650f  src/entry.php
 6b3aa507db090eeed537e689871c255d2e5076d9  src/functions/bot.php
 3fb16eb730d177bb63ddc54211d8f9eb9981dfdd  src/functions/database.php
 b4e107152a5c8a28d386f5947b4f1bc916982525  src/functions/language.php
 f39b8f542fbb57d067b2ba0d47903c1d5cdd4c5d  src/functions/module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
-254fba190adbb4f5ad5e1feff34661e4f805f622  src/index.php
+40e44f9c365d139c3000e520ceadbfe2bc014a34  src/index.php
 8211d4b18ee0281e7eaca30775c96664b88d723e  src/language/en/system.json
 ea7907d4194cf00dbc72d9dac5f32d0194df1eff  src/language/pt-br/system.json
 4eb252d9275dd332bcb2758d57b867e0fc984048  src/system/constants.php
@@ -36,4 +36,4 @@ ea7907d4194cf00dbc72d9dac5f32d0194df1eff  src/language/pt-br/system.json
 bf4c37d6314fa21bed64148bf2a43360aec74370  src/system/functions/debug.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
 7281bf142e6980c0535bee35ffcfcc3b963dd4d3  src/system/requires.php
-7447eb643a57e4fa6fa5f0453084dde4b796e4fa  src/system/system.php
+e8e585d87fcbee14e965a889dd47bf242f1b6ee2  src/system/system.php

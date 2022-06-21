@@ -1,13 +1,18 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.00
+//2022.06.21.00
 
 //Installation date: ##DATE##
 
 //Token given by @BotFather
 //Type: string
 const Token = '##TOKEN##';
+
+//Token created for authenticate the webhook
+//Type: string
+//Default: null
+const TokenWebhook = ##TOKENWEBHOOK##;
 
 //Main admin
 //Type: int
