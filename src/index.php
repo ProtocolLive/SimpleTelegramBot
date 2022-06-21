@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.05.02.00
+//2022.06.21.00
 
 require(__DIR__ . '/system/php.php');
 set_error_handler('error');
@@ -89,6 +89,7 @@ function Action_ok():void{
   $config = str_replace('##TESTSERVER##', $_POST['testserver'], $config);
   $config = str_replace('##LANGUAGE##', $_POST['language'], $config);
   $config = str_replace('##ADMIN##', $_POST['admin'], $config);
+  $config = str_replace('##TOKENWEBHOOK##', "'" . hash('sha256', uniqid()) . "'", $config);
   file_put_contents(__DIR__ . '/RENAME_WITH_TOKEN/config.php', $config);
 
   file_put_contents(__DIR__ . '/RENAME_WITH_TOKEN/db/system.json', '{}');
