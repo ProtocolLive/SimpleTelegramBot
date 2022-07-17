@@ -18,14 +18,14 @@ a9d4a8ae1dd29f0c4e4b0f9650cacde16e9a2a20  src/RENAME_WITH_TOKEN/stats.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/tools/index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/tools/info.php
 7194cfdc783a8ad37a46517b01b73048cbbd4d56  src/RENAME_WITH_TOKEN/tools/scope.php
-da39a3ee5e6b4b0d3255bfef95601890afd80709  src/class/index.htm
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/TelegramBotLibrary/index.htm
 28161dacc4fbd7f2375a99637e9c04f7582cdb44  src/cmds/admin.php
 1f5c08f340ba09daa60b397b14c44b0039eac901  src/cmds/modules.php
 21acef3798859c08f2a708e865900d7d6443e575  src/cron.php
 e22c539b5ec45156ae0e89c240b9e0b830a6650f  src/entry.php
 6b3aa507db090eeed537e689871c255d2e5076d9  src/functions/bot.php
 3fb16eb730d177bb63ddc54211d8f9eb9981dfdd  src/functions/database.php
-b4e107152a5c8a28d386f5947b4f1bc916982525  src/functions/language.php
+7b0c81bd9ae077a2e0163f7b94296e879fff7bf7  src/functions/language.php
 f39b8f542fbb57d067b2ba0d47903c1d5cdd4c5d  src/functions/module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
 40e44f9c365d139c3000e520ceadbfe2bc014a34  src/index.php
@@ -35,5 +35,5 @@ ea7907d4194cf00dbc72d9dac5f32d0194df1eff  src/language/pt-br/system.json
 8fbbb9d59ca541847f4a61df73406ad4ae7150df  src/system/functions/basics.php
 bf4c37d6314fa21bed64148bf2a43360aec74370  src/system/functions/debug.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
-7281bf142e6980c0535bee35ffcfcc3b963dd4d3  src/system/requires.php
+33e60b54b0a558a344136189eae53f68d09ca610  src/system/requires.php
 e8e585d87fcbee14e965a889dd47bf242f1b6ee2  src/system/system.php

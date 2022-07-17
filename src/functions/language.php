@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.04.29.00
+//2022.07.17.00
 
 abstract class StbLanguageMaster{
   protected string $Default;
@@ -59,7 +59,7 @@ class StbLanguageSys extends StbLanguageMaster{
   }
 }
 
-class StbLanguageModule{
+class StbLanguageModule extends StbLanguageMaster{
   public function __construct(string $Default){
     DebugTrace();
     $this->Default = $Default;
