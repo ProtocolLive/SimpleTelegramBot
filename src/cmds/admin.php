@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.18.06
+//2022.07.29.00
 
 class StbAdmin{
   static private function JumpLineCheck(
@@ -20,8 +20,9 @@ class StbAdmin{
      * @var TelegramBotLibrary $Bot
      * @var StbLanguageSys $Lang
      * @var TblCmd $Webhook
+     * @var StbDatabase $Db
      */
-    global $Bot, $Lang, $Webhook;
+    global $Bot, $Lang, $Webhook, $Db;
     DebugTrace();
     $Bot->TextSend(
       $Webhook->Message->User->Id,
@@ -30,7 +31,7 @@ class StbAdmin{
         $Webhook->Message->User->Id,
       )
     );
-    LogUsage('id');
+    $Db->UsageLog($Webhook->Message->User->Id, 'id');
   }
 
   static public function Command_admin():void{
@@ -42,38 +43,41 @@ class StbAdmin{
      * @var TelegramBotLibrary $Bot
      * @var TblCmd|TgCallback $Webhook
      * @var StbLanguageSys $Lang
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      */
     global $Bot, $Webhook, $Lang, $Db;
     DebugTrace();
     $id = $Webhook->User->Id ?? $Webhook->Message->User->Id;
-    $admins = $Db->Admins();
-    if(isset($admins[$id]) === false):
+    $user = $Db->Admin($id);
+    if($user === false):
       $Bot->TextSend(
         $id,
         $Lang->Get('Denied')
       );
       return;
     endif;
-
     $mk = new TblMarkupInline();
     $line = 0;
     $col = 0;
-    if($admins[$id]->Perms->value & StbDbAdminPerm::Admins->value):
+    if($user->Perms->value & StbDbAdminPerm::Admins->value):
       $mk->ButtonCallback(
         $line,
         $col++,
         $Lang->Get('AdminsButton', Group: 'Admin'),
-        $Db->CallBackHashSet(get_class() . '::Callback_Admins();')
+        $Db->CallBackHashSet([
+          get_class() . '::Callback_Admins'
+        ])
       );
     endif;
     self::JumpLineCheck($line, $col);
-    if($admins[$id]->Perms->value & StbDbAdminPerm::Modules->value):
+    if($user->Perms->value & StbDbAdminPerm::Modules->value):
       $mk->ButtonCallback(
         $line,
         $col++,
         $Lang->Get('ModulesButton', Group: 'Admin'),
-        $Db->CallBackHashSet('StbAdminModules::Callback_Modules();')
+        $Db->CallBackHashSet([
+          'StbAdminModules::Callback_Modules'
+        ])
       );
     endif;
     self::JumpLineCheck($line, $col);
@@ -82,7 +86,9 @@ class StbAdmin{
         $line,
         $col++,
         $Lang->Get('UpdatesButton', Group: 'Admin'),
-        $Db->CallBackHashSet(get_class() . '::Callback_Updates();')
+        $Db->CallBackHashSet([
+          get_class() . '::Callback_Updates'
+        ])
       );
     endif;
     self::JumpLineCheck($line, $col);
@@ -91,16 +97,16 @@ class StbAdmin{
         $line,
         $col++,
         $Lang->Get('PhpInfoButton', Group: 'Admin'),
-        dirname($_SERVER['SCRIPT_URI']) . '/tools/info.php'
+        dirname('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']) . '/tools/info.php'
       );
     endif;
     self::JumpLineCheck($line, $col);
-    if($admins[$id]->Perms->value & StbDbAdminPerm::Stats->value):
+    if($user->Perms->value & StbDbAdminPerm::Stats->value):
       $mk->ButtonWebapp(
         $line,
         $col++,
         $Lang->Get('StatsButton', Group: 'Admin'),
-        dirname($_SERVER['SCRIPT_URI']) . '/stats.php'
+        dirname('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']) . '/stats.php'
       );
     endif;
     if(get_class($Webhook) === 'TblCmd'):
@@ -123,13 +129,13 @@ class StbAdmin{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
-    $admins = $Db->Admins();
-    if(($admins[$Webhook->User->Id]->Perms & StbDbAdminPerm::Admins->value) === false):
+    $user = $Db->Admin($Webhook->User->Id);
+    if(($user->Perms->value & StbDbAdminPerm::Admins->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -141,31 +147,37 @@ class StbAdmin{
       0,
       0,
       '🔙',
-      $Db->CallBackHashSet(get_class() . '::Callback_AdminMenu();')
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_AdminMenu'
+      ])
     );
     $mk->ButtonCallback(
       0,
       1,
       '➕',
-      $Db->CallBackHashSet(get_class() . '::Callback_AdminNew();')
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_AdminNew'
+      ])
     );
     $line = 1;
     $col = 0;
     $Admins = $Db->Admins();
     $buttons = [];
-    foreach($Admins as $admin => $data):
-      $detail = $Db->VariableGet(StbDbParam::UserDetails->value, $admin);
-      if($detail === null):
+    foreach($Admins as $admin):
+      if($admin->Name === null):
         $detail = $admin;
       else:
-        $detail = $detail['Name'];
+        $detail = $admin->Name;
       endif;
-      $buttons[$admin] = [$line, $col];
+      $buttons[$admin->Id] = [$line, $col];
       $mk->ButtonCallback(
         $line,
         $col++,
         $detail,
-        $Db->CallBackHashSet(get_class() . "::Callback_Admin($admin);")
+        $Db->CallBackHashSet([
+          get_class() . '::Callback_Admin',
+          $admin
+        ])
       );
       self::JumpLineCheck($line, $col);
     endforeach;
@@ -180,7 +192,13 @@ class StbAdmin{
     foreach($buttons as $admin => $coord):
       $detail = $Bot->ChatGet($admin);
       if($detail !== null):
-        $Db->VariableSet(StbDbParam::UserDetails->value, $detail, $admin);
+        $Db->UserEdit(
+          $admin,
+          $detail->Name,
+          TgChatType::Private,
+          $detail->NameLast,
+          $detail->Nick
+        );
         $data = $mk->ButtonGet($coord[0], $coord[1]);
         if($data['text'] !== $detail->Name):
           $changed = true;
@@ -188,7 +206,10 @@ class StbAdmin{
             $coord[0],
             $coord[1],
             $detail->Name,
-            $Db->CallBackHashSet("Callback_Admin($admin);")
+            $Db->CallBackHashSet([
+              'Callback_Admin',
+              $admin
+            ])
           );
         endif;
       endif;
@@ -206,7 +227,7 @@ class StbAdmin{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      */
     global $Bot, $Webhook, $Db, $Lang;
@@ -215,12 +236,12 @@ class StbAdmin{
       $Lang->Get('AdminNewId', Group: 'Admin'),
       Markup: new TblMarkupForceReply
     );
-    $Db->ListenerAdd(
-      StbDbListeners::Text,
-      'Listener_AdminNew',
-      $Webhook->User->Id
-    );
     if($msg !== null):
+      $Db->ListenerAdd(
+        StbDbListeners::Text,
+        get_class(),
+        $Webhook->User->Id
+      );
       $Db->VariableSet(
         'AdminNew',
         $msg->Id
@@ -232,14 +253,14 @@ class StbAdmin{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
-    $admin = $Db->Admin($Webhook->User->Id);
-    if($admin === null
-    or ($admin->Perms & StbDbAdminPerm::Admins->value) === false):
+    $user = $Db->Admin($Webhook->User->Id);
+    if($user === null
+    or ($user->Perms->value & StbDbAdminPerm::Admins->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -253,7 +274,9 @@ class StbAdmin{
       $line,
       $col++,
       '🔙',
-      $Db->CallBackHashSet(get_class() . '::Callback_Admins();')
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_Admins'
+      ])
     );
     $admin = $Db->Admin($Admin);
     foreach(StbDbAdminPerm::cases() as $perm):
@@ -261,27 +284,26 @@ class StbAdmin{
       or $perm === StbDbAdminPerm::None):
         continue;
       endif;
-      $value = $admin->Perms & $perm->value;
+      $value = $admin->Perms->value & $perm->value;
       $mk->ButtonCallback(
         $line,
         $col++,
         ($value ? '✅' : '') . $Lang->Get('Perm' . $perm->name, Group: 'Admin'),
-        $Db->CallBackHashSet(
-          get_class() . '::Callback_AdminPerm('.
-          $Admin . ',' .
-          $perm->value . ',' .
-          !$value . ');'
-        )
+        $Db->CallBackHashSet([
+          get_class() . '::Callback_AdminPerm',
+          $Admin,
+          $perm->value,
+          !$value
+        ])
       );
       self::JumpLineCheck($line, $col, 2);
     endforeach;
-    $temp = $Db->VariableGet(StbDbParam::UserDetails->value, $Admin);
-    $AdminName = $temp['Name'];
-    if($temp['NameLast'] !== null):
-      $AdminName .= ' ' . $temp['NameLast'];
+    $AdminName = $admin->Name;
+    if($admin->NameLast !== null):
+      $AdminName .= ' ' . $admin->NameLast;
     endif;
-    if($temp['Nick'] !== null):
-      $AdminName .= ' (' . $temp['Nick'] . ')';
+    if($admin->Nick !== null):
+      $AdminName .= ' (' . $admin->Nick . ')';
     endif;
     $Bot->TextEdit(
       $Webhook->User->Id,
@@ -303,14 +325,14 @@ class StbAdmin{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
-    $admin = $Db->Admin($Webhook->User->Id);
-    if($admin === null
-    or ($admin->Perms & StbDbAdminPerm::Admins->value) === false):
+    $user = $Db->Admin($Webhook->User->Id);
+    if($user === null
+    or ($user->Perms->value & StbDbAdminPerm::Admins->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -319,9 +341,9 @@ class StbAdmin{
     endif;
     $admin = $Db->Admin($Admin);
     if($Grant):
-      $Perm = $admin->Perms | $Perm;
+      $Perm = $admin->Perms->value | $Perm;
     else:
-      $Perm = $admin->Perms & ~$Perm;
+      $Perm = $admin->Perms->value & ~$Perm;
     endif;
     $Db->AdminEdit($Admin, $Perm);
     self::Callback_Admin($Admin);
@@ -332,7 +354,7 @@ class StbAdmin{
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
      * @var StbLanguageSys $Lang
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      */
     global $Bot, $Webhook, $Lang, $Db;
     DebugTrace();
@@ -350,7 +372,9 @@ class StbAdmin{
       $line,
       $col++,
       '🔙',
-      $Db->CallBackHashSet(get_class() . '::Callback_AdminMenu();')
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_AdminMenu'
+      ])
     );
     $files = UpdateCheck();
     $files = implode(PHP_EOL, $files);
@@ -369,7 +393,7 @@ class StbAdmin{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgText $Webhook
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      */
     global $Bot, $Webhook, $Db, $Lang;
@@ -395,7 +419,13 @@ class StbAdmin{
       );
       return false;
     endif;
-    $Db->VariableSet(StbDbParam::UserDetails->value, $details, $Webhook->Text);
+    $Db->UserEdit(
+      $Webhook->Text,
+      $details->Name,
+      $details->Type,
+      $details->NameLast,
+      $details->Nick
+    );
     $Bot->TextSend(
       $Webhook->Message->User->Id,
       sprintf(

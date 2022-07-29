@@ -1,13 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.18.02
+//2022.07.29.00
 
 class StbAdminModules{
   static public function Callback_Modules():void{
     /**
      * @var TelegramBotLibrary $Bot
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      * @var TblCmd $Webhook
      */
@@ -29,22 +29,32 @@ class StbAdminModules{
       $line,
       $col++,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet('Admin::Callback_AdminMenu();')
+      $Db->CallBackHashSet([
+        'StbAdmin::Callback_AdminMenu'
+      ])
     );
     $mk->ButtonCallback(
       $line,
       $col++,
       $Lang->Get('Add'),
-      $Db->CallBackHashSet(get_class() . '::Callback_ModuleAdd();')
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_ModuleAdd'
+      ])
     );
     $line = 1;
     $col = 0;
-    foreach($mods as $mod => $time):
+    foreach($mods as $mod):
+      if($Db->ModuleRestricted($mod['module'])):
+        continue;
+      endif;
       $mk->ButtonCallback(
         $line,
         $col++,
-        $mod,
-        $Db->CallBackHashSet("Callback_Mod('$mod');")
+        $mod['module'],
+        $Db->CallBackHashSet([
+          get_class() . '::Callback_Mod',
+          $mod['module']
+        ])
       );
       if($col === 4):
         $col = 0;
@@ -63,14 +73,14 @@ class StbAdminModules{
   static public function Callback_ModuleAdd():void{
     /**
      * @var TelegramBotLibrary $Bot
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      * @var TgCallback $Webhook
      */
     global $Bot, $Db, $Lang, $Webhook;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
+    if(($admin->Perms->value & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -82,33 +92,29 @@ class StbAdminModules{
     $line = 0;
     $col = 0;
 
-    $ModulesFiles = [];
-    $sysmods = StbModuleSystem();
+    $modules = [];
     foreach(glob(DirModules . '/*', GLOB_ONLYDIR) as $file):
-      $file = basename($file);
-      if(in_array($file, $sysmods) === false):
-        $ModulesFiles[] = $file;
-      endif;
+      $modules[] = basename($file);
     endforeach;
-    foreach($Db->Modules() as $mod => $time):
-      $temp = array_search($mod, $ModulesFiles);
-      if($temp !== null):
-        unset($ModulesFiles[$temp]);
-      endif;
-    endforeach;
+    $modules = array_diff($modules, array_column($Db->Modules(), 'module'));
 
     $mk->ButtonCallback(
       $line,
       $col++,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet(get_class() . '::Callback_Modules();')
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_Modules'
+      ])
     );
-    foreach($ModulesFiles as $mod):
+    foreach($modules as $mod):
       $mk->ButtonCallback(
         $line,
         $col++,
         $mod,
-        $Db->CallBackHashSet("Callback_InsModPic('$mod');")
+        $Db->CallBackHashSet([
+          get_class() . '::Callback_InsModPic',
+          $mod
+        ])
       );
       if($col === 4):
         $line++;
@@ -129,12 +135,12 @@ class StbAdminModules{
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
      * @var StbLanguageSys $Lang
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      */
     global $Bot, $Webhook, $Lang, $Db;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
+    if(($admin->Perms->value & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -152,7 +158,9 @@ class StbAdminModules{
         $line,
         $col++,
         $Lang->Get('Back'),
-        $Db->CallBackHashSet(get_class() . '::Callback_ModuleAdd();')
+        $Db->CallBackHashSet([
+          get_class() . '::Callback_ModuleAdd'
+        ])
       );
       $Bot->TextEdit(
         Admin,
@@ -167,7 +175,9 @@ class StbAdminModules{
         $line,
         $col++,
         $Lang->Get('Back'),
-        $Db->CallBackHashSet(get_class() . '::Callback_ModuleAdd();')
+        $Db->CallBackHashSet([
+          get_class() . '::Callback_ModuleAdd'
+        ])
       );
       $Bot->TextEdit(
         Admin,
@@ -183,14 +193,14 @@ class StbAdminModules{
   static public function Callback_Mod(string $Module):void{
     /**
      * @var TelegramBotLibrary $Bot
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      * @var TgCallback $Webhook
      */
     global $Bot, $Db, $Lang, $Webhook;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
+    if(($admin->Perms->value & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -201,26 +211,31 @@ class StbAdminModules{
     $mk = new TblMarkupInline;
     $line = 0;
     $col = 0;
-    $date = $Db->Modules($Module);
     $mk->ButtonCallback(
       $line,
       $col++,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet(get_class() . '::Callback_Modules();')
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_Modules'
+      ])
     );
     $mk->ButtonCallback(
       $line,
       $col++,
       $Lang->Get('UninstallButton', Group: 'Module'),
-      $Db->CallBackHashSet("Callback_UniModPic1('$Module');")
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_UniModPic1',
+        $Module
+      ])
     );
+    $date = $Db->Modules($Module);
     $Bot->TextEdit(
       Admin,
       $Webhook->Message->Id,
       sprintf(
         $Lang->Get('Module', Group: 'Module'),
         $Module,
-        date('Y-m-d H:i:s', $date)
+        date('Y-m-d H:i:s', $date[0]['created'])
       ),
       Markup: $mk
     );
@@ -231,12 +246,12 @@ class StbAdminModules{
      * @var TelegramBotLibrary $Bot
      * @var StbLanguageSys $Lang
      * @var TgCallback $Webhook
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      */
     global $Bot, $Lang, $Webhook, $Db;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
+    if(($admin->Perms->value & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')
@@ -249,13 +264,19 @@ class StbAdminModules{
       0,
       0,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet("Callback_Mod('$Module');")
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_Mod',
+        $Module
+      ])
     );
     $mk->ButtonCallback(
       0,
       1,
       $Lang->Get('Yes'),
-      $Db->CallBackHashSet("Callback_UniModPic2('$Module');")
+      $Db->CallBackHashSet([
+        get_class() . '::Callback_UniModPic2',
+        $Module
+      ])
     );
     $Bot->MarkupEdit(
       Admin,
@@ -268,13 +289,13 @@ class StbAdminModules{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
-     * @var StbDatabaseSys $Db
+     * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     $admin = $Db->Admin($Webhook->User->Id);
-    if(($admin->Perms & StbDbAdminPerm::Modules->value) === false):
+    if(($admin->Perms->value & StbDbAdminPerm::Modules->value) === false):
       $Bot->TextSend(
         $Webhook->User->Id,
         $Lang->Get('Denied')

@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.06.18.00
+//2022.07.29.00
 
 enum StbDbListeners{
   case Chat;
@@ -25,19 +25,16 @@ enum StbDbAdminPerm:int{
   case Stats = 8;
 }
 
-enum StbDbParam:string{
-  case UserDetails = 'UserDetails';
-}
-
 class StbDbAdminData{
   public function __construct(
     public readonly int $Id,
     public readonly int $Creation,
-    public readonly int $Perms
+    public readonly StbDbAdminPerm $Perms,
+    public readonly string $Name,
   ){}
 }
 
-class StbDatabaseSys{
+class StbDatabase{
   private const ParamAdmins = 'Admins';
   private const ParamCommands = 'Commands';
   private const ParamModules = 'Modules';
@@ -46,33 +43,13 @@ class StbDatabaseSys{
   private const ParamCallBackHash = 'CallBackHash';
   private const AdminDataArrayCreation = 0;
   private const AdminDataArrayPerm = 1;
+  private PhpLiveDb $Db;
+  public string|null $DbError = null;
 
-  private function Open(int $User = null):array{
-    DebugTrace();
-    if($User === null):
-      $file = DirDb . '/system.json';
-    else:
-      $file = DirDb . '/' . $User . '.json';
-    endif;
-    if(is_file($file)):
-      $db = file_get_contents($file);
-      $db = json_decode($db, true);
-    else:
-      $db = [];
-    endif;
-    return $db;
-  }
-
-  private function Save(array $Db, int $User = null):void{
-    DebugTrace();
-    if($User === null):
-      $file = DirDb . '/system.json';
-    else:
-      $file = DirDb . '/' . $User . '.json';
-    endif;
-    $db = json_encode($Db, JSON_PRETTY_PRINT);
-    DirCreate(dirname($file));
-    file_put_contents($file, $db);
+  public function __construct(
+    PhpLiveDb $Db
+  ){
+    $this->Db = $Db;
   }
 
   private function NoUserListener(
@@ -86,18 +63,7 @@ class StbDatabaseSys{
     endif;
   }
 
-  private function AdminSuper(array $Var = null):array{
-    $Var ??= [];
-    $Var = [
-      Admin => [
-        self::AdminDataArrayCreation => 0,
-        self::AdminDataArrayPerm => StbDbAdminPerm::All->value
-      ]
-    ] + $Var;
-    return $Var;
-  }
-
-  private function ModuleRestricted(string $Module):bool{
+  public function ModuleRestricted(string $Module):bool{
     if(substr($Module, 0, 3) === 'Stb'
     or substr($Module, 0, 3) === 'Tbl'
     or substr($Module, 0, 2) === 'Tg'):
@@ -110,18 +76,18 @@ class StbDatabaseSys{
     int $User
   ):StbDbAdminData|false{
     DebugTrace();
-    $db = $this->Open();
-    $admins = $db['System'][self::ParamAdmins];
-    $admins = $this->AdminSuper($admins);
-    if(isset($admins[$User])):
-      return new StbDbAdminData(
-        $User,
-        $admins[$User][self::AdminDataArrayCreation],
-        $admins[$User][self::AdminDataArrayPerm]
-      );
-    else:
+    $consult = $this->Db->Select('chats');
+    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $result = $consult->Run();
+    if($result === []):
       return false;
     endif;
+    return new StbDbAdminData(
+      $User,
+      $result[0]['created'],
+      StbDbAdminPerm::from($result[0]['perms']),
+      $result[0]['name']
+    );
   }
 
   public function AdminAdd(
@@ -129,19 +95,23 @@ class StbDatabaseSys{
     int $Perms
   ):bool{
     DebugTrace();
-    if($User === Admin):
+    $consult = $this->Db->Select('chatss');
+    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $result = $consult->Run();
+    if($result !== []):
       return false;
     endif;
-    $db = $this->Open();
-    if(isset($db['System'][self::ParamAdmins][$User]) === false):
-      $db['System'][self::ParamAdmins][$User] = [
-        self::AdminDataArrayCreation => time(),
-        self::AdminDataArrayPerm => $Perms
-      ];
-      $this->Save($db);
+    $consult = $this->Db->Insert('chatss');
+    $consult->FieldAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->FieldAdd('perms', $Perms, PhpLiveDbTypes::Int);
+    $consult->FieldAdd('created', time(), PhpLiveDbTypes::Int);
+    $consult->Run();
+    $this->DbError = $consult->Error;
+    if($this->DbError === null):
       return true;
+    else:
+      return false;
     endif;
-    return false;
   }
 
   public function AdminDel(
@@ -151,55 +121,82 @@ class StbDatabaseSys{
     if($User === Admin):
       return false;
     endif;
-    $db = $this->Open();
-    unset($db['System'][self::ParamAdmins][$User]);
-    $this->Save($db);
+    $consult = $this->Db->Update('chatss');
+    $consult->FieldAdd('perms', StbDbAdminPerm::None->value, PhpLiveDbTypes::Int);
+    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->Run();
     return true;
   }
 
   public function AdminEdit(
     int $User,
-    int $Perm
+    int $Perms
   ):bool{
     DebugTrace();
     if($User === Admin):
       return false;
     endif;
-    $db = $this->Open();
-    $db['System'][self::ParamAdmins][$User][self::AdminDataArrayPerm] = $Perm;
-    $this->Save($db);
-    return true;
+    $consult = $this->Db->Update('chatss');
+    $consult->FieldAdd('perms', $Perms, PhpLiveDbTypes::Int);
+    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->WhereAdd(
+      'perms',
+      StbDbAdminPerm::None->value,
+      PhpLiveDbTypes::Int,
+      PhpLiveDbOperators::Bigger
+    );
+    if($consult->Run() === 1):
+      return true;
+    else:
+      return false;
+    endif;
   }
 
+  /**
+   * @return StbDbAdminData[]
+   */
   public function Admins():array{
     DebugTrace();
-    $db = $this->Open();
-    $admins = $db['System'][self::ParamAdmins];
-    $admins = $this->AdminSuper($admins);
-    foreach($admins as $id => &$admin):
+    $consult = $this->Db->Select('chats');
+    $consult->WhereAdd(
+      'perms',
+      StbDbAdminPerm::None->value,
+      PhpLiveDbTypes::Int,
+      PhpLiveDbOperators::Bigger
+    );
+    $result = $consult->Run();
+    foreach($result as &$admin):
       $admin = new StbDbAdminData(
-        $id,
-        $admin[self::AdminDataArrayCreation],
-        $admin[self::AdminDataArrayPerm]
+        $admin['chat_id'],
+        $admin['created'],
+        StbDbAdminPerm::from($admin['perms']),
+        $result[0]['name']
       );
     endforeach;
-    return $admins;
+    return $result;
   }
 
   /**
    * The callback data are limited to 64 bytes. This function hash the function to be called
    */
   public function CallBackHashSet(
-    string $Function
+    array $Data
   ):string|false{
     DebugTrace();
-    if(substr($Function, -1) !== ';'):
-      return false;
+    $Data = json_encode($Data);
+    $hash = sha1($Data);
+    $consult = $this->Db->select('callbackshash');
+    $consult->WhereAdd('hash', $hash, PhpLiveDbTypes::Str);
+    $result = $consult->Run();
+    if($result === []):
+      $consult = $this->Db->Insert('callbackshash');
+      $consult->FieldAdd('hash', $hash, PhpLiveDbTypes::Str);
+    else:
+      $consult = $this->Db->Update('callbackshash');
+      $consult->WhereAdd('hash', $hash, PhpLiveDbTypes::Str);
     endif;
-    $hash = sha1($Function);
-    $db = $this->Open();
-    $db['System'][self::ParamCallBackHash][$hash] = $Function;
-    $this->Save($db);
+    $consult->FieldAdd('data', $Data, PhpLiveDbTypes::Str);
+    $consult->Run(HtmlSafe: false);
     return $hash;
   }
 
@@ -207,23 +204,28 @@ class StbDatabaseSys{
     string $Hash
   ):bool{
     DebugTrace();
-    $db = $this->Open();
-    if(isset($db['System'][self::ParamCallBackHash][$Hash]) === false):
+    $consult = $this->Db->Select('callbackshash');
+    $consult->WhereAdd('hash', $Hash, PhpLiveDbTypes::Str);
+    $result = $consult->Run();
+    if($result === []):
       return false;
     endif;
-    eval($db['System'][self::ParamCallBackHash][$Hash]);
+    $function = json_decode($result[0]['data'], true);
+    call_user_func_array(array_shift($function), $function);
     return true;
   }
 
   public function CommandAdd(string $Command, string $Module):bool{
     DebugTrace();
-    $db = $this->Open();
-    if(isset($db['System'][self::ParamCommands][$Command])):
-      return false;
-    else:
-      $db['System'][self::ParamCommands][$Command] = $Module;
-      $this->Save($db);
+    $consult = $this->Db->Insert('commands');
+    $consult->FieldAdd('command', $Command, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('module', $Module, PhpLiveDbTypes::Str);
+    $consult->Run();
+    $this->DbError = $consult->Error;
+    if($this->DbError === null):
       return true;
+    else:
+      return false;
     endif;
   }
 
@@ -232,11 +234,19 @@ class StbDatabaseSys{
     if(is_string($Command)):
       $Command = [$Command];
     endif;
-    $db = $this->Open();
-    foreach($Command as $cmd):
-      unset($db['System'][self::ParamCommands][$cmd]);
+    $consult = $this->Db->Delete('commands');
+    $consult->WhereAdd(1, Parenthesis: PhpLiveDbParenthesis::Open);
+    foreach($Command as $id => $cmd):
+      $consult->WhereAdd(
+        'command',
+        $cmd,
+        PhpLiveDbTypes::Str,
+        AndOr: PhpLiveDbAndOr::Or,
+        CustomPlaceholder: 'cmd' . $id
+      );
     endforeach;
-    $this->Save($db);
+    $consult->WhereAdd(2, Parenthesis: PhpLiveDbParenthesis::Close);
+    $consult->Run();
   }
 
   /**
@@ -244,15 +254,13 @@ class StbDatabaseSys{
    * @param string $Command
    * @return array|string|null Return all commands, the respective module or null for command not found
    */
-  public function Commands(string $Command = null):array|string|null{
+  public function Commands(string $Command = null):array{
     DebugTrace();
-    $db = $this->Open();
-    $db['System'][self::ParamCommands] ??= [];
-    if($Command === null):
-      return $db['System'][self::ParamCommands];
-    else:
-      return $db['System'][self::ParamCommands][$Command] ?? null;
+    $consult = $this->Db->Select('commands');
+    if($Command !== null):
+      $consult->WhereAdd('command', $Command, PhpLiveDbTypes::Str);
     endif;
+    return $consult->Run();
   }
 
   /**
@@ -262,37 +270,36 @@ class StbDatabaseSys{
     StbDbListeners $Listener,
     string $Class,
     int $User = null
-  ):void{
-    DebugTrace();
-    if($this->NoUserListener($Listener)):
-      $User = null;
-    endif;
-    $db = $this->Open($User);
-    if(in_array($Class, $db['System'][self::ParamListeners][$Listener->name])):
-      return;
-    endif;
-    $db['System'][self::ParamListeners][$Listener->name][] = $Class;
-    $this->Save($db, $User);
-  }
-
-  public function ListenerDel(
-    StbDbListeners $Listener,
-    string $Class,
-    int $User = null
   ):bool{
     DebugTrace();
     if($this->NoUserListener($Listener)):
       $User = null;
     endif;
-    $db = $this->Open($User);
-    $index = array_search($Class, $db['System'][self::ParamListeners][$Listener->name]);
-    if($index === false):
+    $consult = $this->Db->Insert('listeners');
+    $consult->FieldAdd('listener', $Listener->name, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('class', $Class, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->Run();
+    $this->DbError = $consult->Error;
+    if($this->DbError === null):
+      return true;
+    else:
       return false;
     endif;
-    unset($db['System'][self::ParamListeners][$Listener->name][$index]);
-    ArrayDefrag($db['System'][self::ParamListeners][$Listener->name]);
-    $this->Save($db, $User);
-    return true;
+  }
+
+  public function ListenerDel(
+    StbDbListeners $Listener,
+    int $User = null
+  ):void{
+    DebugTrace();
+    if($this->NoUserListener($Listener)):
+      $User = null;
+    endif;
+    $consult = $this->Db->Delete('listeners');
+    $consult->WhereAdd('listener', $Listener->name, PhpLiveDbTypes::Str);
+    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->Run();
   }
 
   public function ListenerGet(
@@ -303,20 +310,10 @@ class StbDatabaseSys{
     if($this->NoUserListener($Listener)):
       $User = null;
     endif;
-    $db = $this->Open($User);
-    return $db['System'][self::ParamListeners][$Listener->name] ?? [];
-  }
-
-  /**
-   * List a module commands
-   * @param string $Module
-   * @return array
-   */
-  public function ModuleCommands(string $Module):array{
-    DebugTrace();
-    $db = $this->Open();
-    $db['System'][self::ParamCommands] ??= [];
-    return array_keys($db['System'][self::ParamCommands], $Module);
+    $consult = $this->Db->Select('listeners');
+    $consult->WhereAdd('listener', $Listener->name, PhpLiveDbTypes::Str);
+    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    return $consult->Run();
   }
 
   public function ModuleInstall(string $Module):bool{
@@ -324,26 +321,31 @@ class StbDatabaseSys{
     if($this->ModuleRestricted($Module)):
       return false;
     endif;
-    $db = $this->Open();
-    $db['System'][self::ParamModules][$Module] = time();
-    $this->Save($db);
-    return true;
+    $consult = $this->Db->Insert('modules');
+    $consult->FieldAdd('module', $Module, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('created', time(), PhpLiveDbTypes::Int);
+    $consult->Run();
+    $this->DbError = $consult->Error;
+    if($this->DbError === null):
+      return true;
+    else:
+      return false;
+    endif;
   }
 
   /**
    * List all installed modules or get the module installation timestamp
    * @param string $Module
-   * @return array|int|null
+   * @return array
    */
-  public function Modules(string $Module = null):array|int|null{
+  public function Modules(string $Module = null):array{
     DebugTrace();
-    $db = $this->Open();
-    $db['System'][self::ParamModules] ??= [];
-    if($Module === null):
-      return $db['System'][self::ParamModules];
-    else:
-      return $db['System'][self::ParamModules][$Module] ?? null;
+    $consult = $this->Db->Select('modules');
+    if($Module !== null):
+      $consult->WhereAdd('module', $Module, PhpLiveDbTypes::Str);
     endif;
+    $consult->Order('module');
+    return $consult->Run();
   }
 
   /**
@@ -351,22 +353,90 @@ class StbDatabaseSys{
    */
   public function ModuleUninstall(string $Module):void{
     DebugTrace();
-    $db = $this->Open();
-    foreach($db['System'][self::ParamListeners] as $listener => $functions):
-      foreach($functions as $id => $name):
-        if(strpos($name, $Module) === 0):
-          unset($db['System'][self::ParamListeners][$listener][$id]);
-        endif;
-      endforeach;
-    endforeach;
-    foreach($db['System'][self::ParamCallBackHash] as $hash => $function):
-      if(strpos($function, $Module) !== false):
-        unset($db['System'][self::ParamCallBackHash][$hash]);
-      endif;
-    endforeach;
-    unset($db[$Module]);
-    unset($db['System'][self::ParamModules][$Module]);
-    $this->Save($db);
+    $consult = $this->Db->Delete('modules');
+    $consult->WhereAdd('module', $Module, PhpLiveDbTypes::Str);
+    $consult->Run();
+    $consult = $this->Db->Delete('callbackshash');
+    $consult->WhereAdd(
+      'data',
+      '%' . $Module . '%',
+      PhpLiveDbTypes::Str,
+      PhpLiveDbOperators::Like
+    );
+    $consult->Run();
+  }
+
+  public function UsageLog(
+    int $Id,
+    string $Event,
+    string $Additional = null
+  ):void{
+    DebugTrace();
+    $consult = $this->Db->Insert('sys_logs');
+    $consult->FieldAdd('chat_id', $Id, PhpLiveDbTypes::Int);
+    $consult->FieldAdd('time', time(), PhpLiveDbTypes::Int);
+    $consult->FieldAdd('event', $Event, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('additional', $Additional, PhpLiveDbTypes::Str);
+    $consult->Run();
+  }
+
+  public function UserEdit(
+    int $Id,
+    string $Name,
+    TgChatType $Type,
+    string $NameLast = null,
+    string $Nick = null,
+  ):bool{
+    DebugTrace();
+    $consult = $this->Db->Update('chatss');
+    $consult->WhereAdd('chat_id', $Id, PhpLiveDbTypes::Int);
+    $consult->FieldAdd('name', $Name, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('name2', $NameLast, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('nick', $Nick, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('type', $Type->value, PhpLiveDbTypes::Str);
+    $result = $consult->Run();
+    $this->DbError = $consult->Error;
+    return $result === 1;
+  }
+
+  public function UserGet(
+    int $Id
+  ):TgChat|null{
+    DebugTrace();
+    $consult = $this->Db->Select('chats');
+    $consult->WhereAdd('chat_id', $Id, PhpLiveDbTypes::Int);
+    $result = $consult->Run();
+    if($result === []):
+      return null;
+    endif;
+    $return = [
+      'id' => $result[0]['chat_id'],
+      'type' => $result[0]['type'],
+      'last_name' => $result[0]['name2'],
+      'username' => $result[0]['nick']
+    ];
+    if($result[0]['type'] === TgChatType::Private->value):
+      $return['first_name'] = $result[0]['name'];
+    endif;
+    return new TgChat($return);
+  }
+
+  public function UserSeen(int $Id):void{
+    DebugTrace();
+    $user = $this->UserGet($Id);
+    if($user === null):
+      $consult = $this->Db->Insert('chats');
+      $consult->FieldAdd('chat_id', $Id, PhpLiveDbTypes::Int);
+      $consult->FieldAdd('created', time(), PhpLiveDbTypes::Int);
+      $consult->FieldAdd('lastseen', time(), PhpLiveDbTypes::Int);
+      $consult->FieldAdd('type', TgChatType::Private->value, PhpLiveDbTypes::Int);
+      $consult->Run();
+      return;
+    endif;
+    $consult = $this->Db->Update('chats');
+    $consult->FieldAdd('lastseen', time(), PhpLiveDbTypes::Int);
+    $consult->WhereAdd('chat_id', $Id, PhpLiveDbTypes::Int);
+    $consult->Run();
   }
 
   public function VariableGet(
@@ -374,8 +444,15 @@ class StbDatabaseSys{
     int $User = null
   ):mixed{
     DebugTrace();
-    $db = $this->Open($User);
-    return $db['System'][self::ParamVariables][$Name] ?? null;
+    $consult = $this->Db->Select('variables');
+    $consult->WhereAdd('name', $Name, PhpLiveDbTypes::Str);
+    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $result = $consult->Run();
+    if($result === []):
+      return null;
+    else:
+      return $result[0]['value'];
+    endif;
   }
 
   public function VariableSet(
@@ -384,76 +461,26 @@ class StbDatabaseSys{
     int $User = null
   ):void{
     DebugTrace();
-    $db = $this->Open($User);
-    $db['System'][self::ParamVariables][$Name] = $Value;
-    $this->Save($db, $User);
-  }
-}
-
-class StbDatabaseModule{
-  private readonly string $Module;
-
-  private function OpenAll(int $User = null):array{
-    DebugTrace();
-    if($User === null):
-      $file = DirDb . '/system.json';
+    if($Value === null):
+      $consult = $this->Db->Delete('variables');
+      $consult->WhereAdd('name', $Name, PhpLiveDbTypes::Str);
+      $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
     else:
-      $file = DirDb . '/' . $User . '.json';
+      $consult = $this->Db->Select('variables');
+      $consult->WhereAdd('name', $Name, PhpLiveDbTypes::Str);
+      $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+      $result = $consult->Run();
+      if($result === []):
+        $consult = $this->Db->Insert('variables');
+        $consult->FieldAdd('name', $Name, PhpLiveDbTypes::Str);
+        $consult->FieldAdd('chat_id', $User, PhpLiveDbTypes::Int);
+      else:
+        $consult = $this->Db->Update('variables');
+        $consult->WhereAdd('name', $Name, PhpLiveDbTypes::Str);
+        $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+      endif;
+      $consult->FieldAdd('value', $Value, PhpLiveDbTypes::Str);
     endif;
-    if(is_file($file)):
-      $db = file_get_contents($file);
-      $db = json_decode($db, true);
-    else:
-      $db = [];
-    endif;
-    return $db;
-  }
-
-  private function Open(int $User = null):array{
-    DebugTrace();
-    $db = $this->OpenAll($User);
-    return $db[$this->Module] ?? [];
-  }
-
-  private function Save(array $Db, int $User = null):void{
-    DebugTrace();
-    if($User === null):
-      $file = DirDb . '/system.json';
-    else:
-      $file = DirDb . '/' . $User . '.json';
-    endif;
-    $db = $this->OpenAll($User);
-    $db[$this->Module] = $Db;
-    $db = json_encode($db);
-    DirCreate(dirname($file));
-    file_put_contents($file, $db);
-  }
-
-  public function __construct(string $Module){
-    DebugTrace();
-    if($Module === 'System'):
-      $Module .= 1;
-    endif;
-    $this->Module = $Module;
-  }
-
-  public function Set(string $Name, mixed $Value, int $User = null){
-    DebugTrace();
-    $db = $this->Open($User);
-    $db[$Name] = $Value;
-    $this->Save($db, $User);
-  }
-
-  public function Get(string $Name, int $User = null):mixed{
-    DebugTrace();
-    $db = $this->Open($User);
-    return $db[$Name] ?? null;
-  }
-
-  public function Del(string $Name, int $User = null):void{
-    DebugTrace();
-    $db = $this->Open($User);
-    unset($db[$Name]);
-    $this->Save($db, $User);
+    $consult->Run();
   }
 }

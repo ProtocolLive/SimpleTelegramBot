@@ -1,32 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.15.00
-
-/**
- * Log an event in usage file
- */
-function LogUsage(string $Event, string $Additional = null):void{
-  /** @var TblCmd $Webhook */
-  global $Webhook;
-  DebugTrace();
-  $temp = date('Y-m-d H:i:s') . "\t";
-  if($Webhook->Message->User->Nick !== null):
-    $temp .= '@' . $Webhook->Message->User->Nick . ' ';
-  endif;
-  $temp .= '(' . $Webhook->Message->User->Id . ') ';
-  $temp .= $Webhook->Message->User->Name;
-  if($Webhook->Message->User->NameLast !== null):
-    $temp .= ' ' . $Webhook->Message->User->NameLast;
-  endif;
-  $temp .= "\t";
-  $temp .= $Event;
-  if($Additional !== null):
-    $temp .= "\t" . $Additional;
-  endif;
-  $temp .= PHP_EOL;
-  file_put_contents(DirLogs . '/usage.log', $temp, FILE_APPEND);
-}
+//2022.07.29.00
 
 /**
  * Log an event in bot file
@@ -45,8 +20,9 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
    * @var TelegramBotLibrary $Bot
    * @var TgCmd $Webhook
    * @var string $UserLang
+   * @var StbDatabase $Db
    */
-  global $Bot, $Webhook, $UserLang;
+  global $Bot, $Webhook, $UserLang, $Db;
   DebugTrace();
   $Photo = false;
   $Text = false;
@@ -77,7 +53,7 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
   endif;
 
   if($Photo or $Text):
-    LogUsage($Command, $EventAdditional);
+    $Db->UsageLog($Webhook->Message->Chat->Id, $Command, $EventAdditional);
     return true;
   else:
     return false;
