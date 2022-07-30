@@ -1,70 +1,53 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2021.09.12.00
+//2022.07.30.00
 
-$ByUser = [];
-$ByCom = [];
+const DirToken = __DIR__;
+require(dirname(__DIR__, 1) . '/system/system.php');
 
-$file = fopen(__DIR__ . '/logs/usage.log', 'r');
-while(feof($file) === false):
-  $line = trim(fgets($file));
-  if(strlen($line) > 0):
-    $temp = explode("\t", $line);
-    $temp2 = $temp[1];
-    if(isset($temp[3])):
-      $temp2 .= ' - ' . $temp[3];
+$consult = $PlDb->Select('chats');
+$chats = $consult->Run();
+
+$consult = $PlDb->Select('sys_logs');
+$consult->Fields('event,count(event) as count');
+$consult->Group('event');
+$consult->Order('count desc');
+$events = $consult->Run();
+
+$consult = $PlDb->Select('sys_logs');
+$consult->JoinAdd('chats', 'chat_id');
+$consult->Order('time desc');
+$logs = $consult->Run();
+
+?>
+<p>Lifetime users interacted: <?= count($chats);?></p>
+
+<p>
+  <b>Commands</b><br><?php
+  foreach($events as $event):
+    echo $event['count'] . ' - ' . $event['event'] . '<br>';
+  endforeach;?>
+</p>
+
+<p>
+  <b>Logs</b><br><?php
+  foreach($logs as $log):
+    echo date('Y/m/d H:i:s', $log['time']) . ' - ';
+    echo $log['event'] . ' ';
+    if($log['additional'] !== null):
+      echo $log['additional'];
     endif;
-    $ByDay[explode(' ', $temp[0])[0]][$temp[2]][] = $temp2;
-    $ByUser[$temp[1]][$temp[2]][] = $temp[0];
-    $ByCom[$temp[2]][$temp[1]][] = $temp[0];
-  endif;
-endwhile;
-$ByUser = array_reverse($ByUser);
-ksort($ByCom);?>
+    echo '<br>';
 
-<table style="width:100%">
-  <tr>
-    <th style="text-align:left;">By day</th>
-    <th style="text-align:left;">By user</th>
-    <th style="text-align:left;">By command</th>
-  </tr>
-  <tr>
-    <td style="vertical-align:top;">
-      Total: <?php print count($ByUser);?><br><?php
-      $ByDay = array_reverse($ByDay);
-      foreach($ByDay as $day => $commands):
-        print $day . '<br>';
-        foreach($commands as $command => $users):
-          print '<span style="margin-left:15px">' . $command . '</span><br>';
-          foreach($users as $user):
-            print '<span style="margin-left:30px">' . $user . '</span><br>';
-          endforeach;
-        endforeach;
-      endforeach;?>
-    <td style="vertical-align:top;">
-      Total: <?php print count($ByUser);?><br><?php
-      foreach($ByUser as $name => $user):
-        print $name . '<br>';
-        foreach($user as $command => $times):
-          print '<span style="margin-left:15px">' . $command . '</span><br>';
-          foreach($times as $time):
-            print '<span style="margin-left:30px">' . $time . '</span><br>';
-          endforeach;
-        endforeach;
-      endforeach;?>
-    </td>
-    <td style="vertical-align:top;">
-      Total: <?php print count($ByCom);?><br><?php
-      foreach($ByCom as $command => $users):
-        print $command . '<br>';
-        foreach($users as $user => $times):
-          print '<span style="margin-left:15px">' . $user . '</span><br>';
-          foreach($times as $time):
-            print '<span style="margin-left:30px">' . $time . '</span><br>';
-          endforeach;
-        endforeach;
-      endforeach;?>
-    </td>
-  </tr>
-</table>
+    echo $log['chat_id'] . ', ';
+    if($log['nick'] !== null):
+      echo '@' . $log['nick'] . ', ';
+    endif;
+    echo $log['name'] . ' ';
+    if($log['name2'] !== null):
+      echo $log['name2'] . ' ';
+    endif;
+    echo '<hr>';
+  endforeach;?>
+</p>
