@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.07.30.00
+//2022.07.30.01
 
 //This file are included by DirToken/index.php
 
@@ -115,7 +115,7 @@ function Update_Cmd():void{
    * @var TblCmd $Webhook
    */
   global $Bot, $Db, $Webhook, $UserLang;
-  $Db->UserSeen($Webhook->Message->User->Id);
+  $Db->UserSeen($Webhook->Message->User);
 
   //When the sender is a chat/channel, they don't have the language
   $UserLang = $Webhook->Message->User->Language ?? DefaultLanguage;
@@ -173,7 +173,7 @@ function Update_Text():void{
    * @var StbDatabase $Db
    */
   global $Db, $Webhook;
-  $Db->UserSeen($Webhook->Message->User->Id);
+  $Db->UserSeen($Webhook->Message->User);
   $Run = false;
   foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
     $Run = true;

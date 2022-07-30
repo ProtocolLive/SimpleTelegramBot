@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.07.30.00
+//2022.07.30.01
 
 enum StbDbListeners{
   case Chat;
@@ -413,21 +413,21 @@ class StbDatabase{
     return new TgChat($return);
   }
 
-  public function UserSeen(int $Id):void{
+  public function UserSeen(TgUser $User):void{
     DebugTrace();
-    $user = $this->UserGet($Id);
+    $user = $this->UserGet($User->Id);
     if($user === null):
       $consult = $this->Db->Insert('chats');
-      $consult->FieldAdd('chat_id', $Id, PhpLiveDbTypes::Int);
+      $consult->FieldAdd('chat_id', $User->Id, PhpLiveDbTypes::Int);
       $consult->FieldAdd('created', time(), PhpLiveDbTypes::Int);
-      $consult->FieldAdd('lastseen', time(), PhpLiveDbTypes::Int);
-      $consult->FieldAdd('type', TgChatType::Private->value, PhpLiveDbTypes::Int);
-      $consult->Run();
-      return;
+    else:
+      $consult = $this->Db->Update('chats');
+      $consult->WhereAdd('chat_id', $User->Id, PhpLiveDbTypes::Int);
     endif;
-    $consult = $this->Db->Update('chats');
+    $consult->FieldAdd('name', $User->Name, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('name2', $User->NameLast, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('nick', $User->Nick, PhpLiveDbTypes::Str);
     $consult->FieldAdd('lastseen', time(), PhpLiveDbTypes::Int);
-    $consult->WhereAdd('chat_id', $Id, PhpLiveDbTypes::Int);
     $consult->Run();
   }
 
