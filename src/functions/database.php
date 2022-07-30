@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.07.30.03
+//2022.07.30.04
 
 enum StbDbListeners{
   case Chat;
@@ -247,7 +247,7 @@ class StbDatabase{
   /**
    * List all commands or check if a commands exists
    * @param string $Command
-   * @return array|string|null Return all commands, the respective module or null for command not found
+   * @return array Return all commands or the respective module
    */
   public function Commands(string $Command = null):array{
     DebugTrace();
