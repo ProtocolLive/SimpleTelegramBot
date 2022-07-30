@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.21.00
+//2022.07.28.00
 
 require(__DIR__ . '/system/php.php');
 set_error_handler('error');
@@ -73,6 +73,8 @@ function Action_():void{?>
 }
 
 function Action_ok():void{
+  global $PlDb;
+  DebugTrace();
   echo '<h1>SimpleTelegramBot Install</h1>';
   $token = explode(':', $_POST['token']);
   $token = $token[1];
@@ -95,6 +97,20 @@ function Action_ok():void{
   file_put_contents(__DIR__ . '/RENAME_WITH_TOKEN/db/system.json', '{}');
   rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/Bot-' . $_POST['name'] . '-' . $token);
   rename(__FILE__, __DIR__ . '/install.php');
+
+  $consult = $PlDb->GetCustom();
+  $sqls = file_get_contents(DirSystem . '/system/install/db.sql');
+  $sqls = explode(';', $sqls);
+  array_pop($sqls);
+  foreach($sqls as $sql):
+    $stm = $consult->prepare($sql);
+    $stm->execute();
+  endforeach;
+  $stm = $consult->prepare('
+    insert into sys_users(user_id,created,perms)
+    values(' . $_POST['admin'] . ',' . time() . ',' . StbDbAdminPerm::All->value . ')
+  ');
+  $stm->execute();
 
   echo '✅ Install complete!';
   $url = dirname($_SERVER['SCRIPT_URI']);
