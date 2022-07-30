@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.07.30.01
+//2022.07.30.02
 
 enum StbDbListeners{
   case Chat;
@@ -393,7 +393,7 @@ class StbDatabase{
 
   public function UserGet(
     int $Id
-  ):TgChat|null{
+  ):TgUser|null{
     DebugTrace();
     $consult = $this->Db->Select('chats');
     $consult->WhereAdd('chat_id', $Id, PhpLiveDbTypes::Int);
@@ -404,13 +404,11 @@ class StbDatabase{
     $return = [
       'id' => $result[0]['chat_id'],
       'type' => $result[0]['type'],
+      'first_name' => $result[0]['name'],
       'last_name' => $result[0]['name2'],
       'username' => $result[0]['nick']
     ];
-    if($result[0]['type'] === TgChatType::Private->value):
-      $return['first_name'] = $result[0]['name'];
-    endif;
-    return new TgChat($return);
+    return new TgUser($return);
   }
 
   public function UserSeen(TgUser $User):void{
