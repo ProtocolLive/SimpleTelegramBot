@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.07.30.02
+//2022.07.30.03
 
 enum StbDbListeners{
   case Chat;
@@ -41,12 +41,14 @@ class StbDatabase{
   public function __construct(
     PhpLiveDb $Db
   ){
+    DebugTrace();
     $this->Db = $Db;
   }
 
   private function NoUserListener(
     StbDbListeners $Listener
   ):bool{
+    DebugTrace();
     if($Listener === StbDbListeners::InlineQuery
     or $Listener === StbDbListeners::ChatMy):
       return true;
@@ -56,6 +58,7 @@ class StbDatabase{
   }
 
   public function ModuleRestricted(string $Module):bool{
+    DebugTrace();
     if(substr($Module, 0, 3) === 'Stb'
     or substr($Module, 0, 3) === 'Tbl'
     or substr($Module, 0, 2) === 'Tg'):
