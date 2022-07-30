@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.07.30.01
+//2022.07.30.02
 
 //This file are included by DirToken/index.php
 
@@ -190,7 +190,7 @@ function Update_Text():void{
     endif;
   endforeach;
   if($Run === false):
-    SendUserCmd('dontknow');
+    SendUserCmd('dontknow', $Webhook->Text);
   endif;
   return;
 }
