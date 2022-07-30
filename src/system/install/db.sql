@@ -5,7 +5,7 @@ create table callbackshash(
 create table chats(
   chat_id bigint unsigned not null primary key,
   type varchar(10) not null,
-  name varchar(100),
+  name varchar(100) not null,
   name2 varchar(100),
   nick varchar(100),
   perms tinyint unsigned default 0 not null,
