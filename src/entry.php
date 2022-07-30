@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.21.01
+//2022.07.29.00
 
 //This file are included by DirToken/index.php
 
@@ -24,7 +24,7 @@ function Action_():void{
     ob_start();
     var_dump($Webhook);
     LogBot(ob_get_contents());
-    ob_end_flush();
+    ob_end_clean();
   endif;
 
   if(get_class($Webhook) === 'TblCmd'):
@@ -111,25 +111,33 @@ function Action_WebhookDel():void{
 function Update_Cmd():void{
   /**
    * @var TelegramBotLibrary $Bot
-   * @var StbDatabaseSys $Db
+   * @var StbDatabase $Db
    * @var TblCmd $Webhook
    */
   global $Bot, $Db, $Webhook, $UserLang;
+  $Db->UserSeen($Webhook->Message->User->Id);
+
   //When the sender is a chat/channel, they don't have the language
   $UserLang = $Webhook->Message->User->Language ?? DefaultLanguage;
 
   //In a group, with many bots, the commands have the target bot.
   //This block check the target and caches the bot name
   if($Webhook->Message->Chat->Type !== TgChatType::Private):
-    $name = $Db->VariableGet(StbDbParam::UserDetails->value);
+    $name = $Db->UserGet($Webhook->Message->User->Id);
     if($name === null):
       $name = $Bot->MyGet();
       if($name !== null):
-        $Db->VariableSet(StbDbParam::UserDetails->value, $name);
+        $Db->UserEdit(
+          $name->Id,
+          $name->Name,
+          $name->Type,
+          $name->NameLast,
+          $name->Nick
+        );
         $name = $name->Nick;
       endif;
     else:
-      $name = $name['Nick'];
+      $name = $name->Nick;
     endif;
     if($Webhook->Target !== null
     and $Webhook->Target !== $name):
@@ -139,9 +147,9 @@ function Update_Cmd():void{
 
   //Module command
   $module = $Db->Commands($Webhook->Command);
-  if($module !== null):
-    StbModuleLoad($module);
-    call_user_func($module . '::Command_' . $Webhook->Command);
+  if($module !== []):
+    StbModuleLoad($module[0]['module']);
+    call_user_func($module[0]['module'] . '::Command_' . $Webhook->Command);
     return;
   endif;
 
@@ -153,7 +161,7 @@ function Update_Cmd():void{
 function Update_Callback():void{
   /**
    * @var TgCallback $Webhook
-   * @var StbDatabaseSys $Db
+   * @var StbDatabase $Db
    */
   global $Webhook, $Db;
   $Db->CallBackHashRun($Webhook->Data);
@@ -162,9 +170,10 @@ function Update_Callback():void{
 function Update_Text():void{
   /**
    * @var TgText $Webhook
-   * @var StbDatabaseSys $Db
+   * @var StbDatabase $Db
    */
   global $Db, $Webhook;
+  $Db->UserSeen($Webhook->Message->User->Id);
   $Run = false;
   foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
     $Run = true;
@@ -189,7 +198,7 @@ function Update_Text():void{
 function Update_ListenerDual(StbDbListeners $Listener):void{
   /**
    * @var TgPhoto $Webhook
-   * @var StbDatabaseSys $Db
+   * @var StbDatabase $Db
    */
   global $Db, $Webhook;
   foreach($Db->ListenerGet($Listener) as $listener):
@@ -209,7 +218,7 @@ function Update_ListenerDual(StbDbListeners $Listener):void{
 
 function Update_ListenerSimple(StbDbListeners $Listener):void{
   /**
-   * @var StbDatabaseSys $Db
+   * @var StbDatabase $Db
    */
   global $Db;
   foreach($Db->ListenerGet($Listener) as $listener):
