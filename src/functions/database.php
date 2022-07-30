@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.07.29.00
+//2022.07.30.00
 
 enum StbDbListeners{
   case Chat;
@@ -35,14 +35,6 @@ class StbDbAdminData{
 }
 
 class StbDatabase{
-  private const ParamAdmins = 'Admins';
-  private const ParamCommands = 'Commands';
-  private const ParamModules = 'Modules';
-  private const ParamVariables = 'Variables';
-  private const ParamListeners = 'Listeners';
-  private const ParamCallBackHash = 'CallBackHash';
-  private const AdminDataArrayCreation = 0;
-  private const AdminDataArrayPerm = 1;
   private PhpLiveDb $Db;
   public string|null $DbError = null;
 
@@ -277,7 +269,7 @@ class StbDatabase{
     endif;
     $consult = $this->Db->Insert('listeners');
     $consult->FieldAdd('listener', $Listener->name, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('class', $Class, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('module', $Class, PhpLiveDbTypes::Str);
     $consult->FieldAdd('chat_id', $User, PhpLiveDbTypes::Int);
     $consult->Run();
     $this->DbError = $consult->Error;
