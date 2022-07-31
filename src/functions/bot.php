@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.07.30.00
+//2022.07.31.00
 
 /**
  * Log an event in bot log file
@@ -40,14 +40,17 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
   $Text = false;
   $File = DirUserCmds . '/' . $UserLang . '/' . $Command;
   
-  $temp = $File . 'jpg';
-  if(is_file($temp)):
-    $Bot->PhotoSend(
-      $Webhook->Message->Chat->Id,
-      $temp
-    );
-    $Photo = true;
-  endif;
+  foreach(['jpg', 'png', 'gif'] as $ext):
+    $temp = $File . '.' . $ext;
+    if(is_file($temp)):
+      $Bot->PhotoSend(
+        $Webhook->Message->Chat->Id,
+        $temp
+      );
+      $Photo = true;
+      break;
+    endif;
+  endforeach;
 
   $File .= '.txt';
   if(is_file($File)):
