@@ -1,4 +1,4 @@
-345998d0a8490163a8eb8169ae497f7a304f9108  src/DirToken.zip
+82df4a53ff9749e43952a75a32f8e56680786c22  src/DirToken.zip
 9ccd6abd6b29bdb66e65686d4cf36f35b6f40993  src/RENAME_WITH_TOKEN/UserCmds/en/dontknow.txt
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/en/index.htm
 5054c3d7f1583aa0a043a72b08d9abf93591802f  src/RENAME_WITH_TOKEN/UserCmds/en/start.txt
@@ -25,16 +25,16 @@ af15cdfeda7ae32fefbbd08bdb4cdcad72d86826  src/entry.php
 7b0c81bd9ae077a2e0163f7b94296e879fff7bf7  src/functions/language.php
 f39b8f542fbb57d067b2ba0d47903c1d5cdd4c5d  src/functions/module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
-dcf62ce33f5634df9a5c22730016484de8e55599  src/index.php
+a0416b913664d71cc66c1fc80e0fff84dbb38b00  src/index.php
 8211d4b18ee0281e7eaca30775c96664b88d723e  src/language/en/system.json
 ea7907d4194cf00dbc72d9dac5f32d0194df1eff  src/language/pt-br/system.json
-7b027f27cfbbe2ff3b5750be42facb386ada9172  src/system/PhpLiveDb/DbBasics.php
-98814e1ea5ec9f735147cc356f15427bf3bba626  src/system/PhpLiveDb/index.php
+056a81f2fd2c1ca22c25b85c0828ec714de416c0  src/system/PhpLiveDb/DbBasics.php
+1f6a4a2595f265d89203149745ecf753759765dc  src/system/PhpLiveDb/index.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/system/TelegramBotLibrary/index.htm
 4eb252d9275dd332bcb2758d57b867e0fc984048  src/system/constants.php
 8fbbb9d59ca541847f4a61df73406ad4ae7150df  src/system/functions/basics.php
 bf4c37d6314fa21bed64148bf2a43360aec74370  src/system/functions/debug.php
-539bdf4a3581529e2142a1c861f1a251d384e504  src/system/install/db.sql
+8c2d34bb32becfbb4b48747e963ab02375ecd38e  src/system/install/db.sql
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
 2d44f0ad682376a943c4dd97af93fdf1c89cc893  src/system/requires.php
 5f0bb95672503582d0fd10696975d64e39f0a307  src/system/system.php

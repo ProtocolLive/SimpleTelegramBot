@@ -7,7 +7,8 @@ create table chats(
   name text default '-',
   name2 text,
   nick text,
-  perms tinyint unsigned default 0 not null,
+  lang text,
+  perms integer unsigned default 0 not null,
   created integer unsigned,
   lastseen integer unsigned
 );
@@ -26,8 +27,8 @@ create table listeners(
   listener text not null,
   chat_id integer,
   module text not null,
-  foreign key(chat_id) references chats(chat_id),
-  foreign key(module) references modules(module),
+  foreign key(chat_id) references chats(chat_id) on delete cascade,
+  foreign key(module) references modules(module) on delete cascade,
   unique(listener,chat_id)
 );
 create table sys_logs(
@@ -36,18 +37,18 @@ create table sys_logs(
   chat_id integer not null,
   event text not null,
   additional text,
-  foreign key(chat_id) references chats(chat_id),
+  foreign key(chat_id) references chats(chat_id) on delete cascade,
   unique(time,chat_id)
 );
 create table sys_params(
   name text not null primary key,
   value text not null
 );
-insert into sys_params values('DbVersion','1.0.1');
+insert into sys_params values('DbVersion','1.0.0');
 create table variables(
   chat_id integer,
   name text not null,
   value text,
   unique(chat_id,name),
-  foreign key(chat_id) references chats(chat_id)
+  foreign key(chat_id) references chats(chat_id) on delete cascade
 );
