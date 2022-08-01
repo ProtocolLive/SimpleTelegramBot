@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.01.01
+//2022.08.01.02
 
 enum StbDbListeners{
   case Chat;
@@ -384,7 +384,6 @@ class StbDatabase{
     $consult->FieldAdd('name', $User->Name, PhpLiveDbTypes::Str);
     $consult->FieldAdd('name2', $User->NameLast, PhpLiveDbTypes::Str);
     $consult->FieldAdd('nick', $User->Nick, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('type', $User->Type->value, PhpLiveDbTypes::Str);
     $result = $consult->Run();
     $this->DbError = $consult->Error;
     return $result === 1;
@@ -402,7 +401,6 @@ class StbDatabase{
     endif;
     $return = [
       'id' => $result[0]['chat_id'],
-      'type' => $result[0]['type'],
       'first_name' => $result[0]['name'],
       'last_name' => $result[0]['name2'],
       'username' => $result[0]['nick']
@@ -425,7 +423,6 @@ class StbDatabase{
     $consult->FieldAdd('name2', $User->NameLast, PhpLiveDbTypes::Str);
     $consult->FieldAdd('nick', $User->Nick, PhpLiveDbTypes::Str);
     $consult->FieldAdd('lastseen', time(), PhpLiveDbTypes::Int);
-    $consult->FieldAdd('type', $User->Type->value, PhpLiveDbTypes::Str);
     $consult->Run();
   }
 

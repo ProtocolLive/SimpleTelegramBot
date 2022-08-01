@@ -3,8 +3,7 @@ create table callbackshash(
   data varchar(100) not null
 );
 create table chats(
-  chat_id bigint unsigned not null primary key,
-  type varchar(10) not null,
+  chat_id bigint not null primary key,
   name varchar(100) default '-',
   name2 varchar(100),
   nick varchar(100),
@@ -25,7 +24,7 @@ create table commands(
 insert into commands values('admin','StbAdmin'),('id','StbAdmin');
 create table listeners(
   listener varchar(100) not null,
-  chat_id bigint unsigned,
+  chat_id bigint,
   module varchar(50) not null,
   foreign key(chat_id) references chats(chat_id),
   foreign key(module) references modules(module),
@@ -34,7 +33,7 @@ create table listeners(
 create table sys_logs(
   log_id integer not null primary key autoincrement,
   time int unsigned not null,
-  chat_id bigint unsigned not null,
+  chat_id bigint not null,
   event varchar(50) not null,
   additional varchar(50),
   foreign key(chat_id) references chats(chat_id),
@@ -46,7 +45,7 @@ create table sys_params(
 );
 insert into sys_params values('DbVersion','1.0.0');
 create table variables(
-  chat_id bigint unsigned,
+  chat_id bigint,
   name varchar(50) not null,
   value varchar(100),
   unique(chat_id,name),
