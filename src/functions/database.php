@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.01.00
+//2022.08.01.01
 
 enum StbDbListeners{
   case Chat;
@@ -425,6 +425,7 @@ class StbDatabase{
     $consult->FieldAdd('name2', $User->NameLast, PhpLiveDbTypes::Str);
     $consult->FieldAdd('nick', $User->Nick, PhpLiveDbTypes::Str);
     $consult->FieldAdd('lastseen', time(), PhpLiveDbTypes::Int);
+    $consult->FieldAdd('type', $User->Type->value, PhpLiveDbTypes::Str);
     $consult->Run();
   }
 

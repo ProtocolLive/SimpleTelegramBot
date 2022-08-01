@@ -21,7 +21,7 @@ bd4e08a8d0d91082b9ed6ef9573d67cc71a65f41  src/cmds/admin.php
 c9306e2f8ac5d50c23bb98674f5d96ddd01a21a5  src/cron.php
 8d737ab76d21dad013016c36c75c6ad34dcb9cf0  src/entry.php
 6ef6e926cb8d6c25fe76cdd31a39fd1b4c40d850  src/functions/bot.php
-193662b54074ad4533533abdd50c9b6b9bb175e7  src/functions/database.php
+e462540c749420eb4879cdce4b8729c2bb921feb  src/functions/database.php
 7b0c81bd9ae077a2e0163f7b94296e879fff7bf7  src/functions/language.php
 f39b8f542fbb57d067b2ba0d47903c1d5cdd4c5d  src/functions/module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
