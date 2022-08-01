@@ -1,53 +1,53 @@
 create table callbackshash(
-  hash varchar(40) not null primary key,
-  data varchar(100) not null
+  hash text not null primary key,
+  data text not null
 );
 create table chats(
-  chat_id bigint not null primary key,
-  name varchar(100) default '-',
-  name2 varchar(100),
-  nick varchar(100),
+  chat_id integer not null primary key,
+  name text default '-',
+  name2 text,
+  nick text,
   perms tinyint unsigned default 0 not null,
-  created int unsigned,
-  lastseen int unsigned
+  created integer unsigned,
+  lastseen integer unsigned
 );
 create table modules(
-  module varchar(50) not null primary key,
-  created int unsigned not null
+  module text not null primary key,
+  created integer unsigned not null
 );
 insert into modules values('StbAdmin',0);
 create table commands(
-  command varchar(100) not null primary key,
-  module varchar(50) not null,
+  command text not null primary key,
+  module text not null,
   foreign key(module) references modules(module) on delete cascade
 );
 insert into commands values('admin','StbAdmin'),('id','StbAdmin');
 create table listeners(
-  listener varchar(100) not null,
-  chat_id bigint,
-  module varchar(50) not null,
+  listener text not null,
+  chat_id integer,
+  module text not null,
   foreign key(chat_id) references chats(chat_id),
   foreign key(module) references modules(module),
   unique(listener,chat_id)
 );
 create table sys_logs(
   log_id integer not null primary key autoincrement,
-  time int unsigned not null,
-  chat_id bigint not null,
-  event varchar(50) not null,
-  additional varchar(50),
+  time integer unsigned not null,
+  chat_id integer not null,
+  event text not null,
+  additional text,
   foreign key(chat_id) references chats(chat_id),
   unique(time,chat_id)
 );
 create table sys_params(
-  name varchar(50) not null primary key,
-  value varchar(100) not null
+  name text not null primary key,
+  value text not null
 );
-insert into sys_params values('DbVersion','1.0.0');
+insert into sys_params values('DbVersion','1.0.1');
 create table variables(
-  chat_id bigint,
-  name varchar(50) not null,
-  value varchar(100),
+  chat_id integer,
+  name text not null,
+  value text,
   unique(chat_id,name),
   foreign key(chat_id) references chats(chat_id)
 );
