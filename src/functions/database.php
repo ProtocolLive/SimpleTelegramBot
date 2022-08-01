@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.07.30.04
+//2022.08.01.00
 
 enum StbDbListeners{
   case Chat;
@@ -376,19 +376,15 @@ class StbDatabase{
   }
 
   public function UserEdit(
-    int $Id,
-    string $Name,
-    TgChatType $Type,
-    string $NameLast = null,
-    string $Nick = null,
+    TgUser $User
   ):bool{
     DebugTrace();
     $consult = $this->Db->Update('chatss');
-    $consult->WhereAdd('chat_id', $Id, PhpLiveDbTypes::Int);
-    $consult->FieldAdd('name', $Name, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('name2', $NameLast, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('nick', $Nick, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('type', $Type->value, PhpLiveDbTypes::Str);
+    $consult->WhereAdd('chat_id', $User->Id, PhpLiveDbTypes::Int);
+    $consult->FieldAdd('name', $User->Name, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('name2', $User->NameLast, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('nick', $User->Nick, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('type', $User->Type->value, PhpLiveDbTypes::Str);
     $result = $consult->Run();
     $this->DbError = $consult->Error;
     return $result === 1;
