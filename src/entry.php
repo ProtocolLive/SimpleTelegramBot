@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.01.00
+//2022.08.01.01
 
 //This file are included by DirToken/index.php
 
@@ -183,7 +183,8 @@ function Update_Text():void{
       return;
     endif;
   endforeach;
-  if($Run === false):
+  if($Run === false
+  and $Webhook->Message->Chat->Type === TgChatType::Private):
     SendUserCmd('dontknow', $Webhook->Text);
   endif;
   return;
