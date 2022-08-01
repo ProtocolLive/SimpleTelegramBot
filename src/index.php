@@ -1,9 +1,11 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.07.28.00
+//2022.08.01.00
 
 require(__DIR__ . '/system/php.php');
+require(__DIR__ . '/system/PhpLiveDb/index.php');
+require(__DIR__ . '/functions/database.php');
 set_error_handler('error');
 set_exception_handler('error');
 
@@ -73,11 +75,10 @@ function Action_():void{?>
 }
 
 function Action_ok():void{
-  global $PlDb;
-  DebugTrace();
   echo '<h1>SimpleTelegramBot Install</h1>';
   $token = explode(':', $_POST['token']);
   $token = $token[1];
+
   if(is_dir(__DIR__ . '/RENAME_WITH_TOKEN') === false):
     $zip = new ZipArchive;
     $zip->open(__DIR__ . '/DirToken.zip');
@@ -96,26 +97,31 @@ function Action_ok():void{
 
   file_put_contents(__DIR__ . '/RENAME_WITH_TOKEN/db/system.json', '{}');
   rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/Bot-' . $_POST['name'] . '-' . $token);
-  rename(__FILE__, __DIR__ . '/install.php');
 
+  $DirToken = 'Bot-' . $_POST['name'] . '-' . $token;
+  $PlDb = new PhpLiveDb(__DIR__ . "/$DirToken/db.db", Driver: PhpLiveDbDrivers::SqLite);
   $consult = $PlDb->GetCustom();
-  $sqls = file_get_contents(DirSystem . '/system/install/db.sql');
+  $sqls = file_get_contents(__DIR__ . '/system/install/db.sql');
   $sqls = explode(';', $sqls);
   array_pop($sqls);
+  $consult->beginTransaction();
   foreach($sqls as $sql):
     $stm = $consult->prepare($sql);
     $stm->execute();
   endforeach;
   $stm = $consult->prepare('
-    insert into sys_users(user_id,created,perms)
-    values(' . $_POST['admin'] . ',' . time() . ',' . StbDbAdminPerm::All->value . ')
+    insert into chats(chat_id,created,perms)
+    values(:admin,' . time() . ',' . StbDbAdminPerm::All->value . ')
   ');
+  $stm->bindValue(':admin', $_POST['admin'], PDO::PARAM_INT);
   $stm->execute();
+  $consult->commit();
 
   echo '✅ Install complete!';
-  $url = dirname($_SERVER['SCRIPT_URI']);
-  $url .= '/Bot-' . $_POST['name'] . '-' . $token . '/index.php?a=WebhookSet';
+  $url = dirname($_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME']);
+  $url .= '/' . $DirToken . '/index.php?a=WebhookSet';
   echo '<p><a href="' . $url . '">Click here to set the webhook</a></p>';
+  rename(__FILE__, __DIR__ . '/install.php');
 }
 
 function error():never{
