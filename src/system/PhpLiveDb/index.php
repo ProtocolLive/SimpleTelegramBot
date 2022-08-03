@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/PhpLiveDb
-//Version 2022.08.01.00
+//Version 2022.08.02.01
 //For PHP >= 8.1
 
 require_once(__DIR__ . '/DbBasics.php');
@@ -102,6 +102,7 @@ class PhpLiveDbSelect extends PhpLiveDbBasics{
   private string|null $Group = null;
   private string|null $Limit = null;
   private bool $ThrowError = true;
+  private PDOStatement|null $Statement = null;
 
   private function SelectHead():void{
     $this->Query = 'select ' . $this->Fields . ' from ' . $this->Table;
@@ -247,8 +248,9 @@ class PhpLiveDbSelect extends PhpLiveDbBasics{
     bool $TrimValues = true,
     bool $Log = false,
     int $LogEvent = null,
-    int $LogUser = null
-  ):array|null{
+    int $LogUser = null,
+    bool $Fetch = false
+  ):array|bool|null{
     $WheresCount = count($this->Wheres);
 
     $this->SelectHead();
@@ -281,16 +283,31 @@ class PhpLiveDbSelect extends PhpLiveDbBasics{
       return null;
     }
 
-    if($OnlyFieldsName):
-      $temp = PDO::FETCH_ASSOC;
+    $this->LogAndDebug($statement, $Debug, $Log, $LogEvent, $LogUser);
+
+    if($Fetch):
+      $this->Statement = $statement;
+      return true;
     else:
-      $temp = PDO::FETCH_DEFAULT;
+      if($OnlyFieldsName):
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+      else:
+        $statement->setFetchMode(PDO::FETCH_DEFAULT);
+      endif;
+      return $statement->fetchAll();
     endif;
-    $return = $statement->fetchAll($temp);
+  }
 
-    $this->LogAndDebug($this->Conn, $statement, $Debug, $Log, $LogEvent, $LogUser);
-
-    return $return;
+  public function Fetch(
+    bool $OnlyFieldsName = true,
+    int $Offset = 0
+  ):array|false{
+    if($OnlyFieldsName):
+      $this->Statement->setFetchMode(PDO::FETCH_ASSOC);
+    else:
+      $this->Statement->setFetchMode(PDO::FETCH_DEFAULT);
+    endif;
+    return $this->Statement->fetch(cursorOffset: $Offset);
   }
 }
 
@@ -390,7 +407,7 @@ class PhpLiveDbInsert extends PhpLiveDbBasics{
 
     $return = $this->Conn->lastInsertId();
 
-    $this->LogAndDebug($this->Conn, $statement, $Debug, $Log, $LogEvent, $LogUser);
+    $this->LogAndDebug($statement, $Debug, $Log, $LogEvent, $LogUser);
 
     return $return;
   }
@@ -542,7 +559,7 @@ class PhpLiveDbUpdate extends PhpLiveDbBasics{
 
     $return = $statement->rowCount();
 
-    $this->LogAndDebug($this->Conn, $statement, $Debug, $Log, $LogEvent, $LogUser);
+    $this->LogAndDebug($statement, $Debug, $Log, $LogEvent, $LogUser);
 
     return $return;
   }
@@ -645,7 +662,7 @@ class PhpLiveDbDelete extends PhpLiveDbBasics{
 
     $return = $statement->rowCount();
 
-    $this->LogAndDebug($this->Conn, $statement, $Debug, $Log, $LogEvent, $LogUser);
+    $this->LogAndDebug($statement, $Debug, $Log, $LogEvent, $LogUser);
 
     return $return;
   }
