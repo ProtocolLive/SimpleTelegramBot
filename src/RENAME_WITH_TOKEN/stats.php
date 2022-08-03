@@ -1,38 +1,36 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.07.30.00
+//2022.08.02.00
 
 const DirToken = __DIR__;
 require(dirname(__DIR__, 1) . '/system/system.php');
 
 $consult = $PlDb->Select('chats');
-$chats = $consult->Run();
+$consult->Fields('count(*) as count');
+$chats = $consult->Run();?>
 
-$consult = $PlDb->Select('sys_logs');
-$consult->Fields('event,count(event) as count');
-$consult->Group('event');
-$consult->Order('count desc');
-$events = $consult->Run();
-
-$consult = $PlDb->Select('sys_logs');
-$consult->JoinAdd('chats', 'chat_id');
-$consult->Order('time desc');
-$logs = $consult->Run();
-
-?>
-<p>Lifetime users interacted: <?= count($chats);?></p>
+<p>Lifetime users interacted: <?=$chats[0]['count'];?></p>
 
 <p>
   <b>Commands</b><br><?php
-  foreach($events as $event):
+  $consult = $PlDb->Select('sys_logs');
+  $consult->Fields('event,count(event) as count');
+  $consult->Group('event');
+  $consult->Order('count desc');
+  $consult->Run(Fetch: true);
+  while(($event = $consult->Fetch()) !== false):
     echo $event['count'] . ' - ' . $event['event'] . '<br>';
-  endforeach;?>
+  endwhile;?>
 </p>
 
 <p>
   <b>Logs</b><br><?php
-  foreach($logs as $log):
+  $consult = $PlDb->Select('sys_logs');
+  $consult->JoinAdd('chats', 'chat_id');
+  $consult->Order('time desc');
+  $consult->Run(Fetch: true);
+  while(($log = $consult->Fetch()) !== false):
     echo date('Y/m/d H:i:s', $log['time']) . ' - ';
     echo $log['event'] . ' ';
     if($log['additional'] !== null):
@@ -49,5 +47,5 @@ $logs = $consult->Run();
       echo $log['name2'] . ' ';
     endif;
     echo '<hr>';
-  endforeach;?>
+  endwhile;?>
 </p>
