@@ -28,8 +28,8 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
 a0416b913664d71cc66c1fc80e0fff84dbb38b00  src/index.php
 8211d4b18ee0281e7eaca30775c96664b88d723e  src/language/en/system.json
 ea7907d4194cf00dbc72d9dac5f32d0194df1eff  src/language/pt-br/system.json
-d62b5e1de0058c4a326597ad4032e671536d1789  src/system/PhpLiveDb/DbBasics.php
-23973b52a14e1fed76fc9c427135a4d1eb2fcfca  src/system/PhpLiveDb/index.php
+1edc76474fba0ccc0fe17780712f4221dc3a4222  src/system/PhpLiveDb/DbBasics.php
+5d46b2062b0c498364b5c58bea5ab69100cb0a76  src/system/PhpLiveDb/index.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/system/TelegramBotLibrary/index.htm
 4eb252d9275dd332bcb2758d57b867e0fc984048  src/system/constants.php
 8fbbb9d59ca541847f4a61df73406ad4ae7150df  src/system/functions/basics.php

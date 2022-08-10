@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/PhpLiveDb
-//Version 2022.08.02.01
+//Version 2022.08.07.04
 //For PHP >= 8.1
 
 require_once(__DIR__ . '/DbBasics.php');
@@ -11,7 +11,7 @@ enum PhpLiveDbDrivers:string{
   case SqLite = 'sqlite';
 }
 
-class PhpLiveDb extends PhpLiveDbBasics{
+final class PhpLiveDb extends PhpLiveDbBasics{
   /**
    * @throws Exception
    */
@@ -41,14 +41,13 @@ class PhpLiveDb extends PhpLiveDbBasics{
     $this->Conn->setAttribute(PDO::ATTR_TIMEOUT, $TimeOut);
     $this->Conn->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
     $this->Conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //Enabling profiling to get duration
+    $this->Conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     if($Driver === PhpLiveDbDrivers::MySql):
-      $statement = $this->Conn->prepare('set profiling_history_size=1;set profiling=1;');
-      $statement->execute();
+      //Enabling profiling to get duration
+      $this->Conn->exec('set profiling_history_size=1;set profiling=1;');
     endif;
     if($Driver === PhpLiveDbDrivers::SqLite):
-      $statement = $this->Conn->prepare('pragma foreign_keys=on');
-      $statement->execute();
+      $this->Conn->exec('pragma foreign_keys=on');
     endif;
     $this->Prefix = $Prefix;
   }
@@ -94,7 +93,7 @@ class PhpLiveDb extends PhpLiveDbBasics{
   }
 }
 
-class PhpLiveDbSelect extends PhpLiveDbBasics{
+final class PhpLiveDbSelect extends PhpLiveDbBasics{
   private string $Fields = '*';
   private array $Join = [];
   private array $Wheres = [];
@@ -103,28 +102,6 @@ class PhpLiveDbSelect extends PhpLiveDbBasics{
   private string|null $Limit = null;
   private bool $ThrowError = true;
   private PDOStatement|null $Statement = null;
-
-  private function SelectHead():void{
-    $this->Query = 'select ' . $this->Fields . ' from ' . $this->Table;
-  }
-
-  private function JoinBuild():void{
-    foreach($this->Join as $join):
-      if($join->Type === PhpLiveDbJoins::Inner):
-        $this->Query .= ' inner';
-      elseif($join->Type === PhpLiveDbJoins::Left):
-        $this->Query .= ' left';
-      elseif($join->Type === PhpLiveDbJoins::Right):
-        $this->Query .= ' right';
-      endif;
-      $this->Query .= ' join ' . $join->Table;
-      if($join->On === null):
-        $this->Query .= ' using(' . $join->Using . ')';
-      else:
-        $this->Query .= ' on(' . $join->On . ')';
-      endif;
-    endforeach;
-  }
 
   public function __construct(
     PDO &$Conn,
@@ -138,8 +115,22 @@ class PhpLiveDbSelect extends PhpLiveDbBasics{
     $this->ThrowError = $ThrowError;
   }
 
+  public function Fetch(
+    bool $FetchBoth = false,
+    int $Offset = 0
+  ):array|false{
+    if($FetchBoth):
+      $this->Statement->setFetchMode(PDO::FETCH_BOTH);
+    endif;
+    return $this->Statement->fetch(cursorOffset: $Offset);
+  }
+
   public function Fields(string $Fields):void{
     $this->Fields = $Fields;
+  }
+
+  public function Group(string $Fields):void{
+    $this->Group = $Fields;
   }
 
   public function JoinAdd(
@@ -166,6 +157,97 @@ class PhpLiveDbSelect extends PhpLiveDbBasics{
         $this->On = $On;
       }
     };
+  }
+
+  private function JoinBuild():void{
+    foreach($this->Join as $join):
+      if($join->Type === PhpLiveDbJoins::Inner):
+        $this->Query .= ' inner';
+      elseif($join->Type === PhpLiveDbJoins::Left):
+        $this->Query .= ' left';
+      elseif($join->Type === PhpLiveDbJoins::Right):
+        $this->Query .= ' right';
+      endif;
+      $this->Query .= ' join ' . $join->Table;
+      if($join->On === null):
+        $this->Query .= ' using(' . $join->Using . ')';
+      else:
+        $this->Query .= ' on(' . $join->On . ')';
+      endif;
+    endforeach;
+  }
+
+  public function Limit(int $Amount, int $First = 0):void{
+    $this->Limit = $First . ',' . $Amount;
+  }
+
+  public function Order(string $Fields):void{
+    $this->Order = $Fields;
+  }
+
+  private function Prepare():PDOStatement{
+    $this->SelectHead();
+    $this->JoinBuild();
+    if(count($this->Wheres) > 0):
+      $this->BuildWhere($this->Wheres);
+    endif;
+    if($this->Group !== null):
+      $this->Query .= ' group by ' . $this->Group;
+    endif;
+    if($this->Order !== null):
+      $this->Query .= ' order by ' . $this->Order;
+    endif;
+    if($this->Limit !== null):
+      $this->Query .= ' limit ' . $this->Limit;
+    endif;
+
+    $this->Query = str_replace('##', $this->Prefix . '_', $this->Query);
+    return $this->Conn->prepare($this->Query);
+  }
+
+  public function QueryGet():string{
+    $this->Prepare();
+    return $this->Query;
+  }
+
+  public function Run(
+    bool $FetchBoth = false,
+    bool $Debug = false,
+    bool $HtmlSafe = true,
+    bool $TrimValues = true,
+    bool $Log = false,
+    int $LogEvent = null,
+    int $LogUser = null,
+    bool $Fetch = false
+  ):array|bool|null{
+    $statement = $this->Prepare();
+    if(count($this->Wheres) > 0):
+      $this->Bind($statement, $this->Wheres, $HtmlSafe, $TrimValues);
+    endif;
+    
+    try{
+      $this->Error = null;
+      $statement->execute();
+    }catch(PDOException $e){
+      $this->ErrorSet($e);
+      return null;
+    }
+
+    $this->LogAndDebug($statement, $Debug, $Log, $LogEvent, $LogUser);
+
+    if($Fetch):
+      $this->Statement = $statement;
+      return true;
+    else:
+      if($FetchBoth):
+        $statement->setFetchMode(PDO::FETCH_BOTH);
+      endif;
+      return $statement->fetchAll();
+    endif;
+  }
+
+  private function SelectHead():void{
+    $this->Query = 'select ' . $this->Fields . ' from ' . $this->Table;
   }
 
   /**
@@ -200,8 +282,10 @@ class PhpLiveDbSelect extends PhpLiveDbBasics{
       $Value = null;
       $Type = PhpLiveDbTypes::Null;
     endif;
-    if(isset($this->Wheres[$CustomPlaceholder ?? $Field])):
-      $error = new PDOException(
+    if(array_search($CustomPlaceholder ?? $Field, $this->WheresControl) !== false
+    and $NoField === false
+    and $NoBind === false):
+      $error = new Exception(
         'The where condition "' . ($CustomPlaceholder ?? $Field) . '" already added',
       );
       if($this->ThrowError):
@@ -211,7 +295,7 @@ class PhpLiveDbSelect extends PhpLiveDbBasics{
         return false;
       endif;
     endif;
-    $this->Wheres[$CustomPlaceholder ?? $Field] = new PhpLiveDbWhere(
+    $this->Wheres[] = new PhpLiveDbWhere(
       $Field,
       $Value,
       $Type,
@@ -223,95 +307,15 @@ class PhpLiveDbSelect extends PhpLiveDbBasics{
       $NoField,
       $NoBind
     );
+    $this->WheresControl[] = $CustomPlaceholder ?? $Field;
     if($Debug):
       var_dump($this->Wheres);
     endif;
     return true;
   }
-
-  public function Order(string $Fields):void{
-    $this->Order = $Fields;
-  }
-
-  public function Group(string $Fields):void{
-    $this->Group = $Fields;
-  }
-
-  public function Limit(int $Amount, int $First = 0):void{
-    $this->Limit = $First . ',' . $Amount;
-  }
-
-  public function Run(
-    bool $OnlyFieldsName = true,
-    bool $Debug = false,
-    bool $HtmlSafe = true,
-    bool $TrimValues = true,
-    bool $Log = false,
-    int $LogEvent = null,
-    int $LogUser = null,
-    bool $Fetch = false
-  ):array|bool|null{
-    $WheresCount = count($this->Wheres);
-
-    $this->SelectHead();
-    $this->JoinBuild();
-    if($WheresCount > 0):
-      $this->BuildWhere($this->Wheres);
-    endif;
-    if($this->Group !== null):
-      $this->Query .= ' group by ' . $this->Group;
-    endif;
-    if($this->Order !== null):
-      $this->Query .= ' order by ' . $this->Order;
-    endif;
-    if($this->Limit !== null):
-      $this->Query .= ' limit ' . $this->Limit;
-    endif;
-
-    $this->Query = str_replace('##', $this->Prefix . '_', $this->Query);
-    $statement = $this->Conn->prepare($this->Query);
-
-    if($WheresCount > 0):
-      $this->Bind($statement, $this->Wheres, $HtmlSafe, $TrimValues);
-    endif;
-    
-    try{
-      $this->Error = null;
-      $statement->execute();
-    }catch(PDOException $e){
-      $this->ErrorSet($e);
-      return null;
-    }
-
-    $this->LogAndDebug($statement, $Debug, $Log, $LogEvent, $LogUser);
-
-    if($Fetch):
-      $this->Statement = $statement;
-      return true;
-    else:
-      if($OnlyFieldsName):
-        $statement->setFetchMode(PDO::FETCH_ASSOC);
-      else:
-        $statement->setFetchMode(PDO::FETCH_DEFAULT);
-      endif;
-      return $statement->fetchAll();
-    endif;
-  }
-
-  public function Fetch(
-    bool $OnlyFieldsName = true,
-    int $Offset = 0
-  ):array|false{
-    if($OnlyFieldsName):
-      $this->Statement->setFetchMode(PDO::FETCH_ASSOC);
-    else:
-      $this->Statement->setFetchMode(PDO::FETCH_DEFAULT);
-    endif;
-    return $this->Statement->fetch(cursorOffset: $Offset);
-  }
 }
 
-class PhpLiveDbInsert extends PhpLiveDbBasics{
+final class PhpLiveDbInsert extends PhpLiveDbBasics{
   private array $Fields = [];
 
   private function InsertFields():void{
@@ -345,7 +349,7 @@ class PhpLiveDbInsert extends PhpLiveDbBasics{
 
   public function FieldAdd(
     string $Field,
-    string|null $Value,
+    string|bool|null $Value,
     PhpLiveDbTypes $Type,
     bool $BlankIsNull = true
   ){
@@ -413,7 +417,7 @@ class PhpLiveDbInsert extends PhpLiveDbBasics{
   }
 }
 
-class PhpLiveDbUpdate extends PhpLiveDbBasics{
+final class PhpLiveDbUpdate extends PhpLiveDbBasics{
   private array $Fields = [];
   private array $Wheres = [];
 
@@ -444,7 +448,7 @@ class PhpLiveDbUpdate extends PhpLiveDbBasics{
 
   public function FieldAdd(
     string $Field,
-    string|null $Value,
+    string|bool|null $Value,
     PhpLiveDbTypes $Type,
     bool $BlankIsNull = true
   ){
@@ -565,7 +569,7 @@ class PhpLiveDbUpdate extends PhpLiveDbBasics{
   }
 }
 
-class PhpLiveDbDelete extends PhpLiveDbBasics{
+final class PhpLiveDbDelete extends PhpLiveDbBasics{
   private array $Wheres = [];
 
   public function __construct(

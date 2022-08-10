@@ -1,14 +1,15 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/PhpLiveDb
-//Version 2022.08.02.00
+//Version 2022.08.07.00
 //For PHP >= 8.1
 
 enum PhpLiveDbTypes:int{
-  case Null = 0;
+  case Bool = 5;
   case Int = 1;
-  case Str = 2;
+  case Null = 0;
   case Sql = 6;
+  case Str = 2;
 }
 
 enum PhpLiveDbOperators:string{
@@ -48,6 +49,7 @@ abstract class PhpLiveDbBasics{
   protected PDO $Conn;
   protected array $Binds = [];
   protected string|null $Query = null;
+  protected array $WheresControl = [];
   public string|null $Error = null;
 
   public function Begin():void{
@@ -246,7 +248,7 @@ abstract class PhpLiveDbBasics{
   }
 }
 
-class PhpLiveDbWhere{
+final class PhpLiveDbWhere{
   public function __construct(
     public string $Field,
     public string|null $Value = null,
