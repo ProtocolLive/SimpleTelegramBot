@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.07.29.00
+//2022.08.18.00
+
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatType;
 
 class StbAdmin{
   static private function JumpLineCheck(

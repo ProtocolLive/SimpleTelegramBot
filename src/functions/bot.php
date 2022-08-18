@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.07.31.00
+//2022.08.18.00
+
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgParseMode;
 
 /**
  * Log an event in bot log file

@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.01.02
+//2022.08.18.00
+
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
 enum StbDbListeners{
   case Chat;

@@ -1,9 +1,11 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.21.00
+//2022.08.18.00
 
 //Installation date: ##DATE##
+
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgInvoiceCurrencies;
 
 //Token given by @BotFather
 //Type: string
