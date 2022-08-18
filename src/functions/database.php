@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.18.00
+//2022.08.18.01
 
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
@@ -192,7 +192,7 @@ class StbDatabase{
       $consult = $this->Db->Update('callbackshash');
       $consult->WhereAdd('hash', $hash, PhpLiveDbTypes::Str);
     endif;
-    $consult->FieldAdd('data', $Data, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('function', $Data, PhpLiveDbTypes::Str);
     $consult->Run(HtmlSafe: false);
     return $hash;
   }
@@ -207,7 +207,7 @@ class StbDatabase{
     if($result === []):
       return false;
     endif;
-    $function = json_decode($result[0]['data'], true);
+    $function = json_decode($result[0]['function'], true);
     call_user_func_array(array_shift($function), $function);
     return true;
   }
