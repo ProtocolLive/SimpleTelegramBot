@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.05.15.00
+//2022.08.14.00
 
 function HandlerError(
   int $errno,
@@ -9,39 +9,31 @@ function HandlerError(
   string $errfile = null,
   int $errline = null,
   array $errcontext = null
-):void{
+):never{
   DebugTrace();
+  $log = PHP_EOL . 'Error: ' . $errstr . PHP_EOL;
+  $log .= $errfile . ' (' . $errline . ')' . PHP_EOL;
   ob_start();
-  echo '</select><pre>';
-  echo 'Error #' . $errno . ' - ' . $errstr . ' in ' . $errfile . ' (' . $errline . ')' . PHP_EOL;
-  echo 'Backtrace:' . PHP_EOL;
   debug_print_backtrace();
-  echo '</pre>';
-  if(ini_get('display_errors')):
-    error_log(ob_get_contents());
-    ob_end_flush();
-    die();
-  endif;
-  error_log(ob_get_contents());
+  $log .= ob_get_contents();
   ob_end_clean();
+  if(ini_get('display_erros')):
+    echo $log;
+  endif;
+  error_log($log);
+  die();
 }
 
-function HandlerException($Exception):void{
+function HandlerException(Throwable $Exception):never{
   DebugTrace();
-  ob_start();
-  echo '</select><pre>';
-  echo 'Exception:' . PHP_EOL;
-  var_dump($Exception);
-  echo 'Backtrace:' . PHP_EOL;
-  debug_print_backtrace();
-  echo '</pre>';
+  $log = 'Exception ' . get_class($Exception) . ': ' . $Exception->getMessage() . PHP_EOL;
+  $log .= $Exception->getFile() . ' (' . $Exception->getLine() . ')' . PHP_EOL;
+  $log .= $Exception->getTraceAsString();
   if(ini_get('display_errors')):
-    error_log(ob_get_contents());
-    ob_end_flush();
-    die();
+    echo $log;
   endif;
-  error_log(ob_get_contents());
-  ob_end_clean();
+  error_log($log);
+  die();
 }
 
 function vd(mixed $v):void{
