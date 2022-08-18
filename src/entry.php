@@ -1,11 +1,11 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.18.00
+//2022.08.18.01
 
 //This file are included by DirToken/index.php
 
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatType;
+use ProtocolLive\TelegramBotLibrary\TgObjects\{TgChatType, TgCallback, TgText, TgPhoto, TgInvoiceCheckout, TgInvoiceShipping, TgInlineQuery, TgGroupStatusMy, TgChatTitle};
 
 $_GET['a'] ??= '';
 if(function_exists('Action_' . $_GET['a'])):
@@ -29,23 +29,23 @@ function Action_():void{
     ob_end_clean();
   endif;
 
-  if(get_class($Webhook) === 'TblCmd'):
+  if(get_class($Webhook) === TblCmd::class):
     Update_Cmd();
-  elseif(get_class($Webhook) === 'TgCallback'):
+  elseif(get_class($Webhook) === TgCallback::class):
     Update_Callback();
-  elseif(get_class($Webhook) === 'TgText'):
+  elseif(get_class($Webhook) === TgText::class):
     Update_Text();
-  elseif(get_class($Webhook) === 'TgPhoto'):
+  elseif(get_class($Webhook) === TgPhoto::class):
     Update_ListenerDual(StbDbListeners::Photo);
-  elseif(get_class($Webhook) === 'TgInvoiceCheckout'):
+  elseif(get_class($Webhook) === TgInvoiceCheckout::class):
     Update_ListenerSimple(StbDbListeners::InvoiceCheckout);
-  elseif(get_class($Webhook) === 'TgInvoiceShipping'):
+  elseif(get_class($Webhook) === TgInvoiceShipping::class):
     Update_ListenerSimple(StbDbListeners::InvoiceShipping);
-  elseif(get_class($Webhook) === 'TgInlineQuery'):
+  elseif(get_class($Webhook) === TgInlineQuery::class):
     Update_ListenerSimple(StbDbListeners::InlineQuery);
-  elseif(get_class($Webhook) === 'TgGroupStatusMy'):
+  elseif(get_class($Webhook) === TgGroupStatusMy::class):
     Update_ListenerSimple(StbDbListeners::ChatMy);
-  elseif(get_class($Webhook) === 'TgChatTitle'):
+  elseif(get_class($Webhook) === TgChatTitle::class):
     Update_ListenerSimple(StbDbListeners::Chat);
   endif;
 }
