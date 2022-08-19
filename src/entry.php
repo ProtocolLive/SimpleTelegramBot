@@ -1,11 +1,16 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.18.01
+//2022.08.19.00
 
 //This file are included by DirToken/index.php
 
-use ProtocolLive\TelegramBotLibrary\TgObjects\{TgChatType, TgCallback, TgText, TgPhoto, TgInvoiceCheckout, TgInvoiceShipping, TgInlineQuery, TgGroupStatusMy, TgChatTitle};
+use ProtocolLive\TelegramBotLibrary\TgObjects\{
+  TgChatType, TgCallback, TgText, TgPhoto, TgInvoiceCheckout, TgInvoiceShipping, TgInlineQuery, TgGroupStatusMy, TgChatTitle, TgUpdateType
+};
+use ProtocolLive\TelegramBotLibrary\TblObjects\{
+  TblCmd, TblWebhook, TblData
+};
 
 $_GET['a'] ??= '';
 if(function_exists('Action_' . $_GET['a'])):

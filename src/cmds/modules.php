@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.07.29.00
+//2022.08.19.00
+
+use ProtocolLive\TelegramBotLibrary\TblObjects\TblMarkupInline;
 
 class StbAdminModules{
   static public function Callback_Modules():void{

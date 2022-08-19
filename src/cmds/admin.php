@@ -1,9 +1,11 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.18.01
+//2022.08.19.00
 
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatType;
+use ProtocolLive\TelegramBotLibrary\TblObjects\{
+  TblMarkupInline, TblMarkupForceReply, TblCmd, TgCallback
+};
 
 class StbAdmin{
   static private function JumpLineCheck(
@@ -111,7 +113,7 @@ class StbAdmin{
         dirname('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']) . '/stats.php'
       );
     endif;
-    if(get_class($Webhook) === 'TblCmd'):
+    if(get_class($Webhook) === TblCmd::class):
       $Bot->TextSend(
         $Webhook->Message->User->Id,
         $Lang->Get('AdminMenu', Group: 'Admin'),
@@ -363,7 +365,7 @@ class StbAdmin{
      * @var StbLanguageSys $Lang
      */
     global $Bot, $Webhook, $Db, $Lang;
-    if(get_class($Webhook->Message->Reply) !== 'TgText'):
+    if(get_class($Webhook->Message->Reply) !== TgText::class):
       return true;
     endif;
     if($Db->VariableGet('AdminNew') !== $Webhook->Message->Reply->Message->Id):
