@@ -1,4 +1,4 @@
-631f5476d31160f4830cf0a77ce382108858723e  src/DirToken.zip
+91dccd57cdae12b9928404e466d3d21d50927b27  src/DirToken.zip
 9ccd6abd6b29bdb66e65686d4cf36f35b6f40993  src/RENAME_WITH_TOKEN/UserCmds/en/dontknow.txt
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/en/index.htm
 5054c3d7f1583aa0a043a72b08d9abf93591802f  src/RENAME_WITH_TOKEN/UserCmds/en/start.txt
@@ -8,7 +8,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/index.h
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/UserCmds/pt-br/index.htm
 a6bd1dbe6c6fe7249552f794d0b78ba5618e0188  src/RENAME_WITH_TOKEN/UserCmds/pt-br/start.txt
 673be2874cd1daaf48768fe60ce464d7254e9caa  src/RENAME_WITH_TOKEN/UserCmds/pt-br/unknown.txt
-9fd66a6f7f2eb2cdfa95bcb88af539a36a898802  src/RENAME_WITH_TOKEN/config.php
+21179884a89e0dfb6af89666cbabc56c1eba4365  src/RENAME_WITH_TOKEN/config.php
 cf19747799090af54bb6a2f6b25c8d790a7c6489  src/RENAME_WITH_TOKEN/index.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/logs/index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/modules/index.htm
@@ -16,10 +16,10 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/modules/index.ht
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/RENAME_WITH_TOKEN/tools/index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/RENAME_WITH_TOKEN/tools/info.php
 7194cfdc783a8ad37a46517b01b73048cbbd4d56  src/RENAME_WITH_TOKEN/tools/scope.php
-65caea513890be080c277df2a396c79a52a13272  src/cmds/admin.php
-4885b5723dede8b7a6b002ada08f3fcaf337dd7e  src/cmds/modules.php
+b35f14a561c3d5617a719d52409e879927f5099a  src/cmds/admin.php
+d51e1ddef3c25ab51f4b33bb126f172a7d58cc36  src/cmds/modules.php
 c9306e2f8ac5d50c23bb98674f5d96ddd01a21a5  src/cron.php
-9de8d1fe514fa2648e0b4ee6b42fc792abac14fe  src/entry.php
+35d10f8d2394bc6ff1952f6ad7d89d8668cdad1d  src/entry.php
 2ab89307ae1dfb8571d57b86707c3be4cf0fb5a7  src/functions/bot.php
 e01562beed716c794d863dde95a9ff0cfa31ae7e  src/functions/database.php
 7b0c81bd9ae077a2e0163f7b94296e879fff7bf7  src/functions/language.php
@@ -37,4 +37,4 @@ c460eb68ba065d997b34f7b7ea95dbdaebcc3a91  src/system/functions/debug.php
 8c2d34bb32becfbb4b48747e963ab02375ecd38e  src/system/install/db.sql
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
 2d44f0ad682376a943c4dd97af93fdf1c89cc893  src/system/requires.php
-5f0bb95672503582d0fd10696975d64e39f0a307  src/system/system.php
+7a419c7ca02cd0a1132704b34cd24a6c2fc0c0fa  src/system/system.php
