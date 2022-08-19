@@ -1,9 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.18.00
+//2022.08.18.01
 
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgParseMode;
+use ProtocolLive\TelegramBotLibrary\TgObjects\{TgParseMode, TgChat, TgChatType, TgUser};
 
 /**
  * Log an event in bot log file
@@ -105,4 +105,19 @@ function UpdateCheck():array{
     endif;
   endforeach;
   return $return;
+}
+
+/**
+ * @throws TypeError
+ */
+function Tgchat2Tguser(TgChat $Chat):TgUser{
+  if($Chat->Type !== TgChatType::Private):
+    throw new TypeError('Chat type must be of type Private');
+  endif;
+  return new TgUser([
+    'id' => $Chat->Id,
+    'first_name' => $Chat->Name,
+    'last_name' => $Chat->NameLast,
+    'username' => $Chat->Nick
+  ]);
 }
