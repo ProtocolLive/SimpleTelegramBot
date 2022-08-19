@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.18.01
+//2022.08.18.02
 
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
@@ -381,7 +381,7 @@ class StbDatabase{
     TgUser $User
   ):bool{
     DebugTrace();
-    $consult = $this->Db->Update('chatss');
+    $consult = $this->Db->Update('chats');
     $consult->WhereAdd('chat_id', $User->Id, PhpLiveDbTypes::Int);
     $consult->FieldAdd('name', $User->Name, PhpLiveDbTypes::Str);
     $consult->FieldAdd('name2', $User->NameLast, PhpLiveDbTypes::Str);
