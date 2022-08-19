@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.18.00
+//2022.08.18.01
 
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatType;
 
@@ -164,14 +164,12 @@ class StbAdmin{
     $line = 1;
     $col = 0;
     $Admins = $Db->Admins();
-    $buttons = [];
     foreach($Admins as $admin):
       if($admin->Name === null):
         $detail = $admin;
       else:
         $detail = $admin->Name;
       endif;
-      $buttons[$admin->Id] = [$line, $col];
       $mk->ButtonCallback(
         $line,
         $col++,
@@ -189,40 +187,6 @@ class StbAdmin{
       $Lang->Get('Admins', Group: 'Admin'),
       Markup: $mk
     );
-
-    $changed = false;
-    foreach($buttons as $admin => $coord):
-      $detail = $Bot->ChatGet($admin);
-      if($detail !== null):
-        $Db->UserEdit(
-          $admin,
-          $detail->Name,
-          TgChatType::Private,
-          $detail->NameLast,
-          $detail->Nick
-        );
-        $data = $mk->ButtonGet($coord[0], $coord[1]);
-        if($data['text'] !== $detail->Name):
-          $changed = true;
-          $mk->ButtonCallback(
-            $coord[0],
-            $coord[1],
-            $detail->Name,
-            $Db->CallBackHashSet([
-              'Callback_Admin',
-              $admin
-            ])
-          );
-        endif;
-      endif;
-    endforeach;
-    if($changed):
-      $Bot->MarkupEdit(
-        $Webhook->User->Id,
-        $Webhook->Message->Id,
-        Markup: $mk
-      );
-    endif;
   }
 
   static public function Callback_AdminNew():void{
