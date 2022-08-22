@@ -1,14 +1,14 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.22.00
+//2022.08.22.01
 
 require(__DIR__ . '/php.php');
 require(__DIR__ . '/requires.php');
 require(DirToken . '/config.php');
 
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
-use ProtocolLive\TelegramBotLibrary\StbObjects\StbDatabase;
+use ProtocolLive\TelegramBotLibrary\StbObjects\{StbDatabase, StbLanguageSys};
 
 set_error_handler('HandlerError');
 set_exception_handler('HandlerException');
