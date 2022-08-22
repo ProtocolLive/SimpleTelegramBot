@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.19.00
+//2022.08.22.00
 
 //This file are included by DirToken/index.php
 
@@ -11,6 +11,7 @@ use ProtocolLive\TelegramBotLibrary\TgObjects\{
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
   TblCmd, TblWebhook, TblData
 };
+use ProtocolLive\TelegramBotLibrary\StbObjects\StbDbListeners;
 
 $_GET['a'] ??= '';
 if(function_exists('Action_' . $_GET['a'])):

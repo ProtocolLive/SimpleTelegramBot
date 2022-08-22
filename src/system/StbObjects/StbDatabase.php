@@ -1,47 +1,17 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.18.02
+//2022.08.22.00
 
+namespace ProtocolLive\TelegramBotLibrary\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
-enum StbDbListeners{
-  case Chat;
-  case ChatMy;
-  case Document;
-  case Text;
-  case InlineQuery;
-  case Invoice;
-  case InvoiceCheckout;
-  case InvoiceShipping;
-  case Photo;
-  case Voice;
-}
-
-enum StbDbAdminPerm:int{
-  case All = 15;
-  case None = 0;
-  case Admins = 1;
-  case Modules = 2;
-  case UserCmds = 4;
-  case Stats = 8;
-}
-
-class StbDbAdminData{
-  public function __construct(
-    public readonly int $Id,
-    public readonly int $Creation,
-    public readonly StbDbAdminPerm $Perms,
-    public readonly string $Name,
-  ){}
-}
-
 class StbDatabase{
-  private PhpLiveDb $Db;
+  private \PhpLiveDb $Db;
   public string|null $DbError = null;
 
   public function __construct(
-    PhpLiveDb $Db
+    \PhpLiveDb $Db
   ){
     DebugTrace();
     $this->Db = $Db;
@@ -74,7 +44,7 @@ class StbDatabase{
   ):StbDbAdminData|false{
     DebugTrace();
     $consult = $this->Db->Select('chats');
-    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
     $result = $consult->Run();
     if($result === []):
       return false;
@@ -93,15 +63,15 @@ class StbDatabase{
   ):bool{
     DebugTrace();
     $consult = $this->Db->Select('chatss');
-    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
     $result = $consult->Run();
     if($result !== []):
       return false;
     endif;
     $consult = $this->Db->Insert('chatss');
-    $consult->FieldAdd('chat_id', $User, PhpLiveDbTypes::Int);
-    $consult->FieldAdd('perms', $Perms, PhpLiveDbTypes::Int);
-    $consult->FieldAdd('created', time(), PhpLiveDbTypes::Int);
+    $consult->FieldAdd('chat_id', $User, \PhpLiveDbTypes::Int);
+    $consult->FieldAdd('perms', $Perms, \PhpLiveDbTypes::Int);
+    $consult->FieldAdd('created', time(), \PhpLiveDbTypes::Int);
     $consult->Run();
     $this->DbError = $consult->Error;
     if($this->DbError === null):
@@ -119,8 +89,8 @@ class StbDatabase{
       return false;
     endif;
     $consult = $this->Db->Update('chatss');
-    $consult->FieldAdd('perms', StbDbAdminPerm::None->value, PhpLiveDbTypes::Int);
-    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->FieldAdd('perms', StbDbAdminPerm::None->value, \PhpLiveDbTypes::Int);
+    $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
     $consult->Run();
     return true;
   }
@@ -134,13 +104,13 @@ class StbDatabase{
       return false;
     endif;
     $consult = $this->Db->Update('chatss');
-    $consult->FieldAdd('perms', $Perms, PhpLiveDbTypes::Int);
-    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->FieldAdd('perms', $Perms, \PhpLiveDbTypes::Int);
+    $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
     $consult->WhereAdd(
       'perms',
       StbDbAdminPerm::None->value,
-      PhpLiveDbTypes::Int,
-      PhpLiveDbOperators::Bigger
+      \PhpLiveDbTypes::Int,
+      \PhpLiveDbOperators::Bigger
     );
     if($consult->Run() === 1):
       return true;
@@ -158,8 +128,8 @@ class StbDatabase{
     $consult->WhereAdd(
       'perms',
       StbDbAdminPerm::None->value,
-      PhpLiveDbTypes::Int,
-      PhpLiveDbOperators::Bigger
+      \PhpLiveDbTypes::Int,
+      \PhpLiveDbOperators::Bigger
     );
     $result = $consult->Run();
     foreach($result as &$admin):
@@ -183,16 +153,16 @@ class StbDatabase{
     $Data = json_encode($Data);
     $hash = sha1($Data);
     $consult = $this->Db->select('callbackshash');
-    $consult->WhereAdd('hash', $hash, PhpLiveDbTypes::Str);
+    $consult->WhereAdd('hash', $hash, \PhpLiveDbTypes::Str);
     $result = $consult->Run();
     if($result === []):
       $consult = $this->Db->Insert('callbackshash');
-      $consult->FieldAdd('hash', $hash, PhpLiveDbTypes::Str);
+      $consult->FieldAdd('hash', $hash, \PhpLiveDbTypes::Str);
     else:
       $consult = $this->Db->Update('callbackshash');
-      $consult->WhereAdd('hash', $hash, PhpLiveDbTypes::Str);
+      $consult->WhereAdd('hash', $hash, \PhpLiveDbTypes::Str);
     endif;
-    $consult->FieldAdd('function', $Data, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('function', $Data, \PhpLiveDbTypes::Str);
     $consult->Run(HtmlSafe: false);
     return $hash;
   }
@@ -202,7 +172,7 @@ class StbDatabase{
   ):bool{
     DebugTrace();
     $consult = $this->Db->Select('callbackshash');
-    $consult->WhereAdd('hash', $Hash, PhpLiveDbTypes::Str);
+    $consult->WhereAdd('hash', $Hash, \PhpLiveDbTypes::Str);
     $result = $consult->Run();
     if($result === []):
       return false;
@@ -215,8 +185,8 @@ class StbDatabase{
   public function CommandAdd(string $Command, string $Module):bool{
     DebugTrace();
     $consult = $this->Db->Insert('commands');
-    $consult->FieldAdd('command', $Command, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('module', $Module, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('command', $Command, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('module', $Module, \PhpLiveDbTypes::Str);
     $consult->Run();
     $this->DbError = $consult->Error;
     if($this->DbError === null):
@@ -232,17 +202,17 @@ class StbDatabase{
       $Command = [$Command];
     endif;
     $consult = $this->Db->Delete('commands');
-    $consult->WhereAdd(1, Parenthesis: PhpLiveDbParenthesis::Open);
+    $consult->WhereAdd(1, Parenthesis: \PhpLiveDbParenthesis::Open);
     foreach($Command as $id => $cmd):
       $consult->WhereAdd(
         'command',
         $cmd,
-        PhpLiveDbTypes::Str,
-        AndOr: PhpLiveDbAndOr::Or,
+        \PhpLiveDbTypes::Str,
+        AndOr: \PhpLiveDbAndOr::Or,
         CustomPlaceholder: 'cmd' . $id
       );
     endforeach;
-    $consult->WhereAdd(2, Parenthesis: PhpLiveDbParenthesis::Close);
+    $consult->WhereAdd(2, Parenthesis: \PhpLiveDbParenthesis::Close);
     $consult->Run();
   }
 
@@ -255,7 +225,7 @@ class StbDatabase{
     DebugTrace();
     $consult = $this->Db->Select('commands');
     if($Command !== null):
-      $consult->WhereAdd('command', $Command, PhpLiveDbTypes::Str);
+      $consult->WhereAdd('command', $Command, \PhpLiveDbTypes::Str);
     endif;
     return $consult->Run();
   }
@@ -273,9 +243,9 @@ class StbDatabase{
       $User = null;
     endif;
     $consult = $this->Db->Insert('listeners');
-    $consult->FieldAdd('listener', $Listener->name, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('module', $Class, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->FieldAdd('listener', $Listener->name, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('module', $Class, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('chat_id', $User, \PhpLiveDbTypes::Int);
     $consult->Run();
     $this->DbError = $consult->Error;
     if($this->DbError === null):
@@ -294,8 +264,8 @@ class StbDatabase{
       $User = null;
     endif;
     $consult = $this->Db->Delete('listeners');
-    $consult->WhereAdd('listener', $Listener->name, PhpLiveDbTypes::Str);
-    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->WhereAdd('listener', $Listener->name, \PhpLiveDbTypes::Str);
+    $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
     $consult->Run();
   }
 
@@ -308,8 +278,8 @@ class StbDatabase{
       $User = null;
     endif;
     $consult = $this->Db->Select('listeners');
-    $consult->WhereAdd('listener', $Listener->name, PhpLiveDbTypes::Str);
-    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->WhereAdd('listener', $Listener->name, \PhpLiveDbTypes::Str);
+    $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
     return $consult->Run();
   }
 
@@ -319,8 +289,8 @@ class StbDatabase{
       return false;
     endif;
     $consult = $this->Db->Insert('modules');
-    $consult->FieldAdd('module', $Module, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('created', time(), PhpLiveDbTypes::Int);
+    $consult->FieldAdd('module', $Module, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('created', time(), \PhpLiveDbTypes::Int);
     $consult->Run();
     $this->DbError = $consult->Error;
     if($this->DbError === null):
@@ -339,7 +309,7 @@ class StbDatabase{
     DebugTrace();
     $consult = $this->Db->Select('modules');
     if($Module !== null):
-      $consult->WhereAdd('module', $Module, PhpLiveDbTypes::Str);
+      $consult->WhereAdd('module', $Module, \PhpLiveDbTypes::Str);
     endif;
     $consult->Order('module');
     return $consult->Run();
@@ -351,14 +321,14 @@ class StbDatabase{
   public function ModuleUninstall(string $Module):void{
     DebugTrace();
     $consult = $this->Db->Delete('modules');
-    $consult->WhereAdd('module', $Module, PhpLiveDbTypes::Str);
+    $consult->WhereAdd('module', $Module, \PhpLiveDbTypes::Str);
     $consult->Run();
     $consult = $this->Db->Delete('callbackshash');
     $consult->WhereAdd(
       'data',
       '%' . $Module . '%',
-      PhpLiveDbTypes::Str,
-      PhpLiveDbOperators::Like
+      \PhpLiveDbTypes::Str,
+      \PhpLiveDbOperators::Like
     );
     $consult->Run();
   }
@@ -370,10 +340,10 @@ class StbDatabase{
   ):void{
     DebugTrace();
     $consult = $this->Db->Insert('sys_logs');
-    $consult->FieldAdd('chat_id', $Id, PhpLiveDbTypes::Int);
-    $consult->FieldAdd('time', time(), PhpLiveDbTypes::Int);
-    $consult->FieldAdd('event', $Event, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('additional', $Additional, PhpLiveDbTypes::Str);
+    $consult->FieldAdd('chat_id', $Id, \PhpLiveDbTypes::Int);
+    $consult->FieldAdd('time', time(), \PhpLiveDbTypes::Int);
+    $consult->FieldAdd('event', $Event, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('additional', $Additional, \PhpLiveDbTypes::Str);
     $consult->Run();
   }
 
@@ -382,10 +352,10 @@ class StbDatabase{
   ):bool{
     DebugTrace();
     $consult = $this->Db->Update('chats');
-    $consult->WhereAdd('chat_id', $User->Id, PhpLiveDbTypes::Int);
-    $consult->FieldAdd('name', $User->Name, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('name2', $User->NameLast, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('nick', $User->Nick, PhpLiveDbTypes::Str);
+    $consult->WhereAdd('chat_id', $User->Id, \PhpLiveDbTypes::Int);
+    $consult->FieldAdd('name', $User->Name, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('name2', $User->NameLast, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('nick', $User->Nick, \PhpLiveDbTypes::Str);
     $result = $consult->Run();
     $this->DbError = $consult->Error;
     return $result === 1;
@@ -396,7 +366,7 @@ class StbDatabase{
   ):TgUser|null{
     DebugTrace();
     $consult = $this->Db->Select('chats');
-    $consult->WhereAdd('chat_id', $Id, PhpLiveDbTypes::Int);
+    $consult->WhereAdd('chat_id', $Id, \PhpLiveDbTypes::Int);
     $result = $consult->Run();
     if($result === []):
       return null;
@@ -415,16 +385,16 @@ class StbDatabase{
     $user = $this->UserGet($User->Id);
     if($user === null):
       $consult = $this->Db->Insert('chats');
-      $consult->FieldAdd('chat_id', $User->Id, PhpLiveDbTypes::Int);
-      $consult->FieldAdd('created', time(), PhpLiveDbTypes::Int);
+      $consult->FieldAdd('chat_id', $User->Id, \PhpLiveDbTypes::Int);
+      $consult->FieldAdd('created', time(), \PhpLiveDbTypes::Int);
     else:
       $consult = $this->Db->Update('chats');
-      $consult->WhereAdd('chat_id', $User->Id, PhpLiveDbTypes::Int);
+      $consult->WhereAdd('chat_id', $User->Id, \PhpLiveDbTypes::Int);
     endif;
-    $consult->FieldAdd('name', $User->Name, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('name2', $User->NameLast, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('nick', $User->Nick, PhpLiveDbTypes::Str);
-    $consult->FieldAdd('lastseen', time(), PhpLiveDbTypes::Int);
+    $consult->FieldAdd('name', $User->Name, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('name2', $User->NameLast, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('nick', $User->Nick, \PhpLiveDbTypes::Str);
+    $consult->FieldAdd('lastseen', time(), \PhpLiveDbTypes::Int);
     $consult->Run();
   }
 
@@ -434,8 +404,8 @@ class StbDatabase{
   ):mixed{
     DebugTrace();
     $consult = $this->Db->Select('variables');
-    $consult->WhereAdd('name', $Name, PhpLiveDbTypes::Str);
-    $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+    $consult->WhereAdd('name', $Name, \PhpLiveDbTypes::Str);
+    $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
     $result = $consult->Run();
     if($result === []):
       return null;
@@ -452,23 +422,23 @@ class StbDatabase{
     DebugTrace();
     if($Value === null):
       $consult = $this->Db->Delete('variables');
-      $consult->WhereAdd('name', $Name, PhpLiveDbTypes::Str);
-      $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+      $consult->WhereAdd('name', $Name, \PhpLiveDbTypes::Str);
+      $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
     else:
       $consult = $this->Db->Select('variables');
-      $consult->WhereAdd('name', $Name, PhpLiveDbTypes::Str);
-      $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+      $consult->WhereAdd('name', $Name, \PhpLiveDbTypes::Str);
+      $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
       $result = $consult->Run();
       if($result === []):
         $consult = $this->Db->Insert('variables');
-        $consult->FieldAdd('name', $Name, PhpLiveDbTypes::Str);
-        $consult->FieldAdd('chat_id', $User, PhpLiveDbTypes::Int);
+        $consult->FieldAdd('name', $Name, \PhpLiveDbTypes::Str);
+        $consult->FieldAdd('chat_id', $User, \PhpLiveDbTypes::Int);
       else:
         $consult = $this->Db->Update('variables');
-        $consult->WhereAdd('name', $Name, PhpLiveDbTypes::Str);
-        $consult->WhereAdd('chat_id', $User, PhpLiveDbTypes::Int);
+        $consult->WhereAdd('name', $Name, \PhpLiveDbTypes::Str);
+        $consult->WhereAdd('chat_id', $User, \PhpLiveDbTypes::Int);
       endif;
-      $consult->FieldAdd('value', $Value, PhpLiveDbTypes::Str);
+      $consult->FieldAdd('value', $Value, \PhpLiveDbTypes::Str);
     endif;
     $consult->Run();
   }
