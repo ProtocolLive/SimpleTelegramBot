@@ -1,20 +1,16 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.25.00
+//2022.08.25.01
 
 require(__DIR__ . '/php.php');
 require(__DIR__ . '/requires.php');
 
-if(is_file(DirSystem . '/vendor/autoload.php')):
-  require(DirSystem . '/vendor/autoload.php');
-else:
-  spl_autoload_register(function (string $class){
-    $class = str_replace('ProtocolLive\TelegramBotLibrary', DirSystem . '/vendor/protocollive/telegrambotlibrary/src', $class);
-    $class = str_replace('\\', '/', $class);
-    require($class . '.php');
-  });
-endif;
+spl_autoload_register(function (string $class){
+  $class = str_replace('ProtocolLive\TelegramBotLibrary', DirSystem . '/vendor/protocollive/telegrambotlibrary/src', $class);
+  $class = str_replace('\\', '/', $class);
+  require($class . '.php');
+});
 
 require(DirToken . '/config.php');
 
