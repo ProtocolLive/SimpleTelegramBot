@@ -35,11 +35,14 @@ aa6ef3beb218139eb07b251b77fa836d86299cdc  src/system/StbObjects/StbDatabase.php
 fe8b80524cbe72401844db90b101a104c6e7c180  src/system/StbObjects/StbLanguageMaster.php
 d5d1a60877cf228b962b8bf592049f0eb8cc87ce  src/system/StbObjects/StbLanguageModule.php
 90f026f0234ae6e4c05556c4a7341732f377e7a8  src/system/StbObjects/StbLanguageSys.php
-da39a3ee5e6b4b0d3255bfef95601890afd80709  src/system/TelegramBotLibrary/index.htm
 4eb252d9275dd332bcb2758d57b867e0fc984048  src/system/constants.php
 8fbbb9d59ca541847f4a61df73406ad4ae7150df  src/system/functions/basics.php
 c460eb68ba065d997b34f7b7ea95dbdaebcc3a91  src/system/functions/debug.php
 8c2d34bb32becfbb4b48747e963ab02375ecd38e  src/system/install/db.sql
 e3813ae3423e3fe61eec44af3c65d31523a86cac  src/system/php.php
-1f71641d434a16f033bbcd6637385237c885cc59  src/system/requires.php
-701e17735735e2e0de9d2648e91fad37fa3df970  src/system/system.php
+f886e5269d2718bac3a361c75a23204d10d108ae  src/system/requires.php
+49c3649c6483d328b3a12535e107018eac373956  src/system/system.php
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/vendor/index.htm
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/vendor/protocollive/index.htm
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/vendor/protocollive/telegrambotlibrary/index.htm
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/vendor/protocollive/telegrambotlibrary/src/index.htm
