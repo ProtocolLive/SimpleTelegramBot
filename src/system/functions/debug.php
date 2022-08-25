@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.14.00
+//2022.08.25.00
 
 function HandlerError(
   int $errno,
@@ -18,7 +18,7 @@ function HandlerError(
   $log .= ob_get_contents();
   ob_end_clean();
   if(ini_get('display_erros')):
-    echo $log;
+    echo '<pre>' . $log;
   endif;
   error_log($log);
   die();
@@ -30,7 +30,7 @@ function HandlerException(Throwable $Exception):never{
   $log .= $Exception->getFile() . ' (' . $Exception->getLine() . ')' . PHP_EOL;
   $log .= $Exception->getTraceAsString();
   if(ini_get('display_errors')):
-    echo $log;
+    echo '<pre>' . $log;
   endif;
   error_log($log);
   die();
