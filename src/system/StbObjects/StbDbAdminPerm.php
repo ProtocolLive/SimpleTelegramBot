@@ -1,9 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.22.00
+//2022.08.27.00
 
-namespace ProtocolLive\TelegramBotLibrary\StbObjects;
+namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 
 enum StbDbAdminPerm:int{
   case All = 15;
