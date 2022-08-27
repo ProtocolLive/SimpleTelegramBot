@@ -87,6 +87,7 @@ function Action_ok():void{
     $zip->extractTo(__DIR__);
   endif;
 
+  //Config file
   $config = file_get_contents(__DIR__ . '/RENAME_WITH_TOKEN/config.php');
   $config = str_replace('##DATE##', date('Y-m-d H:i:s'), $config);
   $config = str_replace('##TIMEZONE##', $_POST['timezone'], $config);
@@ -96,6 +97,11 @@ function Action_ok():void{
   $config = str_replace('##ADMIN##', $_POST['admin'], $config);
   $config = str_replace('##TOKENWEBHOOK##', "'" . hash('sha256', uniqid()) . "'", $config);
   file_put_contents(__DIR__ . '/RENAME_WITH_TOKEN/config.php', $config);
+
+  //Index file
+  $config = file_get_contents(__DIR__ . '/RENAME_WITH_TOKEN/index.php');
+  $config = str_replace('##DIR##', __DIR__, $config);
+  file_put_contents(__DIR__ . '/RENAME_WITH_TOKEN/index.php', $config);
 
   file_put_contents(__DIR__ . '/RENAME_WITH_TOKEN/db/system.json', '{}');
   rename(__DIR__ . '/RENAME_WITH_TOKEN', __DIR__ . '/Bot-' . $_POST['name'] . '-' . $token);
