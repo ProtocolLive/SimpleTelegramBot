@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.27.00
+//2022.08.27.01
 
 use ProtocolLive\TelegramBotLibrary\StbObjects\StbDbAdminPerm;
 
@@ -123,7 +123,7 @@ function Action_ok():void{
   $url = dirname($_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME']);
   $url .= '/' . $DirToken . '/index.php?a=WebhookSet';
   echo '<p><a href="' . $url . '">Click here to set the webhook</a></p>';
-  rename(__FILE__, __DIR__ . '/install.php');
+  rename(__FILE__, __DIR__ . '/index_' . time() . '.php');
 }
 
 function error():never{
