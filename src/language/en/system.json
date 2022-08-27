@@ -1,45 +1,45 @@
-{
-  "Commands":[
-    [
-      "chat",
-      "cmd",
-      "Manage command list",
-      "cmd"
-    ]
-  ],
-  "Module":{
-    "InstallNotFound": "⚠️ This module cannot be installed because don't have Install method",
-    "InstallPick": "Choose a module to install:",
-    "Module": "Module: %1$s\nInstallation: %2$s",
-    "Modules": "🧩 Modules installed:",
-    "UninstallButton": "Uninstall",
-    "UninstallNotFound": "⚠️ This module cannot be installed because don't have Uninstall method"
-  },
-  "Admin":{
-    "AdminNewId": "Type the new administrator ID:",
-    "AdminMenu": "⚙️ Administration menu",
-    "Admin": "Administrator: %1$s\nAdded: %2$s",
-    "Admins": "🎖️ Administrators:",
-    "AdminsButton": "🎖️ Administrators",
-    "ModulesButton": "🧩 Modules",
-    "PermAdmins": " Administradores",
-    "PermModules": " Módulos",
-    "PermUserCmds": " Comandos",
-    "PermStats": " Estatísticas",
-    "PhpInfoButton": "🔍 Server info",
-    "StatsButton": "📊 Statistics",
-    "Updates": "Outdated files:\n\n%s",
-    "UpdatesButton": "📡 Updates",
-    "UserFound": "User founded: %s"
-  },
-  "Errors":{
-    "ChatNull": "Could not possible to get chat data",
-    "Denied": "⛔ Access denied",
-    "UserNull": "Could not possible to get user data"
-  },
-  "Add": "➕",
-  "Back": "🔙",
-  "DateTime":"m/d/Y h:i:s a",
-  "MyId": "Your ID is %s",
-  "Yes": "✅"
+{
+  "Commands":[
+    [
+      "chat",
+      "cmd",
+      "Manage command list",
+      "cmd"
+    ]
+  ],
+  "Module":{
+    "InstallNotFound": "⚠️ This module cannot be installed because don't have Install method",
+    "InstallPick": "Choose a module to install:",
+    "Module": "Module: %1$s\nInstallation: %2$s",
+    "Modules": "🧩 Modules installed:",
+    "UninstallButton": "Uninstall",
+    "UninstallNotFound": "⚠️ This module cannot be installed because don't have Uninstall method"
+  },
+  "Admin":{
+    "AdminNewId": "Type the new administrator ID:",
+    "AdminMenu": "⚙️ Administration menu",
+    "Admin": "Administrator: %1$s\nAdded: %2$s",
+    "Admins": "🎖️ Administrators:",
+    "AdminsButton": "🎖️ Administrators",
+    "ModulesButton": "🧩 Modules",
+    "PermAdmins": " Administradores",
+    "PermModules": " Módulos",
+    "PermUserCmds": " Comandos",
+    "PermStats": " Estatísticas",
+    "PhpInfoButton": "🔍 Server info",
+    "StatsButton": "📊 Statistics",
+    "Updates": "Outdated files:\n\n%s",
+    "UpdatesButton": "📡 Updates",
+    "UserFound": "User founded: %s"
+  },
+  "Errors":{
+    "ChatNull": "Could not possible to get chat data",
+    "Denied": "⛔ Access denied",
+    "UserNull": "Could not possible to get user data"
+  },
+  "Add": "➕",
+  "Back": "🔙",
+  "DateTime":"m/d/Y h:i:s a",
+  "MyId": "Your ID is %s",
+  "Yes": "✅"
 }
