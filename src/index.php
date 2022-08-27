@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.01.00
+//2022.08.27.00
+
+use ProtocolLive\TelegramBotLibrary\StbObjects\StbDbAdminPerm;
 
 require(__DIR__ . '/system/php.php');
 require(__DIR__ . '/system/PhpLiveDb/index.php');
