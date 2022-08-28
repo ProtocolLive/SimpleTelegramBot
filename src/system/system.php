@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.25.01
+//2022.08.28.00
 
 require(__DIR__ . '/php.php');
 require(__DIR__ . '/requires.php');
@@ -14,9 +14,9 @@ spl_autoload_register(function (string $class){
 
 require(DirToken . '/config.php');
 
-use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
+use ProtocolLive\SimpleTelegramBot\StbObjects\{StbDatabase, StbLanguageSys};
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
-use ProtocolLive\TelegramBotLibrary\StbObjects\{StbDatabase, StbLanguageSys};
+use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
 
 set_error_handler('HandlerError');
 set_exception_handler('HandlerException');
