@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.18.01
+//2022.08.28.00
 
 use ProtocolLive\TelegramBotLibrary\TgObjects\{TgParseMode, TgChat, TgChatType, TgUser};
 
@@ -36,11 +36,12 @@ function SendUserCmd(string $Command, string $EventAdditional = null):bool{
    * @var string $UserLang
    * @var StbDatabase $Db
    */
-  global $Bot, $Webhook, $UserLang, $Db;
+  global $Bot, $Webhook, $Db;
   DebugTrace();
   $Photo = false;
   $Text = false;
-  $File = DirUserCmds . '/' . $UserLang . '/' . $Command;
+  $data = $Db->UserGet($Webhook->Message->User->Id);
+  $File = DirUserCmds . '/' . ($data->Language ?? DefaultLanguage) . '/' . $Command;
   
   foreach(['jpg', 'png', 'gif'] as $ext):
     $temp = $File . '.' . $ext;
