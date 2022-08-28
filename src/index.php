@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.27.01
+//2022.08.28.00
 
 require(__DIR__ . '/system/php.php');
 require(__DIR__ . '/system/PhpLiveDb/index.php');
@@ -24,4 +24,15 @@ function error():never{
   echo '<pre>';
   var_dump(func_get_args());
   die();
+}
+
+function CopyRecursive(string $From, string $To):void{
+  foreach(glob($From . '/*') as $file):
+    if(is_dir($file)):
+      mkdir($To . '/' . basename($file), 0755, true);
+      CopyRecursive($file, $To . '/' . basename($file));
+    else:
+      copy($file, $To . '/' . basename($file));
+    endif;
+  endforeach;
 }

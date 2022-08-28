@@ -1,4 +1,5 @@
 <?php
+//2022.08.28.00
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
 
 <!DOCTYPE html>
@@ -17,9 +18,8 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
   $DirSystem = dirname(__DIR__, 1);
   $DirToken = 'Bot-' . $_POST['name'] . '-' . $token;
 
-  $zip = new ZipArchive;
-  $zip->open(__DIR__ . '/DirToken.zip');
-  $zip->extractTo($DirSystem);
+  mkdir($DirSystem . '/RENAME_WITH_TOKEN', 0755, true);
+  CopyRecursive(__DIR__ . '/RENAME_WITH_TOKEN', $DirSystem . '/RENAME_WITH_TOKEN');
 
   $config = file_get_contents($DirSystem . '/RENAME_WITH_TOKEN/config.php');
   $config = str_replace('##DATE##', date('Y-m-d H:i:s'), $config);
