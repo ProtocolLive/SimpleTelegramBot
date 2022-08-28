@@ -1,6 +1,6 @@
 create table callbackshash(
   hash varchar(100) not null primary key,
-  data varchar(100) not null
+  method varchar(100) not null
 );
 create table chats(
   chat_id bigint not null primary key,
