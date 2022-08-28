@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.02
+//2022.08.28.03
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin;
@@ -54,7 +54,7 @@ class StbAdminModules{
       $mk->ButtonCallback(
         $line,
         $col++,
-        $mod['module'],
+        basename($mod['module']),
         $Db->CallBackHashSet([
           __CLASS__ . '::Callback_Mod',
           $mod['module']
