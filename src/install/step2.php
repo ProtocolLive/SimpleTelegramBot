@@ -18,10 +18,10 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
   $DirSystem = dirname(__DIR__, 1);
   $DirToken = 'Bot-' . $_POST['name'] . '-' . $token;
 
-  mkdir($DirSystem . '/RENAME_WITH_TOKEN', 0755, true);
-  CopyRecursive(__DIR__ . '/RENAME_WITH_TOKEN', $DirSystem . '/RENAME_WITH_TOKEN');
+  mkdir($DirSystem . '/DirToken', 0755, true);
+  CopyRecursive(__DIR__ . '/DirToken', $DirSystem . '/DirToken');
 
-  $config = file_get_contents($DirSystem . '/RENAME_WITH_TOKEN/config.php');
+  $config = file_get_contents($DirSystem . '/DirToken/config.php');
   $config = str_replace('##DATE##', date('Y-m-d H:i:s'), $config);
   $config = str_replace('##TIMEZONE##', $_POST['timezone'], $config);
   $config = str_replace('##TOKEN##', $_POST['token'], $config);
@@ -29,9 +29,9 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
   $config = str_replace('##LANGUAGE##', $_POST['language'], $config);
   $config = str_replace('##ADMIN##', $_POST['admin'], $config);
   $config = str_replace('##TOKENWEBHOOK##', "'" . hash('sha256', uniqid()) . "'", $config);
-  file_put_contents($DirSystem . '/RENAME_WITH_TOKEN/config.php', $config);
+  file_put_contents($DirSystem . '/DirToken/config.php', $config);
 
-  rename($DirSystem . '/RENAME_WITH_TOKEN', $DirSystem . '/Bot-' . $_POST['name'] . '-' . $token);
+  rename($DirSystem . '/DirToken', $DirSystem . '/Bot-' . $_POST['name'] . '-' . $token);
 
   $PlDb = new PhpLiveDb(
     "$DirSystem/$DirToken/db.db",
