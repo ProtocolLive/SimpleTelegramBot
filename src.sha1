@@ -23,9 +23,11 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/DirToken/modules/index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/DirToken/tools/index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  src/install/DirToken/tools/info.php
 7194cfdc783a8ad37a46517b01b73048cbbd4d56  src/install/DirToken/tools/scope.php
-8c2d34bb32becfbb4b48747e963ab02375ecd38e  src/install/db.sql
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/index.htm
+da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/sql/index.htm
+8c2d34bb32becfbb4b48747e963ab02375ecd38e  src/install/sql/sqlite/install.sql
 4cc5b17180e319c15a91ecb1bc4cfc535957f2a5  src/install/step1.php
-cf69915d292ebc3fbc55ba5c87ba2d8eba84670a  src/install/step2.php
+c20c6afbfb39e862c895b20c653f5fa1924da386  src/install/step2.php
 8211d4b18ee0281e7eaca30775c96664b88d723e  src/language/en/system.json
 ea7907d4194cf00dbc72d9dac5f32d0194df1eff  src/language/pt-br/system.json
 1edc76474fba0ccc0fe17780712f4221dc3a4222  src/system/PhpLiveDb/DbBasics.php
