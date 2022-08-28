@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.22.00
+//2022.08.28.00
 
 //This file are included by DirToken/index.php
 
@@ -62,13 +62,18 @@ function Action_WebhookSet():void{
    */
   global $BotData;
   $Webhook = new TblWebhook($BotData);
-  $Webhook->Set(
-    $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'],
-    Updates: TgUpdateType::cases(),
-    TokenWebhook: $BotData->TokenWebhook
-  );
-  echo $Webhook->ErrorStr;
-  echo '<p><a href="index.php?a=WebhookGet">Click here see details</a></p>';
+  try{
+    $Webhook->Set(
+      $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'],
+      Updates: TgUpdateType::cases(),
+      TokenWebhook: $BotData->TokenWebhook
+    );
+    echo '<p>Webhook set</p>';
+    echo '<p><a href="index.php?a=WebhookGet">Click here see details</a></p>';
+  }catch(TblException $e){
+    echo '<p>Webhook fails</p>';
+    echo '<p>' . $e->getMessage() . '</p>';
+  }
 }
 
 function Action_WebhookGet():void{
