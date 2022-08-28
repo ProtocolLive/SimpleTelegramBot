@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.00
+//2022.08.28.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblMarkupInline;
@@ -41,7 +41,7 @@ class StbAdminModules{
       $col++,
       $Lang->Get('Add'),
       $Db->CallBackHashSet([
-        get_class() . '::Callback_ModuleAdd'
+        __CLASS__ . '::Callback_ModuleAdd'
       ])
     );
     $line = 1;
@@ -55,7 +55,7 @@ class StbAdminModules{
         $col++,
         $mod['module'],
         $Db->CallBackHashSet([
-          get_class() . '::Callback_Mod',
+          __CLASS__ . '::Callback_Mod',
           $mod['module']
         ])
       );
@@ -106,7 +106,7 @@ class StbAdminModules{
       $col++,
       $Lang->Get('Back'),
       $Db->CallBackHashSet([
-        get_class() . '::Callback_Modules'
+        __CLASS__ . '::Callback_Modules'
       ])
     );
     foreach($modules as $mod):
@@ -115,7 +115,7 @@ class StbAdminModules{
         $col++,
         $mod,
         $Db->CallBackHashSet([
-          get_class() . '::Callback_InsModPic',
+          __CLASS__ . '::Callback_InsModPic',
           $mod
         ])
       );
@@ -162,7 +162,7 @@ class StbAdminModules{
         $col++,
         $Lang->Get('Back'),
         $Db->CallBackHashSet([
-          get_class() . '::Callback_ModuleAdd'
+          __CLASS__ . '::Callback_ModuleAdd'
         ])
       );
       $Bot->TextEdit(
@@ -179,7 +179,7 @@ class StbAdminModules{
         $col++,
         $Lang->Get('Back'),
         $Db->CallBackHashSet([
-          get_class() . '::Callback_ModuleAdd'
+          __CLASS__ . '::Callback_ModuleAdd'
         ])
       );
       $Bot->TextEdit(
@@ -219,7 +219,7 @@ class StbAdminModules{
       $col++,
       $Lang->Get('Back'),
       $Db->CallBackHashSet([
-        get_class() . '::Callback_Modules'
+        __CLASS__ . '::Callback_Modules'
       ])
     );
     $mk->ButtonCallback(
@@ -227,7 +227,7 @@ class StbAdminModules{
       $col++,
       $Lang->Get('UninstallButton', Group: 'Module'),
       $Db->CallBackHashSet([
-        get_class() . '::Callback_UniModPic1',
+        __CLASS__ . '::Callback_UniModPic1',
         $Module
       ])
     );
@@ -268,7 +268,7 @@ class StbAdminModules{
       0,
       $Lang->Get('Back'),
       $Db->CallBackHashSet([
-        get_class() . '::Callback_Mod',
+        __CLASS__ . '::Callback_Mod',
         $Module
       ])
     );
@@ -277,7 +277,7 @@ class StbAdminModules{
       1,
       $Lang->Get('Yes'),
       $Db->CallBackHashSet([
-        get_class() . '::Callback_UniModPic2',
+        __CLASS__ . '::Callback_UniModPic2',
         $Module
       ])
     );

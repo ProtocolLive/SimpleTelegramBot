@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.00
+//2022.08.28.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -70,7 +70,7 @@ class StbAdmin{
         $col++,
         $Lang->Get('AdminsButton', Group: 'Admin'),
         $Db->CallBackHashSet([
-          get_class() . '::Callback_Admins'
+          __CLASS__ . '::Callback_Admins'
         ])
       );
     endif;
@@ -92,7 +92,7 @@ class StbAdmin{
         $col++,
         $Lang->Get('UpdatesButton', Group: 'Admin'),
         $Db->CallBackHashSet([
-          get_class() . '::Callback_Updates'
+          __CLASS__ . '::Callback_Updates'
         ])
       );
     endif;
@@ -153,7 +153,7 @@ class StbAdmin{
       0,
       '🔙',
       $Db->CallBackHashSet([
-        get_class() . '::Callback_AdminMenu'
+        __CLASS__ . '::Callback_AdminMenu'
       ])
     );
     $mk->ButtonCallback(
@@ -161,7 +161,7 @@ class StbAdmin{
       1,
       '➕',
       $Db->CallBackHashSet([
-        get_class() . '::Callback_AdminNew'
+        __CLASS__ . '::Callback_AdminNew'
       ])
     );
     $line = 1;
@@ -178,7 +178,7 @@ class StbAdmin{
         $col++,
         $detail,
         $Db->CallBackHashSet([
-          get_class() . '::Callback_Admin',
+          __CLASS__ . '::Callback_Admin',
           $admin
         ])
       );
@@ -208,7 +208,7 @@ class StbAdmin{
     if($msg !== null):
       $Db->ListenerAdd(
         StbDbListeners::Text,
-        get_class(),
+        __CLASS__,
         $Webhook->User->Id
       );
       $Db->VariableSet(
@@ -244,7 +244,7 @@ class StbAdmin{
       $col++,
       '🔙',
       $Db->CallBackHashSet([
-        get_class() . '::Callback_Admins'
+        __CLASS__ . '::Callback_Admins'
       ])
     );
     $admin = $Db->Admin($Admin);
@@ -259,7 +259,7 @@ class StbAdmin{
         $col++,
         ($value ? '✅' : '') . $Lang->Get('Perm' . $perm->name, Group: 'Admin'),
         $Db->CallBackHashSet([
-          get_class() . '::Callback_AdminPerm',
+          __CLASS__ . '::Callback_AdminPerm',
           $Admin,
           $perm->value,
           !$value
@@ -342,7 +342,7 @@ class StbAdmin{
       $col++,
       '🔙',
       $Db->CallBackHashSet([
-        get_class() . '::Callback_AdminMenu'
+        __CLASS__ . '::Callback_AdminMenu'
       ])
     );
     $files = UpdateCheck();
