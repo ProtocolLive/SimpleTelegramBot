@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.27.00
+//2022.08.28.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
@@ -375,7 +375,8 @@ class StbDatabase{
       'id' => $result[0]['chat_id'],
       'first_name' => $result[0]['name'],
       'last_name' => $result[0]['name2'],
-      'username' => $result[0]['nick']
+      'username' => $result[0]['nick'],
+      'language_code' => $result[0]['lang']
     ];
     return new TgUser($return);
   }
@@ -395,6 +396,7 @@ class StbDatabase{
     $consult->FieldAdd('name2', $User->NameLast, \PhpLiveDbTypes::Str);
     $consult->FieldAdd('nick', $User->Nick, \PhpLiveDbTypes::Str);
     $consult->FieldAdd('lastseen', time(), \PhpLiveDbTypes::Int);
+    $consult->FieldAdd('lang', $User->Language, \PhpLiveDbTypes::Str);
     $consult->Run();
   }
 
