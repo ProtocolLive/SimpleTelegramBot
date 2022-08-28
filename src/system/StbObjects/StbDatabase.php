@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.28.01
+//2022.08.28.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
@@ -31,12 +31,12 @@ class StbDatabase{
 
   public function ModuleRestricted(string $Module):bool{
     DebugTrace();
-    if(substr($Module, 0, 3) === 'Stb'
-    or substr($Module, 0, 3) === 'Tbl'
-    or substr($Module, 0, 2) === 'Tg'):
-      return true;
+    if(strpos($Module, '\Stb') === false
+    and substr($Module, '\Tbl') === false
+    and substr($Module, '\Tg') === false):
+      return false;
     endif;
-    return false;
+    return true;
   }
 
   public function Admin(
