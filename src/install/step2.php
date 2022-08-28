@@ -1,5 +1,5 @@
 <?php
-//2022.08.28.00
+//2022.08.28.01
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
 
 <!DOCTYPE html>
@@ -38,7 +38,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
     Driver: PhpLiveDbDrivers::SqLite
   );
   $consult = $PlDb->GetCustom();
-  $sqls = file_get_contents(__DIR__ . '/db.sql');
+  $sqls = file_get_contents(__DIR__ . '/sql/sqlite/install.sql');
   $sqls = explode(';', $sqls);
   array_pop($sqls);
   $consult->beginTransaction();
