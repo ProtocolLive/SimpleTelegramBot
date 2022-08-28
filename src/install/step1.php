@@ -57,6 +57,33 @@
           </select>
         </td>
       </tr>
+    </table><br>
+    <table>
+      <tr>
+        <td>Database:</td>
+        <td>
+          <select name="databases">
+            <option value="sqlite">SQLite</option>
+            <option value="mysql" disabled>MySQL</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Host:</td>
+        <td><input type="text" name="host" disabled></td>
+      </tr>
+      <tr>
+        <td>User:</td>
+        <td><input type="text" name="user" disabled></td>
+      </tr>
+      <tr>
+        <td>Password:</td>
+        <td><input type="text" name="pwd" disabled></td>
+      </tr>
+      <tr>
+        <td>Database name:</td>
+        <td><input type="text" name="db" disabled></td>
+      </tr>
     </table>
     <p>
       <input type="submit" value="Install">
