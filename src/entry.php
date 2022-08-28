@@ -1,14 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.03
+//2022.08.28.04
 
 //This file are included by DirToken/index.php
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbListeners;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
-  TblCmd, TblWebhook, TblData,
-    TblException
+  TblCmd, TblWebhook, TblData, TblException
 };
 use ProtocolLive\TelegramBotLibrary\TgObjects\{
   TgChatType, TgCallback, TgText, TgPhoto, TgInvoiceCheckout, TgInvoiceShipping, TgInlineQuery, TgGroupStatusMy, TgChatTitle, TgUpdateType
