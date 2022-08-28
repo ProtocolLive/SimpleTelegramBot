@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.25.00
+//2022.08.28.00
+
+use ProtocolLive\SimpleTelegramBot\StbObjects\StbLog;
 
 function HandlerError(
   int $errno,
@@ -10,7 +12,6 @@ function HandlerError(
   int $errline = null,
   array $errcontext = null
 ):never{
-  DebugTrace();
   $log = PHP_EOL . 'Error: ' . $errstr . PHP_EOL;
   $log .= $errfile . ' (' . $errline . ')' . PHP_EOL;
   ob_start();
@@ -25,7 +26,6 @@ function HandlerError(
 }
 
 function HandlerException(Throwable $Exception):never{
-  DebugTrace();
   $log = 'Exception ' . get_class($Exception) . ': ' . $Exception->getMessage() . PHP_EOL;
   $log .= $Exception->getFile() . ' (' . $Exception->getLine() . ')' . PHP_EOL;
   $log .= $Exception->getTraceAsString();
@@ -57,8 +57,8 @@ $DebugTraceFolder = __DIR__;
 function DebugTrace():void{
   global $DebugTraceFolder;
   static $DebugTraceCount = 0;
-  $debug = defined('Debug') ? Debug : -1;
-  if(($debug & StbDebug::Trace) !== StbDebug::Trace):
+  $debug = defined('Log') ? Log : -1;
+  if(!($debug & StbLog::Trace)):
     return;
   endif;
   $trace = debug_backtrace();
