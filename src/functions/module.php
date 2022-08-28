@@ -1,14 +1,18 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.06.08.00
+//2022.08.28.00
+
+use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbAdmin, StbAdminModules
+};
 
 function StbModuleSystem():array{
-  return ['StbAdmin', 'StbModules'];
+  return [StbAdmin::class, StbAdminModules::class];
 }
 
 function StbModuleLoad(string $Module):void{
   if(in_array($Module, StbModuleSystem()) === false):
-    require(DirModules . '/' . $Module . '/index.php');
+    require(DirModules . '/' . basename($Module) . '/index.php');
   endif;
 }
