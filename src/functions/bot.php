@@ -1,32 +1,27 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.28.00
+//2022.08.28.01
 
+use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbLog, StbDatabase
+};
 use ProtocolLive\TelegramBotLibrary\TgObjects\{TgParseMode, TgChat, TgChatType, TgUser};
 
-/**
- * Log an event in bot log file
- */
-function LogBot(string $Msg, bool $NewLine = true):void{
+function StbLog(
+  StbLog $Type,
+  string $Msg,
+  bool $NewLine = true
+):void{
   DebugTrace();
   $Msg = date('Y-m-d H:i:s') . PHP_EOL . $Msg . PHP_EOL;
   if($NewLine):
     $Msg .= PHP_EOL;
   endif;
-  file_put_contents(DirLogs . '/bot.log', $Msg, FILE_APPEND);
-}
-
-/**
- * Log the cron job
- */
-function LogCron(string $Msg, bool $NewLine = true):void{
-  DebugTrace();
-  $Msg = date('Y-m-d H:i:s') . PHP_EOL . $Msg . PHP_EOL;
-  if($NewLine):
-    $Msg .= PHP_EOL;
+  if($Type === StbLog::Cron):
+    $file = 'cron';
   endif;
-  file_put_contents(DirLogs . '/cron.log', $Msg, FILE_APPEND);
+  file_put_contents(DirLogs . '/' . $file . '.log', $Msg, FILE_APPEND);
 }
 
 function SendUserCmd(string $Command, string $EventAdditional = null):bool{

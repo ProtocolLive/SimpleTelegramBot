@@ -1,12 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.19.00
+//2022.08.28.00
 
 //Installation date: ##DATE##
 
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgInvoiceCurrencies;
-use ProtocolLive\TelegramBotLibrary\TblObjects\TblDebug;
+use ProtocolLive\TelegramBotLibrary\TblObjects\TblLog;
+//use ProtocolLive\PhpLiveDb\Drivers;
 
 //Token given by @BotFather
 //Type: string
@@ -35,11 +36,11 @@ const TestServer = ##TESTSERVER##;
 //Default: UTC
 const Timezone = '##TIMEZONE##';
 
-//Use the debug constants of the class TelegramBot or/and the constants defined to bot
+//Use the log constants of the class TelegramBot or/and the constants defined to bot
 //Tips: & and, | or, ^ xor
-//Type: TblDebug
-//Default: TblDebug::All
-const Debug = TblDebug::All ^ TblDebug::Curl ^ TblDebug::Webhook;
+//Type: TblLog
+//Default: TblLog::All
+const Log = TblLog::Webhook | TblLog::Send | TblLog::Response;
 
 //Default currency
 //Type: TgInvoiceCurrencies

@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.01
+//2022.08.28.02
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{StbDatabase, StbLanguageSys};
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
@@ -37,7 +37,7 @@ $BotData = new TblData(
   Token,
   DirLogs,
   TokenWebhook,
-  Debug,
+  Log,
   TestServer
 );
 $Bot = new TelegramBotLibrary($BotData, TestServer);
