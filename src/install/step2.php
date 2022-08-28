@@ -1,5 +1,5 @@
 <?php
-//2022.08.28.02
+//2022.08.28.03
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
 
 <!DOCTYPE html>
@@ -54,12 +54,12 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
   $stm->execute();
   $consult->commit();
 
+  rename(__DIR__, $DirSystem . '/install_' . uniqid());
+  rename($DirSystem . '/index.php', $DirSystem . '/index_' . uniqid() . '.php');
+
   echo '✅ Install complete!';
   $url = dirname($_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME']);
   $url .= '/' . $DirToken . '/index.php?a=WebhookSet';
-  echo '<p><a href="https://' . $url . '">Click here to set the webhook</a></p>';
-
-  rename(__DIR__, $DirSystem . '/install_' . uniqid());
-  rename($DirSystem . '/index.php', $DirSystem . '/index_' . uniqid() . '.php');?>
+  echo '<p><a href="https://' . $url . '">Click here to set the webhook</a></p>';?>
 </body>
 </html>
