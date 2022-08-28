@@ -1,45 +1,45 @@
-{
-  "Commands":[
-    [
-      "chat",
-      "cmd",
-      "Gerenciar lista de comandos",
-      "cmd"
-    ]
-  ],
-  "Module":{
-    "InstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de instalação",
-    "InstallPick": "Clique em um módulo para instalar:",
-    "Module": "Módulo: %1$s\nInstalação: %2$s",
-    "Modules": "🧩 Módulos instalados:",
-    "UninstallButton": "Desinstalar",
-    "UninstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de desinstalação"
-  },
-  "Admin":{
-    "AdminNewId": "Digite o ID do novo administrador:",
-    "AdminMenu": "⚙️ Menu de administração",
-    "Admin": "Administrador: %1$s\nAdicionado: %2$s",
-    "Admins": "🎖️ Administradores:",
-    "AdminsButton": "🎖️ Administradores",
-    "ModulesButton": "🧩 Módulos",
-    "PermAdmins": " Administradores",
-    "PermModules": " Módulos",
-    "PermUserCmds": " Comandos",
-    "PermStats": " Estatísticas",
-    "PhpInfoButton": "🔍 Detalhes do servidor",
-    "StatsButton": "📊 Estatísticas",
-    "Updates": "Arquivos desatualizados:\n\n%s",
-    "UpdatesButton": "📡 Atualizações",
-    "UserFound": "Usuário encontrado: %s"
-  },
-  "Errors":{
-    "ChatNull": "Não foi possível obter as informações do chat",
-    "Denied": "⛔ Acesso negado",
-    "UserNull": "Não foi possível obter as informações do usuário"
-  },
-  "Add": "➕",
-  "Back": "🔙",
-  "DateTime":"d/m/Y H:i:s",
-  "MyId": "Seu ID é %s",
-  "Yes": "✅"
+{
+  "Commands":[
+    [
+      "chat",
+      "cmd",
+      "Gerenciar lista de comandos",
+      "cmd"
+    ]
+  ],
+  "Module":{
+    "InstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de instalação",
+    "InstallPick": "Clique em um módulo para instalar:",
+    "Module": "Módulo: %1$s\nInstalação: %2$s",
+    "Modules": "🧩 Módulos instalados:",
+    "UninstallButton": "Desinstalar",
+    "UninstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de desinstalação"
+  },
+  "Admin":{
+    "AdminNewId": "Digite o ID do novo administrador:",
+    "AdminMenu": "⚙️ Menu de administração",
+    "Admin": "Administrador: %1$s\nAdicionado: %2$s",
+    "Admins": "🎖️ Administradores:",
+    "AdminsButton": "🎖️ Administradores",
+    "ModulesButton": "🧩 Módulos",
+    "PermAdmins": " Administradores",
+    "PermModules": " Módulos",
+    "PermUserCmds": " Comandos",
+    "PermStats": " Estatísticas",
+    "PhpInfoButton": "🔍 Detalhes do servidor",
+    "StatsButton": "📊 Estatísticas",
+    "Updates": "Arquivos desatualizados:\n\n%s",
+    "UpdatesButton": "📡 Atualizações",
+    "UserFound": "Usuário encontrado: %s"
+  },
+  "Errors":{
+    "ChatNull": "Não foi possível obter as informações do chat",
+    "Denied": "⛔ Acesso negado",
+    "UserNull": "Não foi possível obter as informações do usuário"
+  },
+  "Add": "➕",
+  "Back": "🔙",
+  "DateTime":"d/m/Y H:i:s",
+  "MyId": "Seu ID é %s",
+  "Yes": "✅"
 }
