@@ -1,9 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.01
+//2022.08.28.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
+use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdminModules;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
   TblMarkupInline, TblMarkupForceReply, TblCmd, TgCallback
 };
@@ -81,7 +82,7 @@ class StbAdmin{
         $col++,
         $Lang->Get('ModulesButton', Group: 'Admin'),
         $Db->CallBackHashSet([
-          'StbAdminModules::Callback_Modules'
+          StbAdminModules::class . '::Callback_Modules'
         ])
       );
     endif;
