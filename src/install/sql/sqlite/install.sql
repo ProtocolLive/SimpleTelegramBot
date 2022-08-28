@@ -16,13 +16,17 @@ create table modules(
   module text not null primary key,
   created integer unsigned not null
 );
-insert into modules values('StbAdmin',0);
+insert into modules values(
+  'ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin', 0
+);
 create table commands(
   command text not null primary key,
   module text not null,
   foreign key(module) references modules(module) on delete cascade
 );
-insert into commands values('admin','StbAdmin'),('id','StbAdmin');
+insert into commands values
+('admin', 'ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin'),
+('id', 'ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin');
 create table listeners(
   listener text not null,
   chat_id integer,

@@ -16,13 +16,16 @@ create table modules(
   module varchar(50) not null primary key,
   created int unsigned not null
 );
-insert into modules values('StbAdmin',0);
+insert into modules values
+  ('ProtocolLive\\SimpleTetelegramBot\\StbObjects\\StbAdmin', 0);
 create table commands(
   command varchar(50) not null primary key,
   module varchar(50) not null,
   foreign key(module) references modules(module) on delete cascade
 );
-insert into commands values('admin','StbAdmin'),('id','StbAdmin');
+insert into commands values
+  ('admin', 'ProtocolLive\\SimpleTetelegramBot\\StbObjects\\StbAdmin'),
+  ('id','ProtocolLive\\SimpleTetelegramBot\\StbObjects\\StbAdmin');
 create table listeners(
   listener varchar(50) not null,
   chat_id bigint,
