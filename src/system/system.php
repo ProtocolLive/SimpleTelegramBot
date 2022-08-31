@@ -1,8 +1,11 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.29.00
+//2022.08.29.01
 
+use ProtocolLive\PhpLiveDb\{
+  PhpLiveDb, Drivers
+};
 use ProtocolLive\SimpleTelegramBot\StbObjects\{StbDatabase, StbLanguageSys};
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
 use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
@@ -40,7 +43,11 @@ $BotData = new TblData(
   TestServer
 );
 $Bot = new TelegramBotLibrary($BotData, TestServer);
-$PlDb = new PhpLiveDb(DirToken . '/db.db', Driver: PhpLiveDbDrivers::SqLite);
+if(DbType === Drivers::MySql):
+  $PlDb = new PhpLiveDb(DbHost, DbUser, DbPwd, DbName);
+else:
+  $PlDb = new PhpLiveDb(DirToken . '/db.db', Driver: Drivers::SqLite);
+endif;
 $Db = new StbDatabase($PlDb);
 $Lang = new StbLanguageSys(DefaultLanguage);
 $UserLang = DefaultLanguage;

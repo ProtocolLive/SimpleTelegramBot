@@ -62,27 +62,27 @@
       <tr>
         <td>Database:</td>
         <td>
-          <select name="databases">
+          <select name="dbtype">
             <option value="sqlite">SQLite</option>
-            <option value="mysql" disabled>MySQL</option>
+            <option value="mysql">MySQL</option>
           </select>
         </td>
       </tr>
       <tr>
         <td>Host:</td>
-        <td><input type="text" name="host" disabled></td>
+        <td><input type="text" name="host"></td>
       </tr>
       <tr>
         <td>User:</td>
-        <td><input type="text" name="user" disabled></td>
+        <td><input type="text" name="user"></td>
       </tr>
       <tr>
         <td>Password:</td>
-        <td><input type="text" name="pwd" disabled></td>
+        <td><input type="text" name="pwd"></td>
       </tr>
       <tr>
         <td>Database name:</td>
-        <td><input type="text" name="db" disabled></td>
+        <td><input type="text" name="db"></td>
       </tr>
     </table>
     <p>

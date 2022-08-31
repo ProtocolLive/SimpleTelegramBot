@@ -1,5 +1,8 @@
 <?php
-//2022.08.28.03
+//2022.08.29.00
+use ProtocolLive\PhpLiveDb\{
+  PhpLiveDb, Drivers
+};
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
 
 <!DOCTYPE html>
@@ -29,22 +32,40 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
   $config = str_replace('##LANGUAGE##', $_POST['language'], $config);
   $config = str_replace('##ADMIN##', $_POST['admin'], $config);
   $config = str_replace('##TOKENWEBHOOK##', "'" . hash('sha256', uniqid()) . "'", $config);
+
+  if($_POST['dbtype'] === 'mysql'):
+    $config = str_replace('##DBTYPE##', 'Drivers::MySql', $config);
+  else:
+    $config = str_replace('##DBTYPE##', 'Drivers::SqLite', $config);
+  endif;
+  $config = str_replace('##DBHOST##', $_POST['host'], $config);
+  $config = str_replace('##DBUSER##', $_POST['user'], $config);
+  $config = str_replace('##DBPWD##', $_POST['pwd'], $config);
+  $config = str_replace('##DBNAME##', $_POST['db'], $config);
   file_put_contents($DirSystem . '/DirToken/config.php', $config);
 
   rename($DirSystem . '/DirToken', $DirSystem . '/Bot-' . $_POST['name'] . '-' . $token);
 
-  $PlDb = new PhpLiveDb(
-    "$DirSystem/$DirToken/db.db",
-    Driver: PhpLiveDbDrivers::SqLite
-  );
+  if($_POST['dbtype'] === 'mysql'):
+    $PlDb = new PhpLiveDb(
+      $_POST['host'],
+      $_POST['user'],
+      $_POST['pwd'],
+      $_POST['db']
+    );
+    $sqls = file_get_contents(__DIR__ . '/sql/mysql/install.sql');
+  else:
+    $PlDb = new PhpLiveDb(
+      "$DirSystem/$DirToken/db.db",
+      Driver: Drivers::SqLite
+    );
+    $sqls = file_get_contents(__DIR__ . '/sql/sqlite/install.sql');
+  endif;
   $consult = $PlDb->GetCustom();
-  $sqls = file_get_contents(__DIR__ . '/sql/sqlite/install.sql');
   $sqls = explode(';', $sqls);
   array_pop($sqls);
-  $consult->beginTransaction();
   foreach($sqls as $sql):
-    $stm = $consult->prepare($sql);
-    $stm->execute();
+    $consult->exec($sql);
   endforeach;
   $stm = $consult->prepare('
     insert into chats(chat_id,created,perms)
@@ -52,7 +73,6 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
   ');
   $stm->bindValue(':admin', $_POST['admin'], PDO::PARAM_INT);
   $stm->execute();
-  $consult->commit();
 
   rename(__DIR__, $DirSystem . '/install_' . uniqid());
   rename($DirSystem . '/index.php', $DirSystem . '/index_' . uniqid() . '.php');

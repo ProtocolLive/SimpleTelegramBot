@@ -1,13 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.00
+//2022.08.29.00
 
 //Installation date: ##DATE##
 
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgInvoiceCurrencies;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblLog;
-//use ProtocolLive\PhpLiveDb\Drivers;
+use ProtocolLive\PhpLiveDb\Drivers;
 
 //Token given by @BotFather
 //Type: string
@@ -46,3 +46,10 @@ const Log = TblLog::Webhook | TblLog::Send | TblLog::Response;
 //Type: TgInvoiceCurrencies
 //Default: TgInvoiceCurrencies::USD
 const DefaultCurrency = TgInvoiceCurrencies::USD;
+
+//Database config
+const DbType = ##DBTYPE##;
+const DbHost = '##DBHOST##';
+const DbUser = '##DBUSER##';
+const DbPwd = '##DBPWD##';
+const DbName = '##DBNAME##';
