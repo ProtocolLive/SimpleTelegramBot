@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.28.00
+//2022.08.31.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbLog;
 
@@ -18,7 +18,7 @@ function HandlerError(
   debug_print_backtrace();
   $log .= ob_get_contents();
   ob_end_clean();
-  if(ini_get('display_erros')):
+  if(ini_get('display_errors')):
     echo '<pre>' . $log;
   endif;
   error_log($log);
