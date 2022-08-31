@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.02
+//2022.08.29.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{StbDatabase, StbLanguageSys};
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
@@ -13,18 +13,17 @@ set_error_handler('HandlerError');
 set_exception_handler('HandlerException');
 
 spl_autoload_register(function (string $Class){
-  $Class = str_replace(
-    'ProtocolLive\TelegramBotLibrary',
-    DirSystem . '/vendor/protocollive/telegrambotlibrary/src',
-    $Class
-  );
-  $Class = str_replace(
-    'ProtocolLive\SimpleTelegramBot\StbObjects',
-    DirSystem . '/system/StbObjects',
-    $Class
-  );
-  $Class = str_replace('\\', '/', $Class);
-  require($Class . '.php');
+  if(strpos($Class, 'ProtocolLive\SimpleTelegramBot\StbObjects') === 0):
+    $Class = str_replace(
+      'ProtocolLive\SimpleTelegramBot\StbObjects',
+      DirSystem . '/system/StbObjects',
+      $Class
+    );
+    $Class = str_replace('\\', '/', $Class);
+    require($Class . '.php');
+  else:
+    require(DirSystem . '/vendor/autoload.php');
+  endif;
 });
 
 require(DirToken . '/config.php');
