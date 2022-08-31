@@ -13,14 +13,14 @@ create table chats(
   lastseen int unsigned
 );
 create table modules(
-  module varchar(50) not null primary key,
+  module varchar(100) not null primary key,
   created int unsigned not null
 );
 insert into modules values
   ('ProtocolLive\\SimpleTetelegramBot\\StbObjects\\StbAdmin', 0);
 create table commands(
   command varchar(50) not null primary key,
-  module varchar(50) not null,
+  module varchar(100) not null,
   foreign key(module) references modules(module) on delete cascade
 );
 insert into commands values
