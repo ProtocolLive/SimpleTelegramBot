@@ -1,6 +1,6 @@
 <?php
 //Protocol Corporation Ltda.
-//https://github.com/ProtocolLive/FuncoesComuns
+//https://github.com/ProtocolLive/SimpleTelegramBot
 //2022.08.29.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
