@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.29.01
+//2022.08.31.00
 
 use ProtocolLive\PhpLiveDb\{
   PhpLiveDb, Drivers
@@ -15,7 +15,8 @@ require(__DIR__ . '/requires.php');
 set_error_handler('HandlerError');
 set_exception_handler('HandlerException');
 
-spl_autoload_register(function (string $Class){
+require(DirSystem . '/vendor/autoload.php');
+spl_autoload_register(function(string $Class){
   if(strpos($Class, 'ProtocolLive\SimpleTelegramBot\StbObjects') === 0):
     $Class = str_replace(
       'ProtocolLive\SimpleTelegramBot\StbObjects',
@@ -24,8 +25,6 @@ spl_autoload_register(function (string $Class){
     );
     $Class = str_replace('\\', '/', $Class);
     require($Class . '.php');
-  else:
-    require(DirSystem . '/vendor/autoload.php');
   endif;
 });
 
