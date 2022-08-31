@@ -1,10 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.00
+//2022.08.29.00
 
 require(__DIR__ . '/system/php.php');
-require(__DIR__ . '/system/PhpLiveDb/index.php');
+require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/system/StbObjects/StbDbAdminPerm.php');
 set_error_handler('error');
 set_exception_handler('error');
