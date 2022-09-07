@@ -3,7 +3,7 @@ create table callbackshash(
   method varchar(100) not null
 );
 create table chats(
-  chat_id bigint not null primary key,
+  chat_id bigint unsigned not null primary key,
   name varchar(50) default '-',
   name2 varchar(50),
   nick varchar(50),
@@ -49,6 +49,7 @@ create table sys_params(
 );
 insert into sys_params values('DbVersion','1.0.0');
 create table variables(
+  var_id int unsigned primary key auto_increment,
   chat_id bigint,
   name varchar(50) not null,
   value varchar(50),
