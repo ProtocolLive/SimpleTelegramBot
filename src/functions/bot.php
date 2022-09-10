@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.09.10.00
+//2022.09.10.01
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbLog, StbDatabase
@@ -94,7 +94,7 @@ function UpdateCheck():array{
   array_pop($ServerHashes);
   foreach($ServerHashes as $sh):
     $sh = explode('  ', $sh);
-    $file = str_replace('src/', DirSystem . '/class/', $sh[1]);
+    $file = str_replace('src/', DirSystem . '/vendor/protocollive/telegrambotlibrary/src/', $sh[1]);
     if(isset($NowHashes[$file])
     and $sh[0] !== $NowHashes[$file]):
       $return[] = $sh[1];
