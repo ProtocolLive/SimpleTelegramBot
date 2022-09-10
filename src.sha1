@@ -1,6 +1,6 @@
 22de30c512c151b80ba92774340c00fbd74cc9d8  src/cron.php
-a853c2d0bdcce88f93d550c42a58ea5cadd3098d  src/entry.php
-259a0e5f5ad098e3a4a953782a6cc5381b402caf  src/functions/bot.php
+f7e7e95cea0b24c6e73fcfbf4af76c48e2bc2d9f  src/entry.php
+335d0bcf3836b35eb3f2c8140b410dde06218b46  src/functions/bot.php
 6d61cb621297adaec26d3d108c1e7449130a6c78  src/functions/module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/index.htm
 13d73fdf795dab1991f916780dc03ae900f0b0d6  src/index.php
@@ -23,7 +23,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/DirToken/tools/index.htm
 7194cfdc783a8ad37a46517b01b73048cbbd4d56  src/install/DirToken/tools/scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/sql/index.htm
-3ba10bb7b34e50ee4534091165c7893ff3fb883d  src/install/sql/mysql/install.sql
+a993b295d4e96c3440abf8e69fef9eaba7af1cc1  src/install/sql/mysql/install.sql
 c8edb46a9986a8b94b3105184d370560ff9ef042  src/install/sql/sqlite/install.sql
 cff0f60d37da7b8b2e5b417b2c72a99e68a8a4da  src/install/step1.php
 b983057c45b05992225baa9a1d11748cf4d22029  src/install/step2.php
