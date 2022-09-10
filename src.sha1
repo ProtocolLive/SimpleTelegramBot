@@ -23,7 +23,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/DirToken/tools/index.htm
 7194cfdc783a8ad37a46517b01b73048cbbd4d56  src/install/DirToken/tools/scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  src/install/sql/index.htm
-a993b295d4e96c3440abf8e69fef9eaba7af1cc1  src/install/sql/mysql/install.sql
+77c022566c8ce5ae21e89b8216d5e76d4b07fb47  src/install/sql/mysql/install.sql
 c8edb46a9986a8b94b3105184d370560ff9ef042  src/install/sql/sqlite/install.sql
 cff0f60d37da7b8b2e5b417b2c72a99e68a8a4da  src/install/step1.php
 b983057c45b05992225baa9a1d11748cf4d22029  src/install/step2.php
