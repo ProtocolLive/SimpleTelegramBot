@@ -21,7 +21,7 @@ insert into modules values
 create table commands(
   command varchar(50) not null primary key,
   module varchar(100) not null,
-  foreign key(module) references modules(module) on delete cascade
+  foreign key(module) references modules(module) on delete cascade on update cascade
 );
 insert into commands values
   ('admin', 'ProtocolLive\\SimpleTetelegramBot\\StbObjects\\StbAdmin'),
@@ -29,9 +29,9 @@ insert into commands values
 create table listeners(
   listener varchar(50) not null,
   chat_id bigint,
-  module varchar(50) not null,
+  module varchar(100) not null,
   foreign key(chat_id) references chats(chat_id) on delete cascade,
-  foreign key(module) references modules(module) on delete cascade,
+  foreign key(module) references modules(module) on delete cascade on update cascade,
   unique(listener,chat_id)
 );
 create table sys_logs(
