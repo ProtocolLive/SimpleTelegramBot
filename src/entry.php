@@ -1,11 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.04
+//2022.09.10.00
 
 //This file are included by DirToken/index.php
 
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbListeners;
+use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbDbListeners, StbDatabase
+};
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
   TblCmd, TblWebhook, TblData, TblException
 };
