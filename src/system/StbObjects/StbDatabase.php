@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.29.00
+//2022.09.11.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\PhpLiveDb\{
@@ -406,7 +406,7 @@ class StbDatabase{
   public function VariableGet(
     string $Name,
     int $User = null
-  ):mixed{
+  ):string|null{
     DebugTrace();
     $consult = $this->Db->Select('variables');
     $consult->WhereAdd('name', $Name, Types::Str);
