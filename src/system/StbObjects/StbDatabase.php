@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.11.00
+//2022.09.11.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\PhpLiveDb\{
@@ -56,7 +56,9 @@ class StbDatabase{
       $User,
       $result[0]['created'],
       StbDbAdminPerm::from($result[0]['perms']),
-      $result[0]['name']
+      $result[0]['name'],
+      $result[0]['name2'],
+      $result[0]['lang']
     );
   }
 
@@ -140,7 +142,9 @@ class StbDatabase{
         $admin['chat_id'],
         $admin['created'],
         StbDbAdminPerm::from($admin['perms']),
-        $result[0]['name']
+        $result[0]['name'],
+        $result[0]['name2'],
+        $result[0]['lang']
       );
     endforeach;
     return $result;
