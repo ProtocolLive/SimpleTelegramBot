@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.10.00
+//2022.09.11.00
 
 //This file are included by DirToken/index.php
 
@@ -184,8 +184,8 @@ function Update_Text():void{
   endforeach;
   foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Message->User->Id) as $listener):
     $Run = true;
-    StbModuleLoad($listener);
-    if(call_user_func($listener . '::Listener_Text') === false):
+    StbModuleLoad($listener['module']);
+    if(call_user_func($listener['module'] . '::Listener_Text') === false):
       return;
     endif;
   endforeach;
