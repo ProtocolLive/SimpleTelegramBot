@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.02
+//2022.09.11.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdminModules;
@@ -54,12 +54,8 @@ class StbAdmin{
     global $Bot, $Webhook, $Lang, $Db;
     DebugTrace();
     $id = $Webhook->User->Id ?? $Webhook->Message->User->Id;
-    $user = $Db->Admin($id);
-    if($user === false):
-      $Bot->TextSend(
-        $id,
-        $Lang->Get('Denied')
-      );
+    $user = AdminCheck($id);
+    if($user === null):
       return;
     endif;
     $mk = new TblMarkupInline();
@@ -140,12 +136,7 @@ class StbAdmin{
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
-    $user = $Db->Admin($Webhook->User->Id);
-    if(($user->Perms->value & StbDbAdminPerm::Admins->value) === false):
-      $Bot->TextSend(
-        $Webhook->User->Id,
-        $Lang->Get('Denied')
-      );
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null):
       return;
     endif;
     $mk = new TblMarkupInline();
@@ -228,13 +219,7 @@ class StbAdmin{
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
-    $user = $Db->Admin($Webhook->User->Id);
-    if($user === null
-    or ($user->Perms->value & StbDbAdminPerm::Admins->value) === false):
-      $Bot->TextSend(
-        $Webhook->User->Id,
-        $Lang->Get('Denied')
-      );
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null):
       return;
     endif;
     $line = 0;
@@ -298,15 +283,9 @@ class StbAdmin{
      * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      */
-    global $Bot, $Webhook, $Db, $Lang;
+    global $Webhook, $Db;
     DebugTrace();
-    $user = $Db->Admin($Webhook->User->Id);
-    if($user === null
-    or ($user->Perms->value & StbDbAdminPerm::Admins->value) === false):
-      $Bot->TextSend(
-        $Webhook->User->Id,
-        $Lang->Get('Denied')
-      );
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null):
       return;
     endif;
     $admin = $Db->Admin($Admin);
@@ -331,7 +310,7 @@ class StbAdmin{
     if($Webhook->User->Id !== Admin):
       $Bot->TextSend(
         $Webhook->User->Id,
-        $Lang->Get('Denied')
+        $Lang->Get('Denied', Group: 'Errors')
       );
       return;
     endif;

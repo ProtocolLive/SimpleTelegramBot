@@ -1,12 +1,15 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.09.10.01
+//2022.09.11.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
-  StbLog, StbDatabase
+  StbLog, StbDatabase, StbDbAdminData, StbDbAdminPerm, StbLanguageSys
 };
-use ProtocolLive\TelegramBotLibrary\TgObjects\{TgParseMode, TgChat, TgChatType, TgUser};
+use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
+use ProtocolLive\TelegramBotLibrary\TgObjects\{
+  TgParseMode, TgChat, TgChatType, TgUser
+};
 
 function StbLog(
   StbLog $Type,
@@ -116,4 +119,30 @@ function Tgchat2Tguser(TgChat $Chat):TgUser{
     'last_name' => $Chat->NameLast,
     'username' => $Chat->Nick
   ]);
+}
+
+function AdminCheck(
+  int $Id,
+  StbDbAdminPerm $Level = StbDbAdminPerm::All,
+  bool $SendDenied = true
+):StbDbAdminData|null{
+  /**
+   * @var StbDatabase $Db
+   * @var TelegramBotLibrary $Bot
+   * @var StbLanguageSys $Lang
+   */
+  global $Db, $Bot, $Lang;
+  $user = $Db->Admin($Id);
+  if($user === false
+  or ($user->Perms->value & $Level->value) === false):
+    if($SendDenied):
+      $Bot->TextSend(
+        $Id,
+        $Lang->Get('Denied', Group: 'Errors')
+      );
+    endif;
+    return null;
+  else:
+    return $user;
+  endif;
 }
