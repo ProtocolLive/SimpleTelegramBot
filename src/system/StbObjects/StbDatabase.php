@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.11.01
+//2022.09.16.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\PhpLiveDb\{
@@ -67,13 +67,13 @@ class StbDatabase{
     int $Perms
   ):bool{
     DebugTrace();
-    $consult = $this->Db->Select('chatss');
+    $consult = $this->Db->Select('chats');
     $consult->WhereAdd('chat_id', $User, Types::Int);
     $result = $consult->Run();
     if($result !== []):
       return false;
     endif;
-    $consult = $this->Db->Insert('chatss');
+    $consult = $this->Db->Insert('chats');
     $consult->FieldAdd('chat_id', $User, Types::Int);
     $consult->FieldAdd('perms', $Perms, Types::Int);
     $consult->FieldAdd('created', time(), Types::Int);
