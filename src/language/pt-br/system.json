@@ -16,9 +16,11 @@
     "UninstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de desinstalação"
   },
   "Admin":{
-    "AdminNewId": "Digite o ID do novo administrador:",
-    "AdminMenu": "⚙️ Menu de administração",
     "Admin": "Administrador: %1$s\nAdicionado: %2$s",
+    "AdminMenu": "⚙️ Menu de administração",
+    "AdminNewId": "Peça para o novo administrador usar o comando /id, depois responda esta mensagem com o ID dele",
+    "AdminNewConfirm": "Usuário encontrado: %1$s",
+    "AdminPromoted": "🎖️ Você agora é um administrador",
     "Admins": "🎖️ Administradores:",
     "AdminsButton": "🎖️ Administradores",
     "ModulesButton": "🧩 Módulos",

@@ -1,12 +1,18 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.11.00
+//2022.09.16.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdminModules;
+use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbAdminModules, StbDbVariables
+};
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
-  TblMarkupInline, TblMarkupForceReply, TblCmd, TgCallback
+  TblMarkupInline, TblMarkupForceReply, TblCmd, TblEntities, TblException
+};
+use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
+use ProtocolLive\TelegramBotLibrary\TgObjects\{
+  TgCallback, TgEntity, TgEntityType, TgProfilePhoto, TgText
 };
 
 class StbAdmin{
@@ -204,10 +210,23 @@ class StbAdmin{
         $Webhook->User->Id
       );
       $Db->VariableSet(
-        'AdminNew',
-        $msg->Id
+        StbDbVariables::AdminNew->name,
+        $msg->Message->Id,
+        $Webhook->User->Id
       );
     endif;
+  }
+
+  public static function Callback_AdminNewOk(int $Id):void{
+    /**
+     * @var StbDatabase $Db
+     * @var TelegramBotLibrary $Bot
+     * @var StbLanguageSys $Lang
+     * @var TgCallback $Webhook
+     */
+    global $Bot, $Lang, $Webhook;
+    self::CallBack_Admin($Id);
+    $Bot->TextSend($Id, $Lang->Get('AdminPromoted', Group: 'Admin'));
   }
 
   static public function Callback_Admin(int $Admin):void{
@@ -340,47 +359,46 @@ class StbAdmin{
 
   static public function Listener_Text():bool{
     /**
-     * @var TelegramBotLibrary $Bot
-     * @var TgText $Webhook
      * @var StbDatabase $Db
+     * @var TgText $Webhook
+     * @var TelegramBotLibrary $Bot
      * @var StbLanguageSys $Lang
      */
-    global $Bot, $Webhook, $Db, $Lang;
-    if(get_class($Webhook->Message->Reply) !== TgText::class):
+    global $Db, $Webhook, $Bot, $Lang;
+    $msg = $Db->VariableGet(StbDbVariables::AdminNew->name, $Webhook->Message->User->Id);
+    if($msg === null
+    or $Webhook->Message->Reply === null
+    or $msg != $Webhook->Message->Reply->Message->Id):
       return true;
     endif;
-    if($Db->VariableGet('AdminNew') !== $Webhook->Message->Reply->Message->Id):
-      return true;
-    endif;
-    /*
-    $Db->ListenerDel(
-      StbDbListeners::TextReply,
-      'Listener_AdminNew',
-      $Webhook->User->Id
-    );
-    $Db->VariableDel('AdminNew');
-    */
-    $details = $Bot->ChatGet($Webhook->Text);
-    if($details === null):
+    try{
+      $user = $Bot->ChatGet($Webhook->Text);
+    }catch(TblException $e){
       $Bot->TextSend(
-        $Webhook->User->Id,
+        $Webhook->Message->User->Id,
         $Lang->Get('UserNull', Group: 'Errors')
       );
       return false;
+    }
+    $Db->UserEdit(Tgchat2Tguser($user));
+    $mk = new TblMarkupInline;
+    $mk->ButtonCallback(0, 0, '🔙', $Db->CallBackHashSet([__CLASS__ . '::Callback_Admins']));
+    $mk->ButtonCallback(0, 1, '✅', $Db->CallBackHashSet([__CLASS__ . '::Callback_AdminNewOk', $Webhook->Text]));
+    $name = $user->Name;
+    if($user->NameLast !== null):
+      $name .= ' ' . $user->NameLast;
     endif;
-    $Db->UserEdit(
-      $Webhook->Text,
-      $details->Name,
-      $details->Type,
-      $details->NameLast,
-      $details->Nick
-    );
+    if($user->Nick !== null):
+      $name .= ' (@' . $user->Nick . ')';
+    endif;
     $Bot->TextSend(
       $Webhook->Message->User->Id,
       sprintf(
-        $Lang->Get('UserFound', Group: 'Admin'),
-        $details->Name
-      )
+        $Lang->Get('AdminNewConfirm', Group: 'Admin'),
+        $name
+      ),
+      Markup: $mk
     );
+    return false;
   }
 }
