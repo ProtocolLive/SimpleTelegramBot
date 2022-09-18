@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.16.00
+//2022.09.18.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
@@ -217,18 +217,6 @@ class StbAdmin{
     endif;
   }
 
-  public static function Callback_AdminNewOk(int $Id):void{
-    /**
-     * @var StbDatabase $Db
-     * @var TelegramBotLibrary $Bot
-     * @var StbLanguageSys $Lang
-     * @var TgCallback $Webhook
-     */
-    global $Bot, $Lang, $Webhook;
-    self::CallBack_Admin($Id);
-    $Bot->TextSend($Id, $Lang->Get('AdminPromoted', Group: 'Admin'));
-  }
-
   static public function Callback_Admin(int $Admin):void{
     /**
      * @var TelegramBotLibrary $Bot
@@ -382,8 +370,23 @@ class StbAdmin{
     }
     $Db->UserEdit(Tgchat2Tguser($user));
     $mk = new TblMarkupInline;
-    $mk->ButtonCallback(0, 0, '🔙', $Db->CallBackHashSet([__CLASS__ . '::Callback_Admins']));
-    $mk->ButtonCallback(0, 1, '✅', $Db->CallBackHashSet([__CLASS__ . '::Callback_AdminNewOk', $Webhook->Text]));
+    $mk->ButtonCallback(
+      0,
+      0,
+      '🔙',
+      $Db->CallBackHashSet([
+        __CLASS__ . '::Callback_Admins'
+      ])
+    );
+    $mk->ButtonCallback(
+      0,
+      1,
+      '✅',
+      $Db->CallBackHashSet([
+        __CLASS__ . '::CallBack_Admin',
+        $Webhook->Text
+      ])
+    );
     $name = $user->Name;
     if($user->NameLast !== null):
       $name .= ' ' . $user->NameLast;
