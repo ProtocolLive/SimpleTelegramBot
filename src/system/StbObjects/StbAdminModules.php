@@ -1,14 +1,14 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.03
+//2022.09.20.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblMarkupInline;
 
 class StbAdminModules{
-  static public function Callback_Modules():void{
+  public static function Callback_Modules():void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var StbDatabase $Db
@@ -74,7 +74,7 @@ class StbAdminModules{
     );
   }
 
-  static public function Callback_ModuleAdd():void{
+  public static function Callback_ModuleAdd():void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var StbDatabase $Db
@@ -134,7 +134,7 @@ class StbAdminModules{
     );
   }
 
-  static public function Callback_InsModPic(string $Module):void{
+  public static function Callback_InsModPic(string $Module):void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
@@ -194,7 +194,7 @@ class StbAdminModules{
     call_user_func($Module . '::Install', $Bot, $Webhook, $Db);
   }
 
-  static public function Callback_Mod(string $Module):void{
+  public static function Callback_Mod(string $Module):void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var StbDatabase $Db
@@ -245,7 +245,7 @@ class StbAdminModules{
     );
   }
 
-  static public function Callback_UniModPic1(string $Module):void{
+  public static function Callback_UniModPic1(string $Module):void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var StbLanguageSys $Lang
@@ -289,7 +289,7 @@ class StbAdminModules{
     );
   }
 
-  static public function Callback_UniModPic2(string $Module):void{
+  public static function Callback_UniModPic2(string $Module):void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook

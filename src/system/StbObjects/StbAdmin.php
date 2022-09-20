@@ -1,18 +1,18 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.18.00
+//2022.09.20.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbAdminModules, StbDbVariables
 };
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
-  TblMarkupInline, TblMarkupForceReply, TblCmd, TblEntities, TblException
+  TblMarkupInline, TblMarkupForceReply, TblCmd, TblException
 };
 use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
 use ProtocolLive\TelegramBotLibrary\TgObjects\{
-  TgCallback, TgEntity, TgEntityType, TgProfilePhoto, TgText
+  TgCallback, TgText
 };
 
 class StbAdmin{
@@ -27,7 +27,7 @@ class StbAdmin{
     endif;
   }
 
-  static public function Command_id():void{
+  public static function Command_id():void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var StbLanguageSys $Lang
@@ -46,11 +46,11 @@ class StbAdmin{
     $Db->UsageLog($Webhook->Message->User->Id, 'id');
   }
 
-  static public function Command_admin():void{
+  public static function Command_admin():void{
     self::Callback_AdminMenu();
   }
 
-  static public function Callback_AdminMenu():void{
+  public static function Callback_AdminMenu():void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TblCmd|TgCallback $Webhook
@@ -133,7 +133,7 @@ class StbAdmin{
     endif;
   }
 
-  static public function Callback_Admins():void{
+  public static function Callback_Admins():void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
@@ -190,7 +190,7 @@ class StbAdmin{
     );
   }
 
-  static public function Callback_AdminNew():void{
+  public static function Callback_AdminNew():void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
@@ -217,7 +217,7 @@ class StbAdmin{
     endif;
   }
 
-  static public function Callback_Admin(int $Admin):void{
+  public static function Callback_Admin(int $Admin):void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
@@ -279,7 +279,7 @@ class StbAdmin{
     );
   }
 
-  static public function Callback_AdminPerm(
+  public static function Callback_AdminPerm(
     int $Admin,
     int $Perm,
     bool $Grant = false
@@ -305,7 +305,7 @@ class StbAdmin{
     self::Callback_Admin($Admin);
   }
 
-  static public function Callback_Updates():void{
+  public static function Callback_Updates():void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
@@ -345,7 +345,7 @@ class StbAdmin{
     );
   }
 
-  static public function Listener_Text():bool{
+  public static function Listener_Text():bool{
     /**
      * @var StbDatabase $Db
      * @var TgText $Webhook
