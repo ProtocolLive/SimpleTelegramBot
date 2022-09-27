@@ -29,7 +29,7 @@ cff0f60d37da7b8b2e5b417b2c72a99e68a8a4da  src/install/step1.php
 b983057c45b05992225baa9a1d11748cf4d22029  src/install/step2.php
 e0e9720d8dcd021c801cb766023c5ef01dc598cd  src/language/en/system.json
 99b48391409aed63225cfd6c7bf90a877eb2d067  src/language/pt-br/system.json
-e6784d93b3c05b4b846764afcdb5ba8e63e9feb8  src/system/StbObjects/StbAdmin.php
+49a3c11f7772163bc0bddc79fe139eeca1f0d8ee  src/system/StbObjects/StbAdmin.php
 19509aeff5d639b030d6139a5cd32c9a1901103b  src/system/StbObjects/StbAdminModules.php
 41aaf07ebef9be7323d593f061b410f2f95bd081  src/system/StbObjects/StbDatabase.php
 fb9dd39ca9d5f8eeec1786185dfa3945bc8fba23  src/system/StbObjects/StbDbAdminData.php

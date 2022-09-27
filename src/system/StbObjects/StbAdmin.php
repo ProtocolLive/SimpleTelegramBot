@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.20.00
+//2022.09.27.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
@@ -21,6 +21,7 @@ class StbAdmin{
     int &$Col,
     int $PerLine = 3
   ):void{
+    DebugTrace();
     if($Col === $PerLine):
       $Col = 0;
       $Line++;
@@ -47,6 +48,7 @@ class StbAdmin{
   }
 
   public static function Command_admin():void{
+    DebugTrace();
     self::Callback_AdminMenu();
   }
 
@@ -198,6 +200,7 @@ class StbAdmin{
      * @var StbLanguageSys $Lang
      */
     global $Bot, $Webhook, $Db, $Lang;
+    DebugTrace();
     $msg = $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('AdminNewId', Group: 'Admin'),
@@ -217,7 +220,10 @@ class StbAdmin{
     endif;
   }
 
-  public static function Callback_Admin(int $Admin):void{
+  public static function Callback_Admin(
+    int $Admin,
+    bool $ListenerDel = false
+  ):void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
@@ -277,6 +283,18 @@ class StbAdmin{
       ),
       Markup: $mk
     );
+    if($ListenerDel):
+      $Db->ListenerDel(
+        StbDbListeners::Text,
+        __CLASS__,
+        $Webhook->User->Id
+      );
+      $Db->VariableSet(
+        StbDbVariables::AdminNew->name,
+        null,
+        $Webhook->User->Id
+      );
+    endif;
   }
 
   public static function Callback_AdminPerm(
@@ -353,6 +371,7 @@ class StbAdmin{
      * @var StbLanguageSys $Lang
      */
     global $Db, $Webhook, $Bot, $Lang;
+    DebugTrace();
     $msg = $Db->VariableGet(StbDbVariables::AdminNew->name, $Webhook->Message->User->Id);
     if($msg === null
     or $Webhook->Message->Reply === null
@@ -384,7 +403,8 @@ class StbAdmin{
       '✅',
       $Db->CallBackHashSet([
         __CLASS__ . '::CallBack_Admin',
-        $Webhook->Text
+        $Webhook->Text,
+        true
       ])
     );
     $name = $user->Name;
