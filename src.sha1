@@ -40,6 +40,7 @@ b444644ea4c1559841793eeb0ef7887086e82a81  src/system/StbObjects/StbDbListeners.p
 34cb9448aa6590122d92597613a451a0cfcbc4ef  src/system/StbObjects/StbLanguageModule.php
 09b999d935236e5617fb6090e054f98a5f2f752e  src/system/StbObjects/StbLanguageSys.php
 dbec8db3a62317c182520da2e5537248ae6ae577  src/system/StbObjects/StbLog.php
+6f3d07c1b520aed2584c3f1b78d50c4c18182a23  src/system/StbObjects/StbModuleHelper.php
 4eb252d9275dd332bcb2758d57b867e0fc984048  src/system/constants.php
 8fbbb9d59ca541847f4a61df73406ad4ae7150df  src/system/functions/basics.php
 28385056707adf0de8326ea585e3b6a8fa93584d  src/system/functions/debug.php
