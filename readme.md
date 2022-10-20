@@ -7,7 +7,13 @@ Others files can be sent, like image PNG or vcard (VCF). Just create the file wi
 
 Check the [Wiki](https://github.com/ProtocolLive/SimpleTelegramBot/wiki) for more details.
 
+## Installation
+
+``
+composer create-project protocollive/simpletelegrambot ./
+``
+
 ## Donation
 
-### Bitcoin - 3Gy65UM1EyLmSuQBhBmhBscY6j6CRfdR6n
-![Bitcoin](https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=3Gy65UM1EyLmSuQBhBmhBscY6j6CRfdR6n)
+### Bitcoin - 34UswyxCATYXJzyQ12c3XZRviPhGWmFzxK
+![Bitcoin](https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=34UswyxCATYXJzyQ12c3XZRviPhGWmFzxK)
