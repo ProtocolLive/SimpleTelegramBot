@@ -1,12 +1,14 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.16.02
+//2022.10.25.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
-use ProtocolLive\PhpLiveDb\{
-  PhpLiveDb, Types, Operators, Parenthesis, AndOr
-};
+use ProtocolLive\PhpLiveDb\AndOr;
+use ProtocolLive\PhpLiveDb\Operators;
+use ProtocolLive\PhpLiveDb\Parenthesis;
+use ProtocolLive\PhpLiveDb\PhpLiveDb;
+use ProtocolLive\PhpLiveDb\Types;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
 class StbDatabase{

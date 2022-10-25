@@ -1,19 +1,16 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.27.00
+//2022.10.25.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
-use ProtocolLive\SimpleTelegramBot\StbObjects\{
-  StbAdminModules, StbDbVariables
-};
-use ProtocolLive\TelegramBotLibrary\TblObjects\{
-  TblMarkupInline, TblMarkupForceReply, TblCmd, TblException
-};
+use ProtocolLive\TelegramBotLibrary\TblObjects\TblCmd;
+use ProtocolLive\TelegramBotLibrary\TblObjects\TblException;
+use ProtocolLive\TelegramBotLibrary\TblObjects\TblMarkupForceReply;
+use ProtocolLive\TelegramBotLibrary\TblObjects\TblMarkupInline;
 use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
-use ProtocolLive\TelegramBotLibrary\TgObjects\{
-  TgCallback, TgText
-};
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgCallback;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgText;
 
 class StbAdmin{
   static private function JumpLineCheck(
