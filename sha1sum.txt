@@ -30,10 +30,10 @@ cff0f60d37da7b8b2e5b417b2c72a99e68a8a4da  install\step1.php
 b983057c45b05992225baa9a1d11748cf4d22029  install\step2.php
 e0e9720d8dcd021c801cb766023c5ef01dc598cd  language\en\system.json
 99b48391409aed63225cfd6c7bf90a877eb2d067  language\pt-br\system.json
-a3eadf774f1b4b8b3b4b5d617462ea47a1fe77d8  readme.md
-49a3c11f7772163bc0bddc79fe139eeca1f0d8ee  system\StbObjects\StbAdmin.php
+3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
+5ba27e3ceb6aac1f58d7a5b42688f56dd32c0770  system\StbObjects\StbAdmin.php
 19509aeff5d639b030d6139a5cd32c9a1901103b  system\StbObjects\StbAdminModules.php
-41aaf07ebef9be7323d593f061b410f2f95bd081  system\StbObjects\StbDatabase.php
+5da98bea74409de52ca464296fe066fdd8d1f240  system\StbObjects\StbDatabase.php
 fb9dd39ca9d5f8eeec1786185dfa3945bc8fba23  system\StbObjects\StbDbAdminData.php
 8a8c12038c66c2b78fe59bdc283b487a746d7ecd  system\StbObjects\StbDbAdminPerm.php
 b444644ea4c1559841793eeb0ef7887086e82a81  system\StbObjects\StbDbListeners.php
