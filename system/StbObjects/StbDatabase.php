@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.10.25.01
+//2022.10.25.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDOException;
@@ -235,22 +235,16 @@ class StbDatabase{
     if($this->NoUserListener($Listener)):
       $User = null;
     endif;
-    $consult = $this->Db->GetCustom();
-    $consult = $consult->prepare('
-      insert into listeners values(:listener,:module,:chat_id)
-      on duplicate key update
-        module=values(module),
-        chat_id=values(chat_id)
-    ');
-    $consult->bindValue(':listener', $Listener->name, \PDO::PARAM_STR);
-    $consult->bindValue(':module', $Class, \PDO::PARAM_STR);
-    $consult->bindValue(':chat_id', $User, \PDO::PARAM_INT);
-    if($consult->execute()):
+    $consult = $this->Db->InsertUpdate('listeners');
+    $consult->FieldAdd(':listener', $Listener->name, Types::Str);
+    $consult->FieldAdd(':module', $Class, Types::Str, Update: true);
+    $consult->FieldAdd(':chat_id', $User, Types::Str, Update: true);
+    try{
+      $consult->Run();
       return true;
-    else:
-      $this->DbError = $consult->errorInfo()[2];
+    }catch(PDOException){
       return false;
-    endif;
+    }
   }
 
   public function ListenerDel(
@@ -348,28 +342,18 @@ class StbDatabase{
     TgUser $User
   ):bool{
     DebugTrace();
-    $consult = $this->Db->GetCustom();
-    $consult = $consult->prepare('
-      insert into chats(chat_id,name,name2,nick,lang)
-        values(:chat_id,:name,:name2,:nick,:lang)
-      on duplicate key update
-        chat_id=values(chat_id),
-        name=values(name),
-        name2=values(name2),
-        nick=values(nick),
-        lang=values(lang)
-    ');
-    $consult->bindValue(':chat_id', $User->Id, \PDO::PARAM_INT);
-    $consult->bindValue(':name', $User->Name, \PDO::PARAM_STR);
-    $consult->bindValue(':name2', $User->NameLast, \PDO::PARAM_STR);
-    $consult->bindValue(':nick', $User->Nick, \PDO::PARAM_STR);
-    $consult->bindValue(':lang', $User->Language, \PDO::PARAM_STR);
-    if($consult->execute()):
+    $consult = $this->Db->InsertUpdate('chats');
+    $consult->FieldAdd(':chat_id', $User->Id, Types::Int);
+    $consult->FieldAdd(':name', $User->Name, Types::Str, Update: true);
+    $consult->FieldAdd(':name2', $User->NameLast, Types::Str, Update: true);
+    $consult->FieldAdd(':nick', $User->Nick, Types::Str, Update: true);
+    $consult->FieldAdd(':lang', $User->Language, Types::Str, Update: true);
+    try{
+      $consult->Run();
       return true;
-    else:
-      $this->DbError = $consult->errorInfo()[2];
+    }catch(PDOException){
       return false;
-    endif;
+    }
   }
 
   public function UserGet(
