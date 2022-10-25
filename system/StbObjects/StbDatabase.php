@@ -1,9 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.10.25.00
+//2022.10.25.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
+use PDOException;
 use ProtocolLive\PhpLiveDb\AndOr;
 use ProtocolLive\PhpLiveDb\Operators;
 use ProtocolLive\PhpLiveDb\Parenthesis;
@@ -13,7 +14,6 @@ use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
 class StbDatabase{
   private PhpLiveDb $Db;
-  public string|null $DbError = null;
 
   public function __construct(
     PhpLiveDb $Db
@@ -72,13 +72,12 @@ class StbDatabase{
     $consult->FieldAdd('chat_id', $User, Types::Int);
     $consult->FieldAdd('perms', $Perms, Types::Int);
     $consult->FieldAdd('created', time(), Types::Int);
-    $consult->Run();
-    $this->DbError = $consult->Error;
-    if($this->DbError === null):
+    try{
+      $consult->Run();
       return true;
-    else:
+    }catch(PDOException){
       return false;
-    endif;
+    }
   }
 
   public function AdminDel(
@@ -182,13 +181,12 @@ class StbDatabase{
     $consult = $this->Db->Insert('commands');
     $consult->FieldAdd('command', $Command, Types::Str);
     $consult->FieldAdd('module', $Module, Types::Str);
-    $consult->Run();
-    $this->DbError = $consult->Error;
-    if($this->DbError === null):
+    try{
+      $consult->Run();
       return true;
-    else:
+    }catch(PDOException){
       return false;
-    endif;
+    }
   }
 
   public function CommandDel(string|array $Command):void{
@@ -291,13 +289,12 @@ class StbDatabase{
     $consult = $this->Db->Insert('modules');
     $consult->FieldAdd('module', $Module, Types::Str);
     $consult->FieldAdd('created', time(), Types::Int);
-    $consult->Run();
-    $this->DbError = $consult->Error;
-    if($this->DbError === null):
+    try{
+      $consult->Run();
       return true;
-    else:
+    }catch(PDOException){
       return false;
-    endif;
+    }
   }
 
   /**
