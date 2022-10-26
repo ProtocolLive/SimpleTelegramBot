@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.10.25.00
+//2022.10.26.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblCmd;
@@ -63,7 +63,7 @@ class StbAdmin{
     if($user === null):
       return;
     endif;
-    $mk = new TblMarkupInline();
+    $mk = new TblMarkupInline;
     $line = 0;
     $col = 0;
     if($user->Perms->value & StbDbAdminPerm::Admins->value):
@@ -377,7 +377,7 @@ class StbAdmin{
     endif;
     try{
       $user = $Bot->ChatGet($Webhook->Text);
-    }catch(TblException $e){
+    }catch(TblException){
       $Bot->TextSend(
         $Webhook->Message->User->Id,
         $Lang->Get('UserNull', Group: 'Errors')
