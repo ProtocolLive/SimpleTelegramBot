@@ -1,11 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.00
+//2022.10.28.00
 
-use ProtocolLive\SimpleTelegramBot\StbObjects\{
-  StbAdmin, StbAdminModules
-};
+use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin;
+use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdminModules;
 
 function StbModuleSystem():array{
   return [StbAdmin::class, StbAdminModules::class];
