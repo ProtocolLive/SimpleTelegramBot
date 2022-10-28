@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.10.28.01
+//2022.10.28.02
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminData;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;
@@ -16,6 +16,9 @@ function StbLog(
   string $Msg,
   bool $NewLine = true
 ):void{
+  /**
+   * @var TblData TblBotData
+   */
   global $BotData;
   DebugTrace();
   if(($BotData->Log & $Type) === false):

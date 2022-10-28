@@ -1,7 +1,7 @@
 213fc25c6e693e6120985a337e42ff7c1d3170d2  LICENSE
 22de30c512c151b80ba92774340c00fbd74cc9d8  cron.php
 4e2b08ba460c257281648512cecd7eef3a8fd5e2  entry.php
-49c075bc3b93a23054793c810e2b5c30001c7325  functions\bot.php
+d421fe0ffa7c99bce239e691bc3ddf92cb7ac189  functions\bot.php
 6d61cb621297adaec26d3d108c1e7449130a6c78  functions\module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  index.htm
 13d73fdf795dab1991f916780dc03ae900f0b0d6  index.php
