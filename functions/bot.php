@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.10.28.02
+//2022.10.28.03
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminData;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;
@@ -10,6 +10,32 @@ use ProtocolLive\TelegramBotLibrary\TgObjects\TgChat;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatType;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgParseMode;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
+
+function AdminCheck(
+  int $Id,
+  StbDbAdminPerm $Level = StbDbAdminPerm::All,
+  bool $SendDenied = true
+):StbDbAdminData|null{
+  /**
+   * @var StbDatabase $Db
+   * @var TelegramBotLibrary $Bot
+   * @var StbLanguageSys $Lang
+   */
+  global $Db, $Bot, $Lang;
+  $user = $Db->Admin($Id);
+  if($user === false
+  or ($user->Perms->value & $Level->value) === false):
+    if($SendDenied):
+      $Bot->TextSend(
+        $Id,
+        $Lang->Get('Denied', Group: 'Errors')
+      );
+    endif;
+    return null;
+  else:
+    return $user;
+  endif;
+}
 
 function StbLog(
   int $Type,
@@ -34,7 +60,10 @@ function StbLog(
   file_put_contents(DirLogs . '/' . $file . '.log', $Msg, FILE_APPEND);
 }
 
-function SendUserCmd(string $Command, string $EventAdditional = null):bool{
+function SendUserCmd(
+  string $Command,
+  string $EventAdditional = null
+):bool{
   /**
    * @var TelegramBotLibrary $Bot
    * @var TgCmd $Webhook
@@ -126,30 +155,4 @@ function Tgchat2Tguser(TgChat $Chat):TgUser{
     'last_name' => $Chat->NameLast,
     'username' => $Chat->Nick
   ]);
-}
-
-function AdminCheck(
-  int $Id,
-  StbDbAdminPerm $Level = StbDbAdminPerm::All,
-  bool $SendDenied = true
-):StbDbAdminData|null{
-  /**
-   * @var StbDatabase $Db
-   * @var TelegramBotLibrary $Bot
-   * @var StbLanguageSys $Lang
-   */
-  global $Db, $Bot, $Lang;
-  $user = $Db->Admin($Id);
-  if($user === false
-  or ($user->Perms->value & $Level->value) === false):
-    if($SendDenied):
-      $Bot->TextSend(
-        $Id,
-        $Lang->Get('Denied', Group: 'Errors')
-      );
-    endif;
-    return null;
-  else:
-    return $user;
-  endif;
 }
