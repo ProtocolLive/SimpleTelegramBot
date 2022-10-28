@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.10.28.00
+//2022.10.28.01
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminData;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;
@@ -12,11 +12,15 @@ use ProtocolLive\TelegramBotLibrary\TgObjects\TgParseMode;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
 function StbLog(
-  StbLog $Type,
+  int $Type,
   string $Msg,
   bool $NewLine = true
 ):void{
+  global $BotData;
   DebugTrace();
+  if(($BotData->Log & $Type) === false):
+    return;
+  endif;
   $Msg = date('Y-m-d H:i:s') . PHP_EOL . $Msg . PHP_EOL;
   if($NewLine):
     $Msg .= PHP_EOL;
