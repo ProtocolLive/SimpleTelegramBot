@@ -1,15 +1,15 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.09.11.00
+//2022.10.28.00
 
-use ProtocolLive\SimpleTelegramBot\StbObjects\{
-  StbLog, StbDatabase, StbDbAdminData, StbDbAdminPerm, StbLanguageSys
-};
-use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
-use ProtocolLive\TelegramBotLibrary\TgObjects\{
-  TgParseMode, TgChat, TgChatType, TgUser
-};
+use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminData;
+use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;
+use ProtocolLive\SimpleTelegramBot\StbObjects\StbLog;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgChat;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatType;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgParseMode;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
 function StbLog(
   StbLog $Type,
