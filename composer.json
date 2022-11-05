@@ -16,5 +16,10 @@
             "name": "Protocol Corporation",
             "email": "protocollive@outlook.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "ProtocolLive\\SimpleTelegramBot\\StbObjects\\": "system/StbObjects"
+        }
+    }
 }

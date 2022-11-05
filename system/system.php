@@ -1,12 +1,12 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.31.00
+//2022.11.05.00
 
-use ProtocolLive\PhpLiveDb\{
-  PhpLiveDb, Drivers
-};
-use ProtocolLive\SimpleTelegramBot\StbObjects\{StbDatabase, StbLanguageSys};
+use ProtocolLive\PhpLiveDb\Drivers;
+use ProtocolLive\PhpLiveDb\PhpLiveDb;
+use ProtocolLive\SimpleTelegramBot\StbObjects\StbDatabase;
+use ProtocolLive\SimpleTelegramBot\StbObjects\StbLanguageSys;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
 use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
 
@@ -16,17 +16,6 @@ set_error_handler('HandlerError');
 set_exception_handler('HandlerException');
 
 require(DirSystem . '/vendor/autoload.php');
-spl_autoload_register(function(string $Class){
-  if(strpos($Class, 'ProtocolLive\SimpleTelegramBot\StbObjects') === 0):
-    $Class = str_replace(
-      'ProtocolLive\SimpleTelegramBot\StbObjects',
-      DirSystem . '/system/StbObjects',
-      $Class
-    );
-    $Class = str_replace('\\', '/', $Class);
-    require($Class . '.php');
-  endif;
-});
 
 require(DirToken . '/config.php');
 date_default_timezone_set(Timezone);
