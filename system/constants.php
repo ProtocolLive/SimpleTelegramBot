@@ -1,9 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.04.30.01
+//2022.11.05.00
 
-define('DirSystem', dirname(__DIR__, 1));
+define('DirSystem', dirname(__DIR__));
 const DirDb = DirToken . '/db';
 const DirLogs = DirToken . '/logs';
 const DirModules = DirToken . '/modules';
