@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.10.28.03
+//2022.11.05.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminData;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;
@@ -98,7 +98,7 @@ function SendUserCmd(
       $Bot->TextSend(
         $Webhook->Message->Chat->Id,
         $txt,
-        TgParseMode::Html
+        ParseMode: TgParseMode::Html
       );
     endforeach;
     $Text = true;
