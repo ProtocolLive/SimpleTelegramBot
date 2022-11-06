@@ -1,8 +1,8 @@
 213fc25c6e693e6120985a337e42ff7c1d3170d2  LICENSE
 22de30c512c151b80ba92774340c00fbd74cc9d8  cron.php
-4e2b08ba460c257281648512cecd7eef3a8fd5e2  entry.php
-d421fe0ffa7c99bce239e691bc3ddf92cb7ac189  functions\bot.php
-6d61cb621297adaec26d3d108c1e7449130a6c78  functions\module.php
+00af360130f38adb00ad6ca9cae135819c5a5dd0  entry.php
+7c3452c470d1760653ea7e90b3d632762dfa9d9f  functions\bot.php
+382d433a6be71d3733b8c64c22b8767125ddf3f1  functions\module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  index.htm
 13d73fdf795dab1991f916780dc03ae900f0b0d6  index.php
 9ccd6abd6b29bdb66e65686d4cf36f35b6f40993  install\DirToken\UserCmds\en\dontknow.txt
@@ -43,9 +43,9 @@ b444644ea4c1559841793eeb0ef7887086e82a81  system\StbObjects\StbDbListeners.php
 09b999d935236e5617fb6090e054f98a5f2f752e  system\StbObjects\StbLanguageSys.php
 dbec8db3a62317c182520da2e5537248ae6ae577  system\StbObjects\StbLog.php
 6f3d07c1b520aed2584c3f1b78d50c4c18182a23  system\StbObjects\StbModuleHelper.php
-4eb252d9275dd332bcb2758d57b867e0fc984048  system\constants.php
+0d442097643230ff1249d443ba8e0b120da6522d  system\constants.php
 8fbbb9d59ca541847f4a61df73406ad4ae7150df  system\functions\basics.php
 28385056707adf0de8326ea585e3b6a8fa93584d  system\functions\debug.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  system\php.php
 6b7999b6be40e86c7c62f60a67ea1467643c03b3  system\requires.php
-211560c96538f200e33f4fd2f35e27d21a538d39  system\system.php
+cffcd233935c79e1150616ad98827bc76a892259  system\system.php
