@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.11.06.00
+//2022.11.06.01
 
 //This file are included by DirToken/index.php
 
@@ -9,7 +9,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbListeners;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblException;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblWebhook;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatType;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgChat;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUpdateType;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
@@ -126,7 +126,7 @@ function Update_Cmd():void{
 
   //In a group, with many bots, the commands have the target bot.
   //This block check the target and caches the bot name
-  if($Webhook->Message->Chat->Type !== TgChatType::Private):
+  if($Webhook->Message->Chat instanceof TgChat):
     $user = $Db->UserGet($Webhook->Message->User->Id);
     if($user === null):
       $user = $Bot->MyGet();
