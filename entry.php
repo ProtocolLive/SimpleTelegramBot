@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.11.00
+//2022.11.05.00
 
 //This file are included by DirToken/index.php
 
@@ -12,7 +12,8 @@ use ProtocolLive\TelegramBotLibrary\TblObjects\{
   TblCmd, TblWebhook, TblData, TblException
 };
 use ProtocolLive\TelegramBotLibrary\TgObjects\{
-  TgChatType, TgCallback, TgText, TgPhoto, TgInvoiceCheckout, TgInvoiceShipping, TgInlineQuery, TgGroupStatusMy, TgChatTitle, TgUpdateType
+  TgChatType, TgCallback, TgText, TgPhoto, TgInvoiceCheckout, TgInvoiceShipping, TgInlineQuery, TgGroupStatusMy, TgChatTitle, TgUpdateType,
+    TgUser
 };
 
 $_GET['a'] ??= '';
@@ -190,7 +191,7 @@ function Update_Text():void{
     endif;
   endforeach;
   if($Run === false
-  and $Webhook->Message->Chat->Type === TgChatType::Private):
+  and $Webhook->Message->Chat instanceof TgUser):
     SendUserCmd('dontknow', $Webhook->Text);
   endif;
   return;
