@@ -1,6 +1,6 @@
 213fc25c6e693e6120985a337e42ff7c1d3170d2  LICENSE
 22de30c512c151b80ba92774340c00fbd74cc9d8  cron.php
-8c9581318b886053e95b61797bc407bbb6f2e515  entry.php
+01200048d508fd638fd477e7f87ff56e78a0d899  entry.php
 0e63e69e1ccd6b1a3b6bb7438c1ed6bf2a1581e6  functions\bot.php
 382d433a6be71d3733b8c64c22b8767125ddf3f1  functions\module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  index.htm
@@ -26,12 +26,12 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  install\index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\sql\index.htm
 59b68f44e7abf5c2729b6aaf847ee41ffb84a532  install\sql\mysql\install.sql
 c8edb46a9986a8b94b3105184d370560ff9ef042  install\sql\sqlite\install.sql
-cff0f60d37da7b8b2e5b417b2c72a99e68a8a4da  install\step1.php
+8a04013ea26ff940756de39d684457fa819612d6  install\step1.php
 b983057c45b05992225baa9a1d11748cf4d22029  install\step2.php
 e0e9720d8dcd021c801cb766023c5ef01dc598cd  language\en\system.json
 99b48391409aed63225cfd6c7bf90a877eb2d067  language\pt-br\system.json
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
-e6f13870ff836a1a5b2e6f75fad52429b60b78c3  system\StbObjects\StbAdmin.php
+09dc82382bb92db42ecd9d1c57ce1abb93af3ab0  system\StbObjects\StbAdmin.php
 19509aeff5d639b030d6139a5cd32c9a1901103b  system\StbObjects\StbAdminModules.php
 5da98bea74409de52ca464296fe066fdd8d1f240  system\StbObjects\StbDatabase.php
 fb9dd39ca9d5f8eeec1786185dfa3945bc8fba23  system\StbObjects\StbDbAdminData.php
