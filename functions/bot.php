@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.11.05.00
+//2022.11.06.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminData;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;
@@ -146,9 +146,6 @@ function UpdateCheck():array{
  * @throws TypeError
  */
 function Tgchat2Tguser(TgChat $Chat):TgUser{
-  if($Chat->Type !== TgChatType::Private):
-    throw new TypeError('Chat type must be of type Private');
-  endif;
   return new TgUser([
     'id' => $Chat->Id,
     'first_name' => $Chat->Name,
