@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.10.26.00
+//2022.11.06.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblCmd;
@@ -116,7 +116,7 @@ class StbAdmin{
         dirname('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']) . '/stats.php'
       );
     endif;
-    if(get_class($Webhook) === TblCmd::class):
+    if($Webhook instanceof TblCmd):
       $Bot->TextSend(
         $Webhook->Message->User->Id,
         $Lang->Get('AdminMenu', Group: 'Admin'),

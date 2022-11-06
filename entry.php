@@ -1,15 +1,24 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.11.06.01
+//2022.11.06.00
 
 //This file are included by DirToken/index.php
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbListeners;
+use ProtocolLive\TelegramBotLibrary\TblObjects\TblCmd;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblException;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblWebhook;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgCallback;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgChat;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatTitle;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgGroupStatusMy;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgInlineQuery;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgInvoiceCheckout;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgInvoiceShipping;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgPhoto;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgText;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUpdateType;
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
@@ -28,24 +37,25 @@ function Action_():void{
   if($Webhook === null):
     return;
   endif;
+  vd($Webhook);
 
-  if(get_class($Webhook) === TblCmd::class):
+  if($Webhook instanceof TblCmd):
     Update_Cmd();
-  elseif(get_class($Webhook) === TgCallback::class):
+  elseif($Webhook instanceof TgCallback):
     Update_Callback();
-  elseif(get_class($Webhook) === TgText::class):
+  elseif($Webhook instanceof TgText):
     Update_Text();
-  elseif(get_class($Webhook) === TgPhoto::class):
+  elseif($Webhook instanceof TgPhoto):
     Update_ListenerDual(StbDbListeners::Photo);
-  elseif(get_class($Webhook) === TgInvoiceCheckout::class):
+  elseif($Webhook instanceof TgInvoiceCheckout):
     Update_ListenerSimple(StbDbListeners::InvoiceCheckout);
-  elseif(get_class($Webhook) === TgInvoiceShipping::class):
+  elseif($Webhook instanceof TgInvoiceShipping):
     Update_ListenerSimple(StbDbListeners::InvoiceShipping);
-  elseif(get_class($Webhook) === TgInlineQuery::class):
+  elseif($Webhook instanceof TgInlineQuery):
     Update_ListenerSimple(StbDbListeners::InlineQuery);
-  elseif(get_class($Webhook) === TgGroupStatusMy::class):
+  elseif($Webhook instanceof TgGroupStatusMy):
     Update_ListenerSimple(StbDbListeners::ChatMy);
-  elseif(get_class($Webhook) === TgChatTitle::class):
+  elseif($Webhook instanceof TgChatTitle):
     Update_ListenerSimple(StbDbListeners::Chat);
   endif;
 }
