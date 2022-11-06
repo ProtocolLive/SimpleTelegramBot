@@ -25,7 +25,8 @@
       <tr>
         <td>Admin ID:</td>
         <td>
-          <input type="text" name="admin">
+          <input type="text" name="admin"><br>
+          To know your ID, send the command <b>/myid</b> to <a href="https://t.me/ProtocolSimpleTelegramBot">ProtocolSimpleTelegramBot</a>
         </td>
       </tr>
       <tr>
