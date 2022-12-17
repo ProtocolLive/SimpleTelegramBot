@@ -1,26 +1,28 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.11.06.00
+//2022.12.17.00
 
 //This file are included by DirToken/index.php
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbListeners;
-use ProtocolLive\TelegramBotLibrary\TblObjects\TblCmd;
-use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
-use ProtocolLive\TelegramBotLibrary\TblObjects\TblException;
-use ProtocolLive\TelegramBotLibrary\TblObjects\TblWebhook;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgCallback;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgChat;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatTitle;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgGroupStatusMy;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgInlineQuery;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgInvoiceCheckout;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgInvoiceShipping;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgPhoto;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgText;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgUpdateType;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
+use ProtocolLive\TelegramBotLibrary\{
+  TblObjects\TblCmd,
+  TblObjects\TblData,
+  TblObjects\TblException,
+  TblObjects\TblWebhook,
+  TgObjects\TgCallback,
+  TgObjects\TgChat,
+  TgObjects\TgChatTitle,
+  TgObjects\TgGroupStatusMy,
+  TgObjects\TgInlineQuery,
+  TgObjects\TgInvoiceCheckout,
+  TgObjects\TgInvoiceShipping,
+  TgObjects\TgPhoto,
+  TgObjects\TgText,
+  TgObjects\TgUpdateType,
+  TgObjects\TgUser
+};
 
 $_GET['a'] ??= '';
 if(function_exists('Action_' . $_GET['a'])):
