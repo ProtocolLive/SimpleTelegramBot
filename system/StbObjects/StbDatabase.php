@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.20.01
+//2022.12.20.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -277,8 +277,8 @@ final class StbDatabase{
   public function ModuleRestricted(string $Module):bool{
     DebugTrace();
     if(strpos($Module, '\Stb') === false
-    and substr($Module, '\Tbl') === false
-    and substr($Module, '\Tg') === false):
+    and strpos($Module, '\Tbl') === false
+    and strpos($Module, '\Tg') === false):
       return false;
     endif;
     return true;
