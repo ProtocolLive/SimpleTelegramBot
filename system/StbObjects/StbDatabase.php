@@ -1,18 +1,20 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.10.25.02
+//2022.12.20.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDOException;
-use ProtocolLive\PhpLiveDb\AndOr;
-use ProtocolLive\PhpLiveDb\Operators;
-use ProtocolLive\PhpLiveDb\Parenthesis;
-use ProtocolLive\PhpLiveDb\PhpLiveDb;
-use ProtocolLive\PhpLiveDb\Types;
+use ProtocolLive\PhpLiveDb\{
+  AndOr,
+  Operators,
+  Parenthesis,
+  PhpLiveDb,
+  Types
+};
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
-class StbDatabase{
+final class StbDatabase{
   private PhpLiveDb $Db;
 
   public function __construct(
@@ -20,28 +22,6 @@ class StbDatabase{
   ){
     DebugTrace();
     $this->Db = $Db;
-  }
-
-  private function NoUserListener(
-    StbDbListeners $Listener
-  ):bool{
-    DebugTrace();
-    if($Listener === StbDbListeners::InlineQuery
-    or $Listener === StbDbListeners::ChatMy):
-      return true;
-    else:
-      return false;
-    endif;
-  }
-
-  public function ModuleRestricted(string $Module):bool{
-    DebugTrace();
-    if(strpos($Module, '\Stb') === false
-    and substr($Module, '\Tbl') === false
-    and substr($Module, '\Tg') === false):
-      return false;
-    endif;
-    return true;
   }
 
   public function Admin(
@@ -137,6 +117,21 @@ class StbDatabase{
     return $result;
   }
 
+  public function CallBackHashRun(
+    string $Hash
+  ):bool{
+    DebugTrace();
+    $consult = $this->Db->Select('callbackshash');
+    $consult->WhereAdd('hash', $Hash, Types::Str);
+    $result = $consult->Run();
+    if($result === []):
+      return false;
+    endif;
+    $function = json_decode($result[0]['method'], true);
+    call_user_func_array(array_shift($function), $function);
+    return true;
+  }
+
   /**
    * The callback data are limited to 64 bytes. This function hash the function to be called
    */
@@ -159,21 +154,6 @@ class StbDatabase{
     $consult->FieldAdd('method', $Data, Types::Str);
     $consult->Run(HtmlSafe: false);
     return $hash;
-  }
-
-  public function CallBackHashRun(
-    string $Hash
-  ):bool{
-    DebugTrace();
-    $consult = $this->Db->Select('callbackshash');
-    $consult->WhereAdd('hash', $Hash, Types::Str);
-    $result = $consult->Run();
-    if($result === []):
-      return false;
-    endif;
-    $function = json_decode($result[0]['method'], true);
-    call_user_func_array(array_shift($function), $function);
-    return true;
   }
 
   public function CommandAdd(string $Command, string $Module):bool{
@@ -291,6 +271,16 @@ class StbDatabase{
     }
   }
 
+  public function ModuleRestricted(string $Module):bool{
+    DebugTrace();
+    if(strpos($Module, '\Stb') === false
+    and substr($Module, '\Tbl') === false
+    and substr($Module, '\Tg') === false):
+      return false;
+    endif;
+    return true;
+  }
+
   /**
    * List all installed modules or get the module installation timestamp
    * @param string $Module
@@ -322,6 +312,18 @@ class StbDatabase{
       Operators::Like
     );
     $consult->Run();
+  }
+
+  private function NoUserListener(
+    StbDbListeners $Listener
+  ):bool{
+    DebugTrace();
+    if($Listener === StbDbListeners::InlineQuery
+    or $Listener === StbDbListeners::ChatMy):
+      return true;
+    else:
+      return false;
+    endif;
   }
 
   public function UsageLog(
