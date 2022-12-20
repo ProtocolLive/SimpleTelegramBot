@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.08.31.00
+//2022.12.20.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbLog;
 
@@ -37,15 +37,17 @@ function HandlerException(Throwable $Exception):never{
 }
 
 function vd(mixed $v):void{
+  echo '<pre>';
   ob_start();
-  echo '</select><pre>';
   echo date('H:i:s') . ' Variable debug:' . PHP_EOL;
   var_dump($v);
   echo 'Backtrace:' . PHP_EOL;
   debug_print_backtrace();
   echo '</pre>';
-  error_log(ob_get_contents());
+  $log = ob_get_contents();
   ob_end_flush();
+  $log = str_replace(['<pre>', '</pre>'], '', $log);
+  error_log($log);
 }
 
 function vdd(mixed $v):never{
