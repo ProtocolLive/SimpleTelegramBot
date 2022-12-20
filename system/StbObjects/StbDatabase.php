@@ -1,9 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.20.00
+//2022.12.20.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
+use PDO;
 use PDOException;
 use ProtocolLive\PhpLiveDb\{
   AndOr,
@@ -15,13 +16,11 @@ use ProtocolLive\PhpLiveDb\{
 use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
 
 final class StbDatabase{
-  private PhpLiveDb $Db;
 
   public function __construct(
-    PhpLiveDb $Db
+    private PhpLiveDb $Db
   ){
     DebugTrace();
-    $this->Db = $Db;
   }
 
   public function Admin(
@@ -201,6 +200,10 @@ final class StbDatabase{
       $consult->WhereAdd('command', $Command, Types::Str);
     endif;
     return $consult->Run();
+  }
+
+  public function GetCustom():PDO{
+    return $this->Db->GetCustom();
   }
 
   /**
