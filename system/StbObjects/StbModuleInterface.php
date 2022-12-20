@@ -1,5 +1,5 @@
 <?php
-//2022.12.20.00
+//2022.12.20.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -9,8 +9,14 @@ use ProtocolLive\TelegramBotLibrary\{
 
 interface StbModuleInterface{
   public static function Install(
-    StbDatabase $Db,
+    TelegramBotLibrary $Bot,
     TgCallback $Webhook,
-    TelegramBotLibrary $Bot
+    StbDatabase $Db
   ):void;
+
+  public static function Uninstall(
+    TelegramBotLibrary $Bot,
+    TgCallback $Webhook,
+    StbDatabase $Db
+  );
 }
