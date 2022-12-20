@@ -1,11 +1,15 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.20.00
+//2022.12.20.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin;
-use ProtocolLive\TelegramBotLibrary\TblObjects\TblMarkupInline;
+use ProtocolLive\TelegramBotLibrary\{
+  TblObjects\TblMarkupInline,
+  TelegramBotLibrary,
+  TgObjects\TgCallback
+};
 
 class StbAdminModules{
   public static function Callback_Modules():void{
