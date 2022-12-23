@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.23.01
+//2022.12.23.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -227,7 +227,8 @@ final class StbDatabase{
     try{
       $consult->Run();
       return true;
-    }catch(PDOException){
+    }catch(PDOException $e){
+      error_log($e);
       return false;
     }
   }
