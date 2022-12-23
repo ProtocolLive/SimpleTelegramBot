@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.20.00
+//2022.12.23.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin;
@@ -195,7 +195,7 @@ class StbAdminModules{
       );
       return;
     endif;
-    call_user_func($Module . '::Install', $Bot, $Webhook, $Db);
+    call_user_func($Module . '::Install', $Bot, $Webhook, $Db, $Lang);
   }
 
   public static function Callback_Mod(string $Module):void{
@@ -311,6 +311,6 @@ class StbAdminModules{
       return;
     endif;
     require(DirModules . '/' . $Module . '/index.php');
-    call_user_func($Module . '::Uninstall', $Bot, $Webhook, $Db);
+    call_user_func($Module . '::Uninstall', $Bot, $Webhook, $Db, $Lang);
   }
 }
