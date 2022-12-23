@@ -1,12 +1,14 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.29.00
+//2022.12.23.00
 
 //Installation date: ##DATE##
 
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgInvoiceCurrencies;
-use ProtocolLive\TelegramBotLibrary\TblObjects\TblLog;
+use ProtocolLive\TelegramBotLibrary\{
+  TblObjects\TblLog,
+  TgObjects\TgInvoiceCurrencies
+};
 use ProtocolLive\PhpLiveDb\Drivers;
 
 //Token given by @BotFather

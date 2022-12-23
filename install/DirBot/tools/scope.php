@@ -1,7 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.23.00
+//2022.12.23.01
+
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgCmdScope;
 
 define('DirBot', dirname(__DIR__, 1));
 require(dirname(__DIR__, 2) . '/system/system.php');

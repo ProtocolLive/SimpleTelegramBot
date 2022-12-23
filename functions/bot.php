@@ -1,15 +1,18 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.11.06.00
+//2022.12.23.00
 
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminData;
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbLog;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgChat;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgChatType;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgParseMode;
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
+use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbDbAdminData,
+  StbDbAdminPerm,
+  StbLog
+};
+use ProtocolLive\TelegramBotLibrary\TgObjects\{
+  TgChat,
+  TgParseMode,
+  TgUser
+};
 
 function AdminCheck(
   int $Id,

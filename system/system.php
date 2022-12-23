@@ -3,12 +3,18 @@
 //https://github.com/ProtocolLive/SimpleTelegramBot
 //2022.12.23.00
 
-use ProtocolLive\PhpLiveDb\Drivers;
-use ProtocolLive\PhpLiveDb\PhpLiveDb;
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbDatabase;
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbLanguageSys;
-use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
-use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
+use ProtocolLive\PhpLiveDb\{
+  Drivers,
+  PhpLiveDb
+};
+use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbDatabase,
+  StbLanguageSys
+};
+use ProtocolLive\TelegramBotLibrary\{
+  TblObjects\TblData,
+  TelegramBotLibrary
+};
 
 require(__DIR__ . '/php.php');
 require(__DIR__ . '/requires.php');
