@@ -1,5 +1,6 @@
 <?php
-//2022.08.29.00
+//2022.12.23.00
+
 use ProtocolLive\PhpLiveDb\{
   PhpLiveDb, Drivers
 };
@@ -16,15 +17,13 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
 <body>
   <h1>SimpleTelegramBot Install</h1><?php
 
-  $token = explode(':', $_POST['token']);
-  $token = $token[1];
   $DirSystem = dirname(__DIR__, 1);
-  $DirToken = 'Bot-' . $_POST['name'] . '-' . $token;
+  $DirBot = 'Bot-' . $_POST['name'] . '-' . md5($_POST['token']);
 
-  mkdir($DirSystem . '/DirToken', 0755, true);
-  CopyRecursive(__DIR__ . '/DirToken', $DirSystem . '/DirToken');
+  mkdir($DirSystem . '/DirBot', 0755, true);
+  CopyRecursive(__DIR__ . '/DirBot', $DirSystem . '/DirBot');
 
-  $config = file_get_contents($DirSystem . '/DirToken/config.php');
+  $config = file_get_contents($DirSystem . '/DirBot/config.php');
   $config = str_replace('##DATE##', date('Y-m-d H:i:s'), $config);
   $config = str_replace('##TIMEZONE##', $_POST['timezone'], $config);
   $config = str_replace('##TOKEN##', $_POST['token'], $config);
@@ -42,9 +41,9 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
   $config = str_replace('##DBUSER##', $_POST['user'], $config);
   $config = str_replace('##DBPWD##', $_POST['pwd'], $config);
   $config = str_replace('##DBNAME##', $_POST['db'], $config);
-  file_put_contents($DirSystem . '/DirToken/config.php', $config);
+  file_put_contents($DirSystem . '/DirBot/config.php', $config);
 
-  rename($DirSystem . '/DirToken', $DirSystem . '/Bot-' . $_POST['name'] . '-' . $token);
+  rename($DirSystem . '/DirBot', $DirSystem . '/Bot-' . $_POST['name'] . '-' . $token);
 
   if($_POST['dbtype'] === 'mysql'):
     $PlDb = new PhpLiveDb(
@@ -56,7 +55,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
     $sqls = file_get_contents(__DIR__ . '/sql/mysql/install.sql');
   else:
     $PlDb = new PhpLiveDb(
-      "$DirSystem/$DirToken/db.db",
+      "$DirSystem/$DirBot/db.db",
       Driver: Drivers::SqLite
     );
     $sqls = file_get_contents(__DIR__ . '/sql/sqlite/install.sql');
@@ -79,7 +78,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
 
   echo '✅ Install complete!';
   $url = dirname($_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME']);
-  $url .= '/' . $DirToken . '/index.php?a=WebhookSet';
+  $url .= '/' . $DirBot . '/index.php?a=WebhookSet';
   echo '<p><a href="https://' . $url . '">Click here to set the webhook</a></p>';?>
 </body>
 </html>

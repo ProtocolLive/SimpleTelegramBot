@@ -3,7 +3,7 @@
 //https://github.com/ProtocolLive/SimpleTelegramBot
 //2022.12.17.00
 
-//This file are included by DirToken/index.php
+//This file are included by DirBot/index.php
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbListeners;
 use ProtocolLive\TelegramBotLibrary\{
