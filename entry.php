@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.17.00
+//2022.12.23.00
 
 //This file are included by DirBot/index.php
 
@@ -39,7 +39,6 @@ function Action_():void{
   if($Webhook === null):
     return;
   endif;
-  vd($Webhook);
 
   if($Webhook instanceof TblCmd):
     Update_Cmd();
