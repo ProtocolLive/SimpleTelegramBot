@@ -8,12 +8,12 @@
     ]
   ],
   "Module":{
-    "InstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de instalação",
+    "Fail": "⚠️ Erro no procedimento",
+    "InstallOk": "✅ Instalação concluída",
     "InstallPick": "Clique em um módulo para instalar:",
     "Module": "Módulo: %1$s\nInstalação: %2$s",
     "Modules": "🧩 Módulos instalados:",
-    "UninstallButton": "Desinstalar",
-    "UninstallNotFound": "⚠️ Este módulo não pode ser instalado porque não tem o método de desinstalação"
+    "UninstallButton": "Desinstalar"
   },
   "Admin":{
     "Admin": "Administrador: %1$s\nAdicionado: %2$s",

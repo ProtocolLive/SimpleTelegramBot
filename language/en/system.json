@@ -8,12 +8,12 @@
     ]
   ],
   "Module":{
-    "InstallNotFound": "⚠️ This module cannot be installed because don't have Install method",
+    "Fail": "⚠️ Procedure fail",
+    "InstallOk": "✅ Install done",
     "InstallPick": "Choose a module to install:",
     "Module": "Module: %1$s\nInstallation: %2$s",
     "Modules": "🧩 Modules installed:",
-    "UninstallButton": "Uninstall",
-    "UninstallNotFound": "⚠️ This module cannot be installed because don't have Uninstall method"
+    "UninstallButton": "Uninstall"
   },
   "Admin":{
     "Admin": "Administrator: %1$s\nAdded: %2$s",
