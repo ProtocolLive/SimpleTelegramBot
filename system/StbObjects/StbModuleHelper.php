@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.23.00
+//2022.12.23.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -20,7 +20,8 @@ abstract class StbModuleHelper{
     StbLanguageSys $Lang,
     TelegramBotLibrary $Bot,
     PDO $Pdo,
-    array $Commands
+    array $Commands,
+    bool $Commit = true
   ):void{
     $Pdo->beginTransaction();
 
@@ -50,7 +51,9 @@ abstract class StbModuleHelper{
       $Webhook->Message->Id,
       sprintf($Lang->Get('InstallOk', Group: 'Module'))
     );
-    $Pdo->commit();
+    if($Commit):
+      $Pdo->commit();
+    endif;
   }
 
   private static function ModName():string{
@@ -87,7 +90,8 @@ abstract class StbModuleHelper{
     StbLanguageSys $Lang,
     TelegramBotLibrary $Bot,
     PDO $Pdo,
-    array $Commands
+    array $Commands,
+    bool $Commit = true
   ):void{
     $Pdo->beginTransaction();
 
@@ -102,6 +106,8 @@ abstract class StbModuleHelper{
       return;
     endif;
 
-    $Pdo->commit();
+    if($Commit):
+      $Pdo->commit();
+    endif;
   }
 }
