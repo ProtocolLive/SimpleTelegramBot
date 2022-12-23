@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.23.00
+//2022.12.23.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -221,9 +221,9 @@ final class StbDatabase{
       $User = null;
     endif;
     $consult = $this->Db->InsertUpdate('listeners');
-    $consult->FieldAdd(':listener', $Listener->name, Types::Str);
-    $consult->FieldAdd(':module', $Class, Types::Str, Update: true);
-    $consult->FieldAdd(':chat_id', $User, Types::Str, Update: true);
+    $consult->FieldAdd('listener', $Listener->name, Types::Str);
+    $consult->FieldAdd('module', $Class, Types::Str, Update: true);
+    $consult->FieldAdd('chat_id', $User, Types::Str, Update: true);
     try{
       $consult->Run();
       return true;
@@ -311,7 +311,7 @@ final class StbDatabase{
     $consult->Run();
     $consult = $this->Db->Delete('callbackshash');
     $consult->WhereAdd(
-      'data',
+      'method',
       '%' . $Module . '%',
       Types::Str,
       Operators::Like
