@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.23.01
+//2022.12.24.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -67,13 +67,13 @@ abstract class StbModuleHelper{
     return 'module_' . self::ModName() . '_' . $Table;
   }
 
-  private static function MsgError(
+  protected static function MsgError(
     PDO $Pdo,
     TgCallback $Webhook,
     TelegramBotLibrary $Bot,
     StbLanguageSys $Lang
   ):void{
-    $Pdo->Rollback();
+    $Pdo->rollBack();
     $Bot->TextEdit(
       $Webhook->User->Id,
       $Webhook->Message->Id,
