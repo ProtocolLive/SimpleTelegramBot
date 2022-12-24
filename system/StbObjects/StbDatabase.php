@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.23.03
+//2022.12.24.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -223,8 +223,8 @@ final class StbDatabase{
     endif;
     $consult = $this->Db->InsertUpdate('listeners');
     $consult->FieldAdd('listener', $Listener->name, Types::Str);
-    $consult->FieldAdd('module', $Class, Types::Str, Update: true);
     $consult->FieldAdd('chat_id', $User, Types::Str, Update: true);
+    $consult->FieldAdd('module', $Class, Types::Str, Update: true);
     try{
       $consult->Run();
       return true;
@@ -406,11 +406,13 @@ final class StbDatabase{
 
   public function VariableGet(
     string $Name,
+    string $Module = null,
     int $User = null
   ):string|null{
     DebugTrace();
     $consult = $this->Db->Select('variables');
     $consult->WhereAdd('name', $Name, Types::Str);
+    $consult->WhereAdd('module', $Module, Types::Str);
     $consult->WhereAdd('chat_id', $User, Types::Int);
     $result = $consult->Run();
     if($result === []):
@@ -423,6 +425,7 @@ final class StbDatabase{
   public function VariableSet(
     string $Name,
     mixed $Value = null,
+    string $Module = null,
     int $User = null
   ):void{
     DebugTrace();
@@ -430,21 +433,14 @@ final class StbDatabase{
       $consult = $this->Db->Delete('variables');
       $consult->WhereAdd('name', $Name, Types::Str);
       $consult->WhereAdd('chat_id', $User, Types::Int);
+      $consult->WhereAdd('module', $Module, Types::Str);
     else:
-      $consult = $this->Db->Select('variables');
-      $consult->WhereAdd('name', $Name, Types::Str);
-      $consult->WhereAdd('chat_id', $User, Types::Int);
-      $result = $consult->Run();
-      if($result === []):
-        $consult = $this->Db->Insert('variables');
-        $consult->FieldAdd('name', $Name, Types::Str);
-        $consult->FieldAdd('chat_id', $User, Types::Int);
-      else:
-        $consult = $this->Db->Update('variables');
-        $consult->WhereAdd('name', $Name, Types::Str);
-        $consult->WhereAdd('chat_id', $User, Types::Int);
-      endif;
-      $consult->FieldAdd('value', $Value, Types::Str);
+      $consult = $this->Db->InsertUpdate('variables');
+      $consult->FieldAdd('name', $Name, Types::Str);
+      $consult->FieldAdd('chat_id', $User, Types::Int);
+      $consult->FieldAdd('module', $Module, Types::Str);
+      $consult->FieldAdd('value', $Value, Types::Str, Update: true);
+      $consult->Run();
     endif;
     $consult->Run();
   }
