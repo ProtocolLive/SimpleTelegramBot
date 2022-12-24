@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.23.00
+//2022.12.24.00
 
 //This file are included by DirBot/index.php
 
@@ -173,6 +173,7 @@ function Update_Callback():void{
    * @var StbDatabase $Db
    */
   global $Webhook, $Db;
+  $Db->UserSeen($Webhook->User);
   $Db->CallBackHashRun($Webhook->Data);
 }
 
