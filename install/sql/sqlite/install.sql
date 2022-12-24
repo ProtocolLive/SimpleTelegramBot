@@ -49,10 +49,12 @@ create table sys_params(
   value text not null
 );
 insert into sys_params values('DbVersion','1.0.0');
+
 create table variables(
   chat_id integer,
+  module text,
   name text not null,
   value text,
-  unique(chat_id,name),
+  unique(module,chat_id,name),
   foreign key(chat_id) references chats(chat_id) on delete cascade
 );
