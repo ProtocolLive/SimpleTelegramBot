@@ -1,11 +1,14 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.24.00
+//2022.12.24.01
 
 //This file are included by DirBot/index.php
 
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbListeners;
+use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbDatabase,
+  StbDbListeners
+};
 use ProtocolLive\TelegramBotLibrary\{
   TblObjects\TblCmd,
   TblObjects\TblData,
@@ -233,8 +236,8 @@ function Update_ListenerSimple(StbDbListeners $Listener):void{
    */
   global $Db;
   foreach($Db->ListenerGet($Listener) as $listener):
-    StbModuleLoad($listener);
-    if(call_user_func($listener . '::Listener_' . $Listener->name) === false):
+    StbModuleLoad($listener['module']);
+    if(call_user_func($listener['module'] . '::Listener_' . $Listener->name) === false):
       return;
     endif;
   endforeach;
