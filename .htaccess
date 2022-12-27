@@ -1,0 +1,4 @@
+<FilesMatch ~ "\.(md|txt|json|lock)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
