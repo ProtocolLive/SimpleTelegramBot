@@ -1,10 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.23.00
+//2022.12.30.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin;
 use ProtocolLive\TelegramBotLibrary\{
   TblObjects\TblMarkupInline,
   TelegramBotLibrary,
