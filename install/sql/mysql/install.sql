@@ -1,6 +1,6 @@
 create table callbackshash(
   hash varchar(100) not null primary key,
-  method varchar(100) not null
+  method varchar(255) not null
 ) engine=InnoDB default charset=utf8mb4 collate=utf8mb4_unicode_ci;
 
 create table chats(
