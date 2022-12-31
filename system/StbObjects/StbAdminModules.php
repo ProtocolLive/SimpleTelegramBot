@@ -1,15 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.02
+//2022.12.31.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
-  TblObjects\TblCmd,
   TblObjects\TblMarkupInline,
   TelegramBotLibrary,
-  TgObjects\TgCallback,
-  TgObjects\TgMessageData
+  TgObjects\TgCallback
 };
 
 class StbAdminModules{
@@ -237,7 +235,7 @@ class StbAdminModules{
     $date = $Db->Modules($Module);
     $Bot->TextEdit(
       Admin,
-      $Webhook->Data->Id,
+      $Webhook->Data->Data->Id,
       sprintf(
         $Lang->Get('Module', Group: 'Module'),
         $Module,
@@ -285,7 +283,7 @@ class StbAdminModules{
     );
     $Bot->MarkupEdit(
       Admin,
-      $Webhook->Data->Id,
+      $Webhook->Data->Data->Id,
       Markup: $mk
     );
   }
