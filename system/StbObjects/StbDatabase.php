@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.01
+//2022.12.30.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -84,17 +84,12 @@ final class StbDatabase{
     $consult = $this->Db->Update('chats');
     $consult->FieldAdd('perms', $Perms, Types::Int);
     $consult->WhereAdd('chat_id', $User, Types::Int);
-    $consult->WhereAdd(
-      'perms',
-      StbDbAdminPerm::None->value,
-      Types::Int,
-      Operators::Bigger
-    );
-    if($consult->Run() === 1):
+    try{
+      $consult->Run();
       return true;
-    else:
+    }catch(PDOException){
       return false;
-    endif;
+    }
   }
 
   /**
