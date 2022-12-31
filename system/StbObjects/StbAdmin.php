@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.01
+//2022.12.30.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -60,7 +60,11 @@ class StbAdmin{
      */
     global $Bot, $Webhook, $Lang, $Db;
     DebugTrace();
-    $id = $Webhook->User->Id ?? $Webhook->Message->User->Id;
+    if($Webhook instanceof TblCmd):
+      $id = $Webhook->Data->User->Id;
+    else:
+      $id = $Webhook->User->Id;
+    endif;
     $user = AdminCheck($id);
     if($user === null):
       return;
