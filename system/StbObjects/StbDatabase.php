@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.00
+//2022.12.30.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -81,7 +81,7 @@ final class StbDatabase{
     if($User === Admin):
       return false;
     endif;
-    $consult = $this->Db->Update('chatss');
+    $consult = $this->Db->Update('chats');
     $consult->FieldAdd('perms', $Perms, Types::Int);
     $consult->WhereAdd('chat_id', $User, Types::Int);
     $consult->WhereAdd(
