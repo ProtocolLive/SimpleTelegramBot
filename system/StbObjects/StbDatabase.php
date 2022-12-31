@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.24.00
+//2022.12.30.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -440,7 +440,6 @@ final class StbDatabase{
       $consult->FieldAdd('chat_id', $User, Types::Int);
       $consult->FieldAdd('module', $Module, Types::Str);
       $consult->FieldAdd('value', $Value, Types::Str, Update: true);
-      $consult->Run();
     endif;
     $consult->Run();
   }
