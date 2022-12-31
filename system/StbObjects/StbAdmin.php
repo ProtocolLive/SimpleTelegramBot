@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.31.01
+//2022.12.31.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -24,6 +24,10 @@ abstract class StbAdmin{
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null
+    or $Webhook->Text === Admin):
+      return;
+    endif;
     try{
       $user = $Bot->ChatGet($Webhook->Text);
     }catch(TblException){
@@ -210,6 +214,10 @@ abstract class StbAdmin{
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null):
+      $Bot->CallbackAnswer(
+        $Webhook->Id,
+        $Lang->Get('Denied', Group: 'Errors')
+      );
       return;
     endif;
     $mk = new TblMarkupInline();
@@ -266,6 +274,13 @@ abstract class StbAdmin{
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null):
+      $Bot->CallbackAnswer(
+        $Webhook->Id,
+        $Lang->Get('Denied', Group: 'Errors')
+      );
+      return;
+    endif;
     $Db->VariableSet(
       StbDbVariables::Action->name,
       StbDbVariables::AdminNew->name,
@@ -304,6 +319,10 @@ abstract class StbAdmin{
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null):
+      $Bot->CallbackAnswer(
+        $Webhook->Id,
+        $Lang->Get('Denied', Group: 'Errors')
+      );
       return;
     endif;
     $line = 0;
@@ -392,6 +411,14 @@ abstract class StbAdmin{
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null
+    or $Id === Admin):
+      $Bot->CallbackAnswer(
+        $Webhook->Id,
+        $Lang->Get('Denied', Group: 'Errors')
+      );
+      return;
+    endif;
     $mk = new TblMarkupInline;
     $mk->ButtonCallback(
       0,
@@ -430,6 +457,14 @@ abstract class StbAdmin{
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null
+    or $Id === Admin):
+      $Bot->CallbackAnswer(
+        $Webhook->Id,
+        $Lang->Get('Denied', Group: 'Errors')
+      );
+      return;
+    endif;
     $Db->AdminEdit($Id, StbDbAdminPerm::None->value);
     self::Callback_Admins();
   }
@@ -447,7 +482,12 @@ abstract class StbAdmin{
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
-    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null):
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null
+    or $Admin === Admin):
+      $Bot->CallbackAnswer(
+        $Webhook->Id,
+        $Lang->Get('Denied', Group: 'Errors')
+      );
       return;
     endif;
     $admin = $Db->Admin($Admin);
