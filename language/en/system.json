@@ -17,6 +17,7 @@
   },
   "Admin":{
     "Admin": "Administrator: %1$s\nAdded: %2$s",
+    "AdminDel": "Deseja realmente excluir esse administrador?",
     "AdminMenu": "⚙️ Administration menu",
     "AdminNewId": "Ask the new administrator to use the command /id, them reply this with the ID",
     "AdminNewConfirm": "Usuário encontrado: %1$s",
@@ -40,7 +41,8 @@
   },
   "Add": "➕",
   "Back": "🔙",
-  "DateTime":"m/d/Y h:i:s a",
+  "Cancel": "Cancelar",
+  "DateTime":"m/d/Y h:i:s",
   "MyId": "Your ID is %s",
   "No": "❎",
   "Yes": "✅"
