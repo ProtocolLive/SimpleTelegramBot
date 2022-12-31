@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.04
+//2022.12.30.05
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -134,7 +134,7 @@ abstract class StbAdmin{
     $mk = new TblMarkupInline;
     $line = 0;
     $col = 0;
-    if($user->Perms->value & StbDbAdminPerm::Admins->value):
+    if($user->Perms & StbDbAdminPerm::Admins->value):
       $mk->ButtonCallback(
         $line,
         $col++,
@@ -145,7 +145,7 @@ abstract class StbAdmin{
       );
     endif;
     self::JumpLineCheck($line, $col);
-    if($user->Perms->value & StbDbAdminPerm::Modules->value):
+    if($user->Perms & StbDbAdminPerm::Modules->value):
       $mk->ButtonCallback(
         $line,
         $col++,
@@ -176,7 +176,7 @@ abstract class StbAdmin{
       );
     endif;
     self::JumpLineCheck($line, $col);
-    if($user->Perms->value & StbDbAdminPerm::Stats->value):
+    if($user->Perms & StbDbAdminPerm::Stats->value):
       $mk->ButtonWebapp(
         $line,
         $col++,
@@ -317,7 +317,7 @@ abstract class StbAdmin{
       or $perm === StbDbAdminPerm::None):
         continue;
       endif;
-      $value = $admin->Perms->value & $perm->value;
+      $value = $admin->Perms & $perm->value;
       $mk->ButtonCallback(
         $line,
         $col++,
@@ -380,9 +380,9 @@ abstract class StbAdmin{
     endif;
     $admin = $Db->Admin($Admin);
     if($Grant):
-      $Perm = $admin->Perms->value | $Perm;
+      $Perm = $admin->Perms | $Perm;
     else:
-      $Perm = $admin->Perms->value & ~$Perm;
+      $Perm = $admin->Perms & ~$Perm;
     endif;
     $Db->AdminEdit($Admin, $Perm);
     self::Callback_Admin($Admin);
