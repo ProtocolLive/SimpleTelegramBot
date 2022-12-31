@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.29.00
+//2022.12.31.00
 
 require(__DIR__ . '/system/php.php');
 require(__DIR__ . '/vendor/autoload.php');
@@ -13,7 +13,7 @@ session_start();
 $step = filter_input(INPUT_GET, 'step', FILTER_VALIDATE_INT);
 if(basename(__FILE__) !== 'index.php'):
   echo 'Protocol SimpleTelegramBot already installed!';
-elseif($step === false or $step === null):
+elseif(empty($step)):
   require(__DIR__ . '/install/step1.php');
 else:
   require(__DIR__ . '/install/step' . $step . '.php');
