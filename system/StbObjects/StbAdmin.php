@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.06
+//2022.12.30.07
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -266,23 +266,29 @@ abstract class StbAdmin{
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
-    $msg = $Bot->TextSend(
+    $Db->VariableSet(
+      StbDbVariables::Action->name,
+      StbDbVariables::AdminNew->name,
+      null,
+      $Webhook->User->Id
+    );
+    $Db->ListenerAdd(
+      StbDbListeners::Text,
+      __CLASS__,
+      $Webhook->User->Id
+    );
+    $mk = new TblMarkupInline;
+    $mk->ButtonCallback(
+      0,
+      0,
+      $Lang->Get('Cancel'),
+      $Db->CallBackHashSet([__CLASS__ . '::Callback_Cancel'])
+    );
+    $Bot->TextSend(
       $Webhook->User->Id,
       $Lang->Get('AdminNewId', Group: 'Admin'),
-      Markup: new TblMarkupForceReply
+      Markup: $mk
     );
-    if($msg !== null):
-      $Db->ListenerAdd(
-        StbDbListeners::Text,
-        __CLASS__,
-        $Webhook->Data->Data->User->Id
-      );
-      $Db->VariableSet(
-        StbDbVariables::AdminNew->name,
-        $msg->Data->Id,
-        $Webhook->Data->Data->User->Id
-      );
-    endif;
   }
 
   public static function Callback_Admin(
@@ -386,6 +392,26 @@ abstract class StbAdmin{
     endif;
     $Db->AdminEdit($Admin, $Perm);
     self::Callback_Admin($Admin);
+  }
+
+  public static function Callback_Cancel():void{
+    /**
+     * @var StbDatabase $Db
+     * @var TgCallback $Webhook
+     */
+    global $Db, $Webhook;
+    DebugTrace();
+    $Db->VariableSet(
+      StbDbVariables::Action->name,
+      null,
+      null,
+      $Webhook->User->Id
+    );
+    $Db->ListenerDel(
+      StbDbListeners::Text,
+      $Webhook->User->Id
+    );
+    self::Callback_Admins();
   }
 
   public static function Callback_Updates():void{
