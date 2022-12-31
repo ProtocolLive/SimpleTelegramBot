@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.05
+//2022.12.30.06
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -244,7 +244,7 @@ abstract class StbAdmin{
         $detail,
         $Db->CallBackHashSet([
           __CLASS__ . '::Callback_Admin',
-          $admin
+          $admin->Id
         ])
       );
       self::JumpLineCheck($line, $col);
