@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.12.30.01
+//2022.12.31.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbDbAdminData,
@@ -16,24 +16,15 @@ use ProtocolLive\TelegramBotLibrary\TgObjects\{
 
 function AdminCheck(
   int $Id,
-  StbDbAdminPerm $Level = StbDbAdminPerm::All,
-  bool $SendDenied = true
+  StbDbAdminPerm $Level = StbDbAdminPerm::All
 ):StbDbAdminData|null{
   /**
    * @var StbDatabase $Db
-   * @var TelegramBotLibrary $Bot
-   * @var StbLanguageSys $Lang
    */
-  global $Db, $Bot, $Lang;
+  global $Db;
   $user = $Db->Admin($Id);
   if($user === false
-  or ($user->Perms->value & $Level->value) === false):
-    if($SendDenied):
-      $Bot->TextSend(
-        $Id,
-        $Lang->Get('Denied', Group: 'Errors')
-      );
-    endif;
+  or ($user->Perms & $Level->value) === false):
     return null;
   else:
     return $user;
