@@ -60,11 +60,9 @@ insert into sys_params values('DbVersion','1.0.0');
 
 create table variables(
   var_id int unsigned primary key auto_increment,
-  module varchar(100),
-  chat_id bigint unsigned,
+  module varchar(100) references modules(module) on delete cascade on update cascade,
+  chat_id bigint unsigned references chats(chat_id) on delete cascade on update cascade,
   name varchar(50) not null,
   value varchar(50),
-  unique(module,chat_id,name),
-  foreign key(chat_id) references chats(chat_id) on delete cascade on update cascade
-  foreign key(module) references modules(module) on delete cascade on update cascade
+  unique(module,chat_id,name)
 ) engine=InnoDB default charset=utf8mb4 collate=utf8mb4_unicode_ci;
