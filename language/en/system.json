@@ -29,7 +29,7 @@
     "PermStats": " Estatísticas",
     "PhpInfoButton": "🔍 Server info",
     "StatsButton": "📊 Statistics",
-    "Updates": "Outdated files:\n\n%s",
+    "Updates": "SimpleTelegramBot: %1$s\nTelegramBotLibrary: %2$s",
     "UpdatesButton": "📡 Updates",
     "UserFound": "User founded: %s"
   },
@@ -42,5 +42,6 @@
   "Back": "🔙",
   "DateTime":"m/d/Y h:i:s a",
   "MyId": "Your ID is %s",
+  "No": "❎",
   "Yes": "✅"
 }
