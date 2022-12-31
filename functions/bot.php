@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.12.23.00
+//2022.12.30.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbDbAdminData,
@@ -113,36 +113,6 @@ function SendUserCmd(
   else:
     return false;
   endif;
-}
-
-function UpdateCheck():array{
-  $NowHashes = HashDir('sha1', DirSystem);
-  $ServerHashes = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/SimpleTelegramBot/main/src.sha1');
-  $ServerHashes = explode(PHP_EOL, $ServerHashes);
-  array_pop($ServerHashes);
-  foreach($ServerHashes as $sh):
-    $sh = explode('  ', $sh);
-    $file = str_replace('src/', DirSystem . '/', $sh[1]);
-    if(strpos($file, DirSystem . '/config.php') !== false):
-      continue;
-    endif;
-    if(isset($NowHashes[$file])
-    and $sh[0] !== $NowHashes[$file]):
-      $return[] = $sh[1];
-    endif;
-  endforeach;
-  $ServerHashes = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/TelegramBotLibrary/main/src.sha1');
-  $ServerHashes = explode(PHP_EOL, $ServerHashes);
-  array_pop($ServerHashes);
-  foreach($ServerHashes as $sh):
-    $sh = explode('  ', $sh);
-    $file = str_replace('src/', DirSystem . '/vendor/protocollive/telegrambotlibrary/src/', $sh[1]);
-    if(isset($NowHashes[$file])
-    and $sh[0] !== $NowHashes[$file]):
-      $return[] = $sh[1];
-    endif;
-  endforeach;
-  return $return;
 }
 
 /**

@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.00
+//2022.12.30.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -349,14 +349,29 @@ class StbAdmin{
         __CLASS__ . '::Callback_AdminMenu'
       ])
     );
-    $files = UpdateCheck();
-    $files = implode(PHP_EOL, $files);
+    $stb = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/SimpleTelegramBot/main/sha1sum.txt');
+    $stb = str_replace("\n", "\r\n", $stb);
+    $stb = file_get_contents(DirSystem . '\sha1sum.txt') === $stb;
+    if($stb):
+      $stb = $Lang->Get('Yes');
+    else:
+      $stb = $Lang->Get('No');
+    endif;
+    $tbl = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/TelegramBotLibrary/main/src/sha1sum.txt');
+    $tbl = str_replace("\n", "\r\n", $tbl);
+    $tbl = file_get_contents(DirSystem . '\vendor\protocollive\telegrambotlibrary\src\sha1sum.txt') === $tbl;
+    if($tbl):
+      $tbl = $Lang->Get('Yes');
+    else:
+      $tbl = $Lang->Get('No');
+    endif;
     $Bot->TextEdit(
       Admin,
       $Webhook->Message->Id,
       sprintf(
         $Lang->Get('Updates', Group: 'Admin'),
-        $files
+        $stb,
+        $tbl
       ),
       Markup: $mk
     );
