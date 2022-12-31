@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.31.00
+//2022.12.31.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -46,14 +46,14 @@ abstract class StbModuleHelper{
       return;
     endif;
 
-    $Bot->TextEdit(
-      $Webhook->Data->Data->Chat->Id,
-      $Webhook->Data->Data->Id,
+    $Bot->CallbackAnswer(
+      $Webhook->Id,
       sprintf($Lang->Get('InstallOk', Group: 'Module'))
     );
     if($Commit):
       $Pdo->commit();
     endif;
+    StbAdminModules::Callback_Modules();
   }
 
   private static function ModName():string{
