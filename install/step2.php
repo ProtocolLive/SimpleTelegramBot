@@ -1,5 +1,5 @@
 <?php
-//2022.12.23.01
+//2022.12.31.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -44,7 +44,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\StbDbAdminPerm;?>
   $config = str_replace('##DBNAME##', $_POST['db'], $config);
   file_put_contents($DirSystem . '/DirBot/config.php', $config);
 
-  rename($DirSystem . '/DirBot', $DirSystem . '/Bot-' . $_POST['name'] . '-' . $token);
+  rename($DirSystem . '\DirBot', $DirSystem . '\\' . $DirBot);
 
   if($_POST['dbtype'] === 'mysql'):
     $PlDb = new PhpLiveDb(
