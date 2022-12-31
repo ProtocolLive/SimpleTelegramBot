@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.31.00
+//2022.12.31.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -19,10 +19,10 @@ abstract class StbAdmin{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgText $Webhook
-     * @var StbLanguageSys $Lang
      * @var StbDatabase $Db
+     * @var StbLanguageSys $Lang
      */
-    global $Bot, $Webhook, $Lang, $Db;
+    global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     try{
       $user = $Bot->ChatGet($Webhook->Text);
@@ -92,11 +92,11 @@ abstract class StbAdmin{
   public static function Command_id():void{
     /**
      * @var TelegramBotLibrary $Bot
-     * @var StbLanguageSys $Lang
      * @var TblCmd $Webhook
      * @var StbDatabase $Db
+     * @var StbLanguageSys $Lang
      */
-    global $Bot, $Lang, $Webhook, $Db;
+    global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     $Bot->TextSend(
       $Webhook->Data->User->Id,
@@ -117,10 +117,10 @@ abstract class StbAdmin{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TblCmd|TgCallback $Webhook
-     * @var StbLanguageSys $Lang
      * @var StbDatabase $Db
+     * @var StbLanguageSys $Lang
      */
-    global $Bot, $Webhook, $Lang, $Db;
+    global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     if($Webhook instanceof TblCmd):
       $id = $Webhook->Data->User->Id;
@@ -387,10 +387,10 @@ abstract class StbAdmin{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
-     * @var StbLanguageSys $Lang
      * @var StbDatabase $Db
+     * @var StbLanguageSys $Lang
      */
-    global $Bot, $Webhook, $Lang, $Db;
+    global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     $mk = new TblMarkupInline;
     $mk->ButtonCallback(
@@ -423,9 +423,12 @@ abstract class StbAdmin{
     int $Id
   ):void{
     /**
+     * @var TelegramBotLibrary $Bot
+     * @var TgCallback $Webhook
      * @var StbDatabase $Db
+     * @var StbLanguageSys $Lang
      */
-    global $Db;
+    global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     $Db->AdminEdit($Id, StbDbAdminPerm::None->value);
     self::Callback_Admins();
@@ -442,7 +445,7 @@ abstract class StbAdmin{
      * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
      */
-    global $Webhook, $Db;
+    global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null):
       return;
@@ -459,10 +462,10 @@ abstract class StbAdmin{
 
   public static function Callback_Cancel():void{
     /**
+     * @var TgText $Webhook
      * @var StbDatabase $Db
-     * @var TgCallback $Webhook
      */
-    global $Db, $Webhook;
+    global $Webhook, $Db;
     DebugTrace();
     $Db->VariableSet(
       StbDbVariables::Action->name,
@@ -481,10 +484,10 @@ abstract class StbAdmin{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
-     * @var StbLanguageSys $Lang
      * @var StbDatabase $Db
+     * @var StbLanguageSys $Lang
      */
-    global $Bot, $Webhook, $Lang, $Db;
+    global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
     if($Webhook->User->Id !== Admin):
       $Bot->TextSend(
@@ -534,12 +537,10 @@ abstract class StbAdmin{
 
   public static function Listener_Text():bool{
     /**
-     * @var StbDatabase $Db
      * @var TgText $Webhook
-     * @var TelegramBotLibrary $Bot
-     * @var StbLanguageSys $Lang
+     * @var StbDatabase $Db
      */
-    global $Db, $Webhook;
+    global $Webhook, $Db;
     DebugTrace();
     $temp = $Db->VariableGet(
       StbDbVariables::Action->name,
