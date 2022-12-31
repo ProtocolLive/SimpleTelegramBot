@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.31.02
+//2022.12.31.03
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -147,8 +147,8 @@ abstract class StbAdmin{
           __CLASS__ . '::Callback_Admins'
         ])
       );
+      self::JumpLineCheck($line, $col);
     endif;
-    self::JumpLineCheck($line, $col);
     if($user->Perms & StbDbAdminPerm::Modules->value):
       $mk->ButtonCallback(
         $line,
@@ -158,8 +158,8 @@ abstract class StbAdmin{
           StbAdminModules::class . '::Callback_Modules'
         ])
       );
+      self::JumpLineCheck($line, $col);
     endif;
-    self::JumpLineCheck($line, $col);
     if($id === Admin):
       $mk->ButtonCallback(
         $line,
@@ -169,8 +169,8 @@ abstract class StbAdmin{
           __CLASS__ . '::Callback_Updates'
         ])
       );
+      self::JumpLineCheck($line, $col);
     endif;
-    self::JumpLineCheck($line, $col);
     if($id === Admin):
       $mk->ButtonWebapp(
         $line,
@@ -178,8 +178,8 @@ abstract class StbAdmin{
         $Lang->Get('PhpInfoButton', Group: 'Admin'),
         dirname('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']) . '/tools/info.php'
       );
+      self::JumpLineCheck($line, $col);
     endif;
-    self::JumpLineCheck($line, $col);
     if($user->Perms & StbDbAdminPerm::Stats->value):
       $mk->ButtonWebapp(
         $line,
