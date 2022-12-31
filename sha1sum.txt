@@ -1,6 +1,6 @@
 213fc25c6e693e6120985a337e42ff7c1d3170d2  LICENSE
 22de30c512c151b80ba92774340c00fbd74cc9d8  cron.php
-0485a727ba4b130ef14ae49e7caf4915dc16fba1  entry.php
+823ebeac216bd8ef643735eaef78b6df082ad54c  entry.php
 c85e883c024f0fc360cf72e966a1360a97bafff1  functions\bot.php
 9e13e275ee407bda468729cd4ef2122e3e9f4533  functions\module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  index.htm
@@ -39,14 +39,14 @@ f8c03985ceea05890f609a5741617f602db2fa3a  system\StbObjects\StbDbAdminData.php
 b444644ea4c1559841793eeb0ef7887086e82a81  system\StbObjects\StbDbListeners.php
 af86f69c773072fb8526ea03ae0811be82ed1468  system\StbObjects\StbDbVariables.php
 5bcb79844cb616879e3193c2fa8d43cd5c85c432  system\StbObjects\StbLanguageMaster.php
-34cb9448aa6590122d92597613a451a0cfcbc4ef  system\StbObjects\StbLanguageModule.php
-09b999d935236e5617fb6090e054f98a5f2f752e  system\StbObjects\StbLanguageSys.php
+6e87d3c7a9ce653b3d8ecc0ecf39db1174441997  system\StbObjects\StbLanguageModule.php
+128f2f9e7bc694794fada229cea5b3429ace5d2b  system\StbObjects\StbLanguageSys.php
 dbec8db3a62317c182520da2e5537248ae6ae577  system\StbObjects\StbLog.php
 4a4445f6b1319b13e5ae88b0c9aaffc5448f74a5  system\StbObjects\StbModuleHelper.php
 53259be772178a0fb6bb395aeff91519d16e6fe9  system\StbObjects\StbModuleInterface.php
 6d10158a742eec5dcd46a7092f3e6d79bf5169cf  system\constants.php
 8fbbb9d59ca541847f4a61df73406ad4ae7150df  system\functions\basics.php
 286fb723e5ea5f5a3b594b4f93b338bee8d15d11  system\functions\debug.php
-6361827f1b20fc9a2e9d58e3423ff8f6ba5efde5  system\php.php
+e3813ae3423e3fe61eec44af3c65d31523a86cac  system\php.php
 6b7999b6be40e86c7c62f60a67ea1467643c03b3  system\requires.php
 af0c17e64c02bb5b90bf929c2eaf0a53012226b2  system\system.php
