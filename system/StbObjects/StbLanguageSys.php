@@ -1,12 +1,15 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.27.00
+//2022.12.31.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 
-class StbLanguageSys extends StbLanguageMaster{
-  public function __construct(string $Default){
+final class StbLanguageSys
+extends StbLanguageMaster{
+  public function __construct(
+    string $Default
+  ){
     DebugTrace();
     $this->Default = $Default;
     foreach(glob(DirSystem . '/language/*', GLOB_ONLYDIR) as $dir):
