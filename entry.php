@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.24.01
+//2022.12.30.00
 
 //This file are included by DirBot/index.php
 
@@ -136,12 +136,12 @@ function Update_Cmd():void{
    * @var TblCmd $Webhook
    */
   global $Bot, $Db, $Webhook;
-  $Db->UserSeen($Webhook->Message->User);
+  $Db->UserSeen($Webhook->Data->User);
 
   //In a group, with many bots, the commands have the target bot.
   //This block check the target and caches the bot name
-  if($Webhook->Message->Chat instanceof TgChat):
-    $user = $Db->UserGet($Webhook->Message->User->Id);
+  if($Webhook->Data->Chat instanceof TgChat):
+    $user = $Db->UserGet($Webhook->Data->User->Id);
     if($user === null):
       $user = $Bot->MyGet();
       if($user !== null):
@@ -177,7 +177,7 @@ function Update_Callback():void{
    */
   global $Webhook, $Db;
   $Db->UserSeen($Webhook->User);
-  $Db->CallBackHashRun($Webhook->Data);
+  $Db->CallBackHashRun($Webhook->Callback);
 }
 
 function Update_Text():void{
@@ -186,7 +186,7 @@ function Update_Text():void{
    * @var StbDatabase $Db
    */
   global $Db, $Webhook;
-  $Db->UserSeen($Webhook->Message->User);
+  $Db->UserSeen($Webhook->Data->User);
   $Run = false;
   foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
     $Run = true;
@@ -195,7 +195,7 @@ function Update_Text():void{
       return;
     endif;
   endforeach;
-  foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Message->User->Id) as $listener):
+  foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Data->User->Id) as $listener):
     $Run = true;
     StbModuleLoad($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_Text') === false):
@@ -203,7 +203,7 @@ function Update_Text():void{
     endif;
   endforeach;
   if($Run === false
-  and $Webhook->Message->Chat instanceof TgUser):
+  and $Webhook->Data->Chat instanceof TgUser):
     SendUserCmd('dontknow', $Webhook->Text);
   endif;
   return;
@@ -221,7 +221,7 @@ function Update_ListenerDual(StbDbListeners $Listener):void{
       return;
     endif;
   endforeach;
-  foreach($Db->ListenerGet($Listener, $Webhook->Message->User->Id) as $listener):
+  foreach($Db->ListenerGet($Listener, $Webhook->Data->User->Id) as $listener):
     StbModuleLoad($listener);
     if(call_user_func($listener . '::Listener_' . $Listener->name) === false):
       return;

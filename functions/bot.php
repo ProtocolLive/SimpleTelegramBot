@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.12.30.00
+//2022.12.30.01
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbDbAdminData,
@@ -77,14 +77,14 @@ function SendUserCmd(
   DebugTrace();
   $Photo = false;
   $Text = false;
-  $data = $Db->UserGet($Webhook->Message->User->Id);
+  $data = $Db->UserGet($Webhook->Data->User->Id);
   $File = DirUserCmds . '/' . ($data->Language ?? DefaultLanguage) . '/' . $Command;
   
   foreach(['jpg', 'png', 'gif'] as $ext):
     $temp = $File . '.' . $ext;
     if(is_file($temp)):
       $Bot->PhotoSend(
-        $Webhook->Message->Chat->Id,
+        $Webhook->Data->Chat->Id,
         $temp
       );
       $Photo = true;
@@ -95,11 +95,11 @@ function SendUserCmd(
   $File .= '.txt';
   if(is_file($File)):
     $text = file_get_contents($File);
-    $text = str_replace('##NAME##', $Webhook->Message->User->Name, $text);
+    $text = str_replace('##NAME##', $Webhook->Data->User->Name, $text);
     $text = explode('##BREAK##', $text);
     foreach($text as $txt):
       $Bot->TextSend(
-        $Webhook->Message->Chat->Id,
+        $Webhook->Data->Chat->Id,
         $txt,
         ParseMode: TgParseMode::Html
       );
@@ -108,7 +108,7 @@ function SendUserCmd(
   endif;
 
   if($Photo or $Text):
-    $Db->UsageLog($Webhook->Message->Chat->Id, $Command, $EventAdditional);
+    $Db->UsageLog($Webhook->Data->Chat->Id, $Command, $EventAdditional);
     return true;
   else:
     return false;

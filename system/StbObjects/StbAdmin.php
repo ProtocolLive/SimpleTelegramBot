@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.02
+//2022.12.30.03
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -37,13 +37,13 @@ class StbAdmin{
     global $Bot, $Lang, $Webhook, $Db;
     DebugTrace();
     $Bot->TextSend(
-      $Webhook->Message->User->Id,
+      $Webhook->Data->User->Id,
       sprintf(
         $Lang->Get('MyId'),
-        $Webhook->Message->User->Id,
+        $Webhook->Data->User->Id,
       )
     );
-    $Db->UsageLog($Webhook->Message->User->Id, 'id');
+    $Db->UsageLog($Webhook->Data->User->Id, 'id');
   }
 
   public static function Command_admin():void{
@@ -124,14 +124,14 @@ class StbAdmin{
     endif;
     if($Webhook instanceof TblCmd):
       $Bot->TextSend(
-        $Webhook->Message->User->Id,
+        $Webhook->Data->User->Id,
         $Lang->Get('AdminMenu', Group: 'Admin'),
         Markup: $mk
       );
     else:
       $Bot->TextEdit(
-        $Webhook->User->Id,
-        $Webhook->Message->Id,
+        $Webhook->Data->Data->Chat->Id,
+        $Webhook->Data->Data->Id,
         $Lang->Get('AdminMenu', Group: 'Admin'),
         Markup: $mk
       );
@@ -188,8 +188,8 @@ class StbAdmin{
       self::JumpLineCheck($line, $col);
     endforeach;
     $Bot->TextEdit(
-      $Webhook->User->Id,
-      $Webhook->Message->Id,
+      $Webhook->Data->Data->Chat->Id,
+      $Webhook->Data->Data->Id,
       $Lang->Get('Admins', Group: 'Admin'),
       Markup: $mk
     );
@@ -213,12 +213,12 @@ class StbAdmin{
       $Db->ListenerAdd(
         StbDbListeners::Text,
         __CLASS__,
-        $Webhook->User->Id
+        $Webhook->Data->Data->User->Id
       );
       $Db->VariableSet(
         StbDbVariables::AdminNew->name,
-        $msg->Message->Id,
-        $Webhook->User->Id
+        $msg->Data->Id,
+        $Webhook->Data->Data->User->Id
       );
     endif;
   }
@@ -277,8 +277,8 @@ class StbAdmin{
       $AdminName .= ' (' . $admin->Nick . ')';
     endif;
     $Bot->TextEdit(
-      $Webhook->User->Id,
-      $Webhook->Message->Id,
+      $Webhook->Data->Data->Chat->Id,
+      $Webhook->Data->Data->Id,
       sprintf(
         $Lang->Get('Admin', Group: 'Admin'),
         $AdminName,
@@ -370,8 +370,8 @@ class StbAdmin{
       $tbl = $Lang->Get('No');
     endif;
     $Bot->TextEdit(
-      Admin,
-      $Webhook->Message->Id,
+      $Webhook->Data->Data->Chat->Id,
+      $Webhook->Data->Data->Id,
       sprintf(
         $Lang->Get('Updates', Group: 'Admin'),
         $stb,
@@ -390,17 +390,20 @@ class StbAdmin{
      */
     global $Db, $Webhook, $Bot, $Lang;
     DebugTrace();
-    $msg = $Db->VariableGet(StbDbVariables::AdminNew->name, $Webhook->Message->User->Id);
+    $msg = $Db->VariableGet(
+      StbDbVariables::AdminNew->name,
+      $Webhook->Data->User->Id
+    );
     if($msg === null
-    or $Webhook->Message->Reply === null
-    or $msg != $Webhook->Message->Reply->Message->Id):
+    or $Webhook->Data->Reply === null
+    or $msg != $Webhook->Data->Reply->Message->Id):
       return true;
     endif;
     try{
       $user = $Bot->ChatGet($Webhook->Text);
     }catch(TblException){
       $Bot->TextSend(
-        $Webhook->Message->User->Id,
+        $Webhook->Data->User->Id,
         $Lang->Get('UserNull', Group: 'Errors')
       );
       return false;
@@ -433,7 +436,7 @@ class StbAdmin{
       $name .= ' (@' . $user->Nick . ')';
     endif;
     $Bot->TextSend(
-      $Webhook->Message->User->Id,
+      $Webhook->Data->User->Id,
       sprintf(
         $Lang->Get('AdminNewConfirm', Group: 'Admin'),
         $name

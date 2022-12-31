@@ -1,13 +1,15 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.00
+//2022.12.30.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
+  TblObjects\TblCmd,
   TblObjects\TblMarkupInline,
   TelegramBotLibrary,
-  TgObjects\TgCallback
+  TgObjects\TgCallback,
+  TgObjects\TgMessageData
 };
 
 class StbAdminModules{
@@ -16,7 +18,7 @@ class StbAdminModules{
      * @var TelegramBotLibrary $Bot
      * @var StbDatabase $Db
      * @var StbLanguageSys $Lang
-     * @var TblCmd $Webhook
+     * @var TgCallback $Webhook
      */
     global $Bot, $Db, $Lang, $Webhook;
     DebugTrace();
@@ -70,8 +72,8 @@ class StbAdminModules{
     endforeach;
 
     $Bot->TextEdit(
-      Admin,
-      $Webhook->Message->Id,
+      $Webhook->Data->Data->Chat->Id,
+      $Webhook->Data->Data->Id,
       $Lang->Get('Modules', Group: 'Module'),
       Markup: $mk
     );
@@ -130,8 +132,8 @@ class StbAdminModules{
     endforeach;
 
     $Bot->TextEdit(
-      Admin,
-      $Webhook->Message->Id,
+      $Webhook->Data->Data->Chat->Id,
+      $Webhook->Data->Data->Id,
       $Lang->Get('InstallPick', Group: 'Module'),
       Markup: $mk
     );
@@ -171,7 +173,7 @@ class StbAdminModules{
       );
       $Bot->TextEdit(
         Admin,
-        $Webhook->Message->Id,
+        $Webhook->Data->Id,
         $Lang->Get('InstallNotFound', null, 'Module'),
         Markup: $mk
       );
@@ -188,7 +190,7 @@ class StbAdminModules{
       );
       $Bot->TextEdit(
         Admin,
-        $Webhook->Message->Id,
+        $Webhook->Data->Id,
         $Lang->Get('UninstallNotFound', null, 'Module'),
         Markup: $mk
       );
@@ -238,7 +240,7 @@ class StbAdminModules{
     $date = $Db->Modules($Module);
     $Bot->TextEdit(
       Admin,
-      $Webhook->Message->Id,
+      $Webhook->Data->Id,
       sprintf(
         $Lang->Get('Module', Group: 'Module'),
         $Module,
@@ -287,7 +289,7 @@ class StbAdminModules{
     );
     $Bot->MarkupEdit(
       Admin,
-      $Webhook->Message->Id,
+      $Webhook->Data->Id,
       Markup: $mk
     );
   }
