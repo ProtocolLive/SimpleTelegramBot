@@ -1,14 +1,14 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.09.16.02
+//2022.12.30.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 
-class StbDbAdminData{
+final class StbDbAdminData{
   public readonly int $Id;
   public readonly int $Creation;
-  public readonly StbDbAdminPerm $Perms;
+  public readonly int $Perms;
   public readonly string $Name;
   public readonly string|null $NameLast;
   public readonly string|null $Nick;
@@ -17,7 +17,7 @@ class StbDbAdminData{
   public function __construct(array $Data){
     $this->Id = $Data['chat_id'];
     $this->Creation = $Data['created'];
-    $this->Perms = StbDbAdminPerm::from($Data['perms']);
+    $this->Perms = $Data['perms'];
     $this->Name = $Data['name'];
     $this->NameLast = $Data['name2'];
     $this->Nick = $Data['nick'];
