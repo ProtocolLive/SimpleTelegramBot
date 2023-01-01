@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.30.00
+//2023.01.01.00
 
 //This file are included by DirBot/index.php
 
@@ -43,7 +43,7 @@ function Action_():void{
     return;
   endif;
 
-  if($Webhook instanceof TblCmd):
+  if(get_class($Webhook) === TblCmd::class)://TblCmdEdited extends TblCmd
     Update_Cmd();
   elseif($Webhook instanceof TgCallback):
     Update_Callback();
