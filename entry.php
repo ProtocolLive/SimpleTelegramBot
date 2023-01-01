@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.01.00
+//2023.01.01.01
 
 //This file are included by DirBot/index.php
 
@@ -125,8 +125,11 @@ function Action_WebhookDel():void{
   */
   global $BotData;
   $Webhook = new TblWebhook($BotData);
-  $Webhook->Del();
-  echo $Webhook->ErrorStr;
+  try{
+    $Webhook->Del();
+  }catch(TblException $e){
+    echo $e->getMessage();
+  }
 }
 
 function Update_Cmd():void{
