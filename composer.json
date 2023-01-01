@@ -7,7 +7,7 @@
         "ext-openssl": "*",
         "ext-curl": "*",
         "ext-pdo": "*",
-        "protocollive/telegrambotlibrary": "^2022.08",
+        "protocollive/telegrambotlibrary": ">=2022.08",
         "protocollive/phplivedb": ">=2022.12.27"
     },
     "license": "MIT",
