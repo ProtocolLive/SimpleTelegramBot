@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.01.00
+//2023.01.02.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -195,7 +195,9 @@ class StbAdminModules{
     call_user_func($Module . '::Install', $Bot, $Webhook, $Db, $Lang);
   }
 
-  public static function Callback_Mod(string $Module):void{
+  public static function Callback_Mod(
+    string $Module
+  ):void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var StbDatabase $Db
