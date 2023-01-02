@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.31.00
+//2023.01.01.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -168,8 +168,8 @@ class StbAdminModules{
         ])
       );
       $Bot->TextEdit(
-        Admin,
-        $Webhook->Data->Id,
+        $Webhook->Data->Data->Chat->Id,
+        $Webhook->Data->Data->Id,
         $Lang->Get('InstallNotFound', null, 'Module'),
         Markup: $mk
       );
@@ -185,8 +185,8 @@ class StbAdminModules{
         ])
       );
       $Bot->TextEdit(
-        Admin,
-        $Webhook->Data->Id,
+        $Webhook->Data->Data->Chat->Id,
+        $Webhook->Data->Data->Id,
         $Lang->Get('UninstallNotFound', null, 'Module'),
         Markup: $mk
       );
