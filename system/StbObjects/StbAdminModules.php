@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.02.00
+//2023.01.02.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -241,7 +241,10 @@ class StbAdminModules{
       sprintf(
         $Lang->Get('Module', Group: 'Module'),
         $Module,
-        date('Y-m-d H:i:s', $date[0]['created'])
+        date(
+          $Lang->Get('DateTime'),
+          $date[0]['created']
+        )
       ),
       Markup: $mk
     );
