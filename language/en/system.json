@@ -35,6 +35,7 @@
     "UserFound": "User founded: %s"
   },
   "Errors":{
+    "ButtonWithoutAction": "⚠️ Button without action",
     "ChatNull": "Could not possible to get chat data",
     "Denied": "⛔ Access denied",
     "UserNull": "Could not possible to get user data"

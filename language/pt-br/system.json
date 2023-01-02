@@ -35,6 +35,7 @@
     "UserFound": "Usuário encontrado: %s"
   },
   "Errors":{
+    "ButtonWithoutAction": "⚠️ Botão sem ação",
     "ChatNull": "Não foi possível obter as informações do chat",
     "Denied": "⛔ Acesso negado",
     "UserNull": "Não foi possível obter as informações do usuário"

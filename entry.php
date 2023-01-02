@@ -1,19 +1,21 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.01.01
+//2023.01.02.00
 
 //This file are included by DirBot/index.php
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbDatabase,
-  StbDbListeners
+  StbDbListeners,
+  StbLanguageSys
 };
 use ProtocolLive\TelegramBotLibrary\{
   TblObjects\TblCmd,
   TblObjects\TblData,
   TblObjects\TblException,
   TblObjects\TblWebhook,
+  TelegramBotLibrary,
   TgObjects\TgCallback,
   TgObjects\TgChat,
   TgObjects\TgChatTitle,
@@ -177,10 +179,17 @@ function Update_Callback():void{
   /**
    * @var TgCallback $Webhook
    * @var StbDatabase $Db
+   * @var TelegramBotLibrary $bot
+   * @var StbLanguageSys $Lang
    */
-  global $Webhook, $Db;
+  global $Webhook, $Db, $Bot, $Lang;
   $Db->UserSeen($Webhook->User);
-  $Db->CallBackHashRun($Webhook->Callback);
+  if($Db->CallBackHashRun($Webhook->Callback) === false):
+    $Bot->CallbackAnswer(
+      $Webhook->Id,
+      $Lang->Get('ButtonWithoutAction', Group: 'Errors')
+    );
+  endif;
 }
 
 function Update_Text():void{
