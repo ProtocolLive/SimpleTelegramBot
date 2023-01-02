@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.31.01
+//2023.01.02.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -15,14 +15,17 @@ abstract class StbModuleHelper{
    * Run this after the 'create table' block
    */
   protected static function InstallHelper(
-    TgCallback $Webhook,
-    StbDatabase $Db,
-    StbLanguageSys $Lang,
-    TelegramBotLibrary $Bot,
     PDO $Pdo,
     array $Commands,
     bool $Commit = true
   ):void{
+    /**
+     * @var StbDatabase $Db
+     * @var TgCallback $Webhook
+     * @var TelegramBotLibrary $Bot
+     * @var StbLanguageSys $Lang
+     */
+    global $Db, $Webhook, $Bot, $Lang;
     $Pdo->beginTransaction();
 
     if($Db->ModuleInstall(self::ModName()) === false):
@@ -85,14 +88,18 @@ abstract class StbModuleHelper{
    * Run this before the 'drop table' block
    */
   protected static function UninstallHelper(
-    TgCallback $Webhook,
-    StbDatabase $Db,
-    StbLanguageSys $Lang,
-    TelegramBotLibrary $Bot,
     PDO $Pdo,
     array $Commands,
     bool $Commit = true
   ):void{
+    /**
+     * @var StbDatabase $Db
+     * @var TgCallback $Webhook
+     * @var TelegramBotLibrary $Bot
+     * @var StbLanguageSys $Lang
+     */
+    global $Db, $Bot, $Webhook, $Lang;
+    DebugTrace();
     $Pdo->beginTransaction();
 
     $Db->ModuleUninstall(self::ModName());
