@@ -1,17 +1,20 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.12.31.00
+//2023.01.09.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbDatabase,
   StbDbAdminData,
   StbDbAdminPerm,
   StbLog
 };
-use ProtocolLive\TelegramBotLibrary\TgObjects\{
-  TgChat,
-  TgParseMode,
-  TgUser
+use ProtocolLive\TelegramBotLibrary\{
+  TblObjects\TblCmd,
+  TelegramBotLibrary,
+  TgObjects\TgChat,
+  TgObjects\TgParseMode,
+  TgObjects\TgUser
 };
 
 function AdminCheck(
@@ -60,8 +63,7 @@ function SendUserCmd(
 ):bool{
   /**
    * @var TelegramBotLibrary $Bot
-   * @var TgCmd $Webhook
-   * @var string $UserLang
+   * @var TblCmd $Webhook
    * @var StbDatabase $Db
    */
   global $Bot, $Webhook, $Db;
@@ -69,8 +71,12 @@ function SendUserCmd(
   $Photo = false;
   $Text = false;
   $data = $Db->UserGet($Webhook->Data->User->Id);
-  $File = DirUserCmds . '/' . ($data->Language ?? DefaultLanguage) . '/' . $Command;
-  
+  $lang = $data->Language ?? DefaultLanguage;
+  if(is_dir(DirUserCmds . '/' . $lang) === false):
+    $lang = DefaultLanguage;
+  endif;
+  $File = DirUserCmds . '/' . $lang . '/' . $Command;
+
   foreach(['jpg', 'png', 'gif'] as $ext):
     $temp = $File . '.' . $ext;
     if(is_file($temp)):
@@ -113,7 +119,7 @@ function Tgchat2Tguser(TgChat $Chat):TgUser{
   return new TgUser([
     'id' => $Chat->Id,
     'first_name' => $Chat->Name,
-    'last_name' => $Chat->NameLast,
+    'last_name' => null,
     'username' => $Chat->Nick
   ]);
 }

@@ -2,7 +2,7 @@
 33a43b40aa6ab8ac95b6e67fbfe33b115a00501d  composer.json
 22de30c512c151b80ba92774340c00fbd74cc9d8  cron.php
 ea81b23eb657db708ab8e75ebadf10128a277076  entry.php
-c85e883c024f0fc360cf72e966a1360a97bafff1  functions\bot.php
+6542e9753327f92db2af8df91547f520dd185b5a  functions\bot.php
 9e13e275ee407bda468729cd4ef2122e3e9f4533  functions\module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  index.htm
 3b059a191bf00d8e1f0c9966611ea9c66478d569  index.php
