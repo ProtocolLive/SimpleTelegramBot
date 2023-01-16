@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.12.20.00
+//2023.01.16.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbLog;
 
@@ -21,6 +21,7 @@ function HandlerError(
   if(ini_get('display_errors')):
     echo '<pre>' . $log;
   endif;
+  $log = htmlentities($log);
   error_log($log);
   die();
 }
@@ -32,6 +33,7 @@ function HandlerException(Throwable $Exception):never{
   if(ini_get('display_errors')):
     echo '<pre>' . $log;
   endif;
+  $log = htmlentities($log);
   error_log($log);
   die();
 }
@@ -47,6 +49,7 @@ function vd(mixed $v):void{
   $log = ob_get_contents();
   ob_end_flush();
   $log = str_replace(['<pre>', '</pre>'], '', $log);
+  $log = htmlentities($log);
   error_log($log);
 }
 
