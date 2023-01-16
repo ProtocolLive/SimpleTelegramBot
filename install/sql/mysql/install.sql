@@ -33,6 +33,7 @@ insert into commands values
   ('id','ProtocolLive\\SimpleTelegramBot\\StbObjects\\StbAdmin');
 
 create table listeners(
+  listener_id int unsigned not null primary key auto_increment,
   listener varchar(50) not null,
   chat_id bigint unsigned,
   module varchar(100) not null,

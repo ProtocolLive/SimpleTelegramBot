@@ -28,6 +28,7 @@ insert into commands values
 ('admin', 'ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin'),
 ('id', 'ProtocolLive\SimpleTelegramBot\StbObjects\StbAdmin');
 create table listeners(
+  listener_id integer not null primary key autoincrement,
   listener text not null,
   chat_id integer,
   module text not null,
