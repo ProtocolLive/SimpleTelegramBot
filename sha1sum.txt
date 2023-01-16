@@ -1,5 +1,5 @@
 213fc25c6e693e6120985a337e42ff7c1d3170d2  LICENSE
-33a43b40aa6ab8ac95b6e67fbfe33b115a00501d  composer.json
+62623398316d4e9c03dfddfd11e803b64438f7fc  composer.json
 22de30c512c151b80ba92774340c00fbd74cc9d8  cron.php
 ea81b23eb657db708ab8e75ebadf10128a277076  entry.php
 6542e9753327f92db2af8df91547f520dd185b5a  functions\bot.php
@@ -24,11 +24,8 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\tools\index.htm
 759b78fe8d0cd1981af0bb5ac2c2fc93a6a8ceff  install\DirBot\tools\info.php
 6dc84b18d4c6ffe5042fd9ece8e62fada1695875  install\DirBot\tools\scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\index.htm
-da39a3ee5e6b4b0d3255bfef95601890afd80709  install\sql\index.htm
-01836874e07d5b87968ab4d4592f0319540ecaf5  install\sql\mysql\install.sql
-ede8de656c2b7590081f9d40c7749ee9a7bf9f90  install\sql\sqlite\install.sql
 8a04013ea26ff940756de39d684457fa819612d6  install\step1.php
-ef592b6dbaa1b5ff4c345ee5f0652b98784e5dda  install\step2.php
+8d36070b2f9109082078a243de78630c19cd3a66  install\step2.php
 5e78cfb50574908dfed251320394fa4f1ba63321  language\en\system.json
 897e50716e667dba291db14806ba15b304cc02b0  language\pt-br\system.json
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
@@ -47,7 +44,7 @@ c06c661e07c0a25b6936545de325a7cb2e8dca3f  system\StbObjects\StbModuleHelper.php
 8863b50216ed86c0af7729680cfb76357bdc1b53  system\StbObjects\StbModuleInterface.php
 6d10158a742eec5dcd46a7092f3e6d79bf5169cf  system\constants.php
 8fbbb9d59ca541847f4a61df73406ad4ae7150df  system\functions\basics.php
-286fb723e5ea5f5a3b594b4f93b338bee8d15d11  system\functions\debug.php
+d14d13fd2244440422660c5c79f9dc718c9597c2  system\functions\debug.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  system\php.php
 6b7999b6be40e86c7c62f60a67ea1467643c03b3  system\requires.php
 af0c17e64c02bb5b90bf929c2eaf0a53012226b2  system\system.php
