@@ -1,5 +1,5 @@
 <?php
-//2023.01.16.01
+//2023.01.16.02
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -148,7 +148,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $consult->Run();
   $consult = $PlDb->Insert('modules');
   $consult->FieldAdd('module', StbAdmin::class, Types::Str);
-  $consult->FieldAdd('created', 0, Types::Int);
+  $consult->FieldAdd('created', time(), Types::Int);
   $consult->Run();
 
   $consult = $PlDb->Create('commands');
