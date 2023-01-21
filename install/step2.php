@@ -1,5 +1,5 @@
 <?php
-//2023.01.16.02
+//2023.01.21.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -122,7 +122,8 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $consult->Add(
     'created',
     Formats::Int,
-    Unsigned: true
+    Unsigned: true,
+    NotNull: true
   );
   $consult->Add(
     'lastseen',
