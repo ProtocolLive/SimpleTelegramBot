@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.02.00
+//2023.01.20.00
 
 //This file are included by DirBot/index.php
 
@@ -228,14 +228,14 @@ function Update_ListenerDual(StbDbListeners $Listener):void{
    */
   global $Db, $Webhook;
   foreach($Db->ListenerGet($Listener) as $listener):
-    StbModuleLoad($listener);
-    if(call_user_func($listener . '::Listener_' . $Listener->name) === false):
+    StbModuleLoad($listener['module']);
+    if(call_user_func($listener['module'] . '::Listener_' . $Listener->name) === false):
       return;
     endif;
   endforeach;
   foreach($Db->ListenerGet($Listener, $Webhook->Data->User->Id) as $listener):
-    StbModuleLoad($listener);
-    if(call_user_func($listener . '::Listener_' . $Listener->name) === false):
+    StbModuleLoad($listener['module']);
+    if(call_user_func($listener['module'] . '::Listener_' . $Listener->name) === false):
       return;
     endif;
   endforeach;
