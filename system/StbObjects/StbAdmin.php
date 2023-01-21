@@ -1,17 +1,18 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.31.03
+//2023.01.21.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
-use ProtocolLive\TelegramBotLibrary\{
-  TblObjects\TblCmd,
-  TblObjects\TblException,
-  TblObjects\TblMarkupForceReply,
-  TblObjects\TblMarkupInline,
-  TelegramBotLibrary,
-  TgObjects\TgCallback,
-  TgObjects\TgText
+use ProtocolLive\TelegramBotLibrary\TblObjects\{
+  TblCmd,
+  TblException,
+  TblMarkupInline
+};
+use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
+use ProtocolLive\TelegramBotLibrary\TgObjects\{
+  TgCallback,
+  TgText
 };
 
 abstract class StbAdmin{
@@ -24,7 +25,7 @@ abstract class StbAdmin{
      */
     global $Bot, $Webhook, $Db, $Lang;
     DebugTrace();
-    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Admins) === null
+    if(AdminCheck($Webhook->Data->User->Id, StbDbAdminPerm::Admins) === null
     or $Webhook->Text === Admin):
       return;
     endif;
@@ -511,11 +512,11 @@ abstract class StbAdmin{
       StbDbVariables::Action->name,
       null,
       null,
-      $Webhook->User->Id
+      $Webhook->Data->User->Id
     );
     $Db->ListenerDel(
       StbDbListeners::Text,
-      $Webhook->User->Id
+      $Webhook->Data->User->Id
     );
     self::Callback_Admins();
   }
