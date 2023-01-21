@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.19.00
+//2023.01.21.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -141,17 +141,9 @@ final class StbDatabase{
     DebugTrace();
     $Data = json_encode($Data);
     $hash = sha1($Data);
-    $consult = $this->Db->select('callbackshash');
-    $consult->WhereAdd('hash', $hash, Types::Str);
-    $result = $consult->Run();
-    if($result === []):
-      $consult = $this->Db->Insert('callbackshash');
-      $consult->FieldAdd('hash', $hash, Types::Str);
-    else:
-      $consult = $this->Db->Update('callbackshash');
-      $consult->WhereAdd('hash', $hash, Types::Str);
-    endif;
-    $consult->FieldAdd('method', $Data, Types::Str);
+    $consult = $this->Db->InsertUpdate('callbackshash');
+    $consult->FieldAdd('hash', $hash, Types::Str, Update: true);
+    $consult->FieldAdd('method', $Data, Types::Str, Update: true);
     $consult->Run(HtmlSafe: false);
     return $hash;
   }
@@ -385,20 +377,14 @@ final class StbDatabase{
 
   public function UserSeen(TgUser $User):void{
     DebugTrace();
-    $user = $this->UserGet($User->Id);
-    if($user === null):
-      $consult = $this->Db->Insert('chats');
-      $consult->FieldAdd('chat_id', $User->Id, Types::Int);
-      $consult->FieldAdd('created', time(), Types::Int);
-    else:
-      $consult = $this->Db->Update('chats');
-      $consult->WhereAdd('chat_id', $User->Id, Types::Int);
-    endif;
-    $consult->FieldAdd('name', $User->Name, Types::Str);
-    $consult->FieldAdd('name2', $User->NameLast, Types::Str);
-    $consult->FieldAdd('nick', $User->Nick, Types::Str);
-    $consult->FieldAdd('lastseen', time(), Types::Int);
-    $consult->FieldAdd('lang', $User->Language, Types::Str);
+    $consult = $this->Db->InsertUpdate('chats');
+    $consult->FieldAdd('chat_id', $User->Id, Types::Int);
+    $consult->FieldAdd('created', time(), Types::Int);
+    $consult->FieldAdd('name', $User->Name, Types::Str, Update: true);
+    $consult->FieldAdd('name2', $User->NameLast, Types::Str, Update: true);
+    $consult->FieldAdd('nick', $User->Nick, Types::Str, Update: true);
+    $consult->FieldAdd('lastseen', time(), Types::Int, Update: true);
+    $consult->FieldAdd('lang', $User->Language, Types::Str, Update: true);
     $consult->Run();
   }
 
