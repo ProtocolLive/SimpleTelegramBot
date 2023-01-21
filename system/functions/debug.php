@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2023.01.16.00
+//2023.01.21.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\StbLog;
 
@@ -49,7 +49,7 @@ function vd(mixed $v):void{
   $log = ob_get_contents();
   ob_end_flush();
   $log = str_replace(['<pre>', '</pre>'], '', $log);
-  $log = htmlentities($log);
+  $log = str_replace('<', '&lt;', $log);
   error_log($log);
 }
 

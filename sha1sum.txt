@@ -1,5 +1,4 @@
 213fc25c6e693e6120985a337e42ff7c1d3170d2  LICENSE
-53e2e09dd7c653cd9befaee6bb4df9d06d1b1d7b  composer.json
 22de30c512c151b80ba92774340c00fbd74cc9d8  cron.php
 adeb160d794929daf65e3cc1e81b6b78c8be1efb  entry.php
 6542e9753327f92db2af8df91547f520dd185b5a  functions\bot.php
@@ -31,7 +30,7 @@ b33d35a914d5889812b94ea4888f12b8a3d96884  install\step2.php
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
 bdb7b6282a1163fa06256a26bca468cdaec8a922  system\StbObjects\StbAdmin.php
 9852565d7357d3b34a55e3a006eb2dd03238085d  system\StbObjects\StbAdminModules.php
-8783c9cd5ba5fb54bedaedd00aa56f19728dc9e7  system\StbObjects\StbDatabase.php
+6a47a0983b7bb0ba2c6f1a7c63b64e7e441b98b4  system\StbObjects\StbDatabase.php
 f8c03985ceea05890f609a5741617f602db2fa3a  system\StbObjects\StbDbAdminData.php
 8a8c12038c66c2b78fe59bdc283b487a746d7ecd  system\StbObjects\StbDbAdminPerm.php
 b444644ea4c1559841793eeb0ef7887086e82a81  system\StbObjects\StbDbListeners.php
@@ -44,7 +43,7 @@ c06c661e07c0a25b6936545de325a7cb2e8dca3f  system\StbObjects\StbModuleHelper.php
 8863b50216ed86c0af7729680cfb76357bdc1b53  system\StbObjects\StbModuleInterface.php
 6d10158a742eec5dcd46a7092f3e6d79bf5169cf  system\constants.php
 8fbbb9d59ca541847f4a61df73406ad4ae7150df  system\functions\basics.php
-d14d13fd2244440422660c5c79f9dc718c9597c2  system\functions\debug.php
+0f70a4a06892dbc07443b936d6d4526a56a533f9  system\functions\debug.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  system\php.php
 6b7999b6be40e86c7c62f60a67ea1467643c03b3  system\requires.php
 af0c17e64c02bb5b90bf929c2eaf0a53012226b2  system\system.php
