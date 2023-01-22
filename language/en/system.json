@@ -1,12 +1,4 @@
 {
-  "Commands":[
-    [
-      "chat",
-      "cmd",
-      "Manage command list",
-      "cmd"
-    ]
-  ],
   "Module":{
     "Fail": "⚠️ Procedure fail",
     "InstallOk": "✅ Install done",
