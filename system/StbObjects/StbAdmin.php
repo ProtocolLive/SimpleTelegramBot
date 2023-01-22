@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.22.05
+//2023.01.22.06
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -599,6 +599,108 @@ abstract class StbAdmin{
     self::Callback_Admins();
   }
 
+  public static function Callback_Cmd(
+    string $Cmd
+  ):void{
+    /**
+     * @var TgCallback $Webhook
+     * @var TelegramBotLibrary $Bot
+     * @var StbLanguageSys $Lang
+     * @var StbDatabase $Db
+     */
+    global $Webhook, $Bot, $Lang, $Db;
+    DebugTrace();
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Cmds) === null):
+      return;
+    endif;
+    $description = $Bot->MyCmdGet()->Get($Cmd);
+    $mk = new TblMarkupInline;
+    $mk->ButtonCallback(
+      0,
+      0,
+      '🔙',
+      $Db->CallBackHashSet([__CLASS__ . '::Callback_Commands'])
+    );
+    $mk->ButtonCallback(
+      0,
+      1,
+      '📝',
+      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdEdit', $Cmd])
+    );
+    $mk->ButtonCallback(
+      0,
+      2,
+      '❌',
+      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdDel', $Cmd])
+    );
+    $Bot->TextEdit(
+      $Webhook->Data->Data->Chat->Id,
+      $Webhook->Data->Data->Id,
+      sprintf(
+        $Lang->Get('Command', Group: 'Admin'),
+        $Cmd,
+        $description
+      ),
+      Markup: $mk
+    );
+  }
+
+  public static function Callback_CmdDel(
+    string $Cmd
+  ):void{
+    /**
+     * @var TgCallback $Webhook
+     * @var StbDatabase $Db
+     * @var TelegramBotLibrary $Bot
+     */
+    global $Webhook, $Db, $Bot;
+    DebugTrace();
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Cmds) === null):
+      return;
+    endif;
+    $mk = new TblMarkupInline;
+    $mk->ButtonCallback(
+      0,
+      0,
+      '🔙',
+      $Db->CallBackHashSet([__CLASS__ . '::Callback_Commands'])
+    );
+    $mk->ButtonCallback(
+      0,
+      1,
+      '📝',
+      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdEdit', $Cmd])
+    );
+    $mk->ButtonCallback(
+      0,
+      2,
+      '✅',
+      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdDelOk', $Cmd])
+    );
+    $Bot->MarkupEdit(
+      $Webhook->Data->Data->Chat->Id,
+      $Webhook->Data->Data->Id,
+      Markup: $mk
+    );
+  }
+
+  public static function Callback_CmdDelOk(
+    string $Cmd
+  ){
+    /**
+     * @var TgCallback $Webhook
+     * @var TelegramBotLibrary $Bot
+     */
+    global $Webhook, $Bot;
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Cmds) === null):
+      return;
+    endif;
+    $cmds = $Bot->MyCmdGet();
+    $cmds->Del($Cmd);
+    $Bot->MyCmdSet($cmds);
+    self::Callback_Commands();
+  }
+
   public static function Callback_CmdDown(
     string $Cmd
   ):void{
@@ -739,7 +841,7 @@ abstract class StbAdmin{
         $line,
         $col++,
         $cmd,
-        $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdEdit', $cmd])
+        $Db->CallBackHashSet([__CLASS__ . '::Callback_Cmd', $cmd])
       );
       if($i < $last):
         $mk->ButtonCallback(

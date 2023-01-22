@@ -15,6 +15,7 @@
     "AdminMenu": "⚙️ Administration menu",
     "Admins": "🎖️ Administrators:",
     "AdminsButton": "🎖️ Administrators",
+    "Command": "Command:%1$s\nDescription: %2$s",
     "CommandsButton": "🤖 Commands",
     "CommandDescription": "Send the description:",
     "CommandName": "Send the command:",
