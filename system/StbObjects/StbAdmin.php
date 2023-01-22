@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.21.01
+//2023.01.22.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -76,7 +76,7 @@ abstract class StbAdmin{
     $Bot->TextSend(
       $Webhook->Data->User->Id,
       sprintf(
-        $Lang->Get('AdminNewConfirm', Group: 'Admin'),
+        $Lang->Get('AdminAddConfirm', Group: 'Admin'),
         $name
       ),
       Markup: $mk
@@ -251,7 +251,7 @@ abstract class StbAdmin{
       1,
       '➕',
       $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_AdminNew'
+        __CLASS__ . '::Callback_AdminAdd'
       ])
     );
     $line = 1;
@@ -282,7 +282,6 @@ abstract class StbAdmin{
     );
   }
 
-  public static function Callback_AdminNew():void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
@@ -300,7 +299,7 @@ abstract class StbAdmin{
     endif;
     $Db->VariableSet(
       StbDbVariables::Action->name,
-      StbDbVariables::AdminNew->name,
+      StbDbVariables::AdminAdd->name,
       null,
       $Webhook->User->Id
     );
@@ -318,7 +317,7 @@ abstract class StbAdmin{
     );
     $Bot->TextSend(
       $Webhook->User->Id,
-      $Lang->Get('AdminNewId', Group: 'Admin'),
+      $Lang->Get('AdminAddId', Group: 'Admin'),
       Markup: $mk
     );
   }
@@ -410,7 +409,7 @@ abstract class StbAdmin{
         $Webhook->User->Id
       );
       $Db->VariableSet(
-        StbDbVariables::AdminNew->name,
+        StbDbVariables::AdminAdd->name,
         null,
         $Webhook->User->Id
       );
@@ -724,8 +723,7 @@ abstract class StbAdmin{
     );
     if($temp === null):
       return true;
-    endif;
-    if($temp === StbDbVariables::AdminNew->name):
+    elseif($temp === StbDbVariables::AdminAdd->name):
       self::AdminAdd();
       return false;
     endif;

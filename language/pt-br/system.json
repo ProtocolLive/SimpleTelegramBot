@@ -9,10 +9,10 @@
   },
   "Admin":{
     "Admin": "Administrador: %1$s\nAdicionado: %2$s",
+    "AdminAddConfirm": "Usuário encontrado: %1$s",
+    "AdminAddId": "Peça para o novo administrador usar o comando /id, depois responda esta mensagem com o ID dele",
     "AdminDel": "Deseja realmente excluir esse administrador?",
     "AdminMenu": "⚙️ Menu de administração",
-    "AdminNewId": "Peça para o novo administrador usar o comando /id, depois responda esta mensagem com o ID dele",
-    "AdminNewConfirm": "Usuário encontrado: %1$s",
     "Admins": "🎖️ Administradores:",
     "AdminsButton": "🎖️ Administradores",
     "CommandsButton": "🤖 Comandos",

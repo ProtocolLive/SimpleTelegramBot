@@ -7,5 +7,5 @@ namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 
 enum StbDbVariables{
   case Action;
-  case AdminNew;
+  case AdminAdd;
 }
