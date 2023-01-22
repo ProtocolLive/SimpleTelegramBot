@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.22.02
+//2023.01.22.03
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -103,6 +103,7 @@ abstract class StbAdmin{
      * @var StbLanguageSys $Lang
      */
     global $Webhook, $Db, $Bot, $Lang;
+    DebugTrace();
     if(AdminCheck($Webhook->Data->User->Id, StbDbAdminPerm::Cmds) === null):
       return;
     endif;
@@ -131,6 +132,7 @@ abstract class StbAdmin{
      * @var TelegramBotLibrary $Bot
      */
     global $Webhook, $Db, $Bot;
+    DebugTrace();
     if(AdminCheck($Webhook->Data->User->Id, StbDbAdminPerm::Cmds) === null):
       return;
     endif;
@@ -604,6 +606,7 @@ abstract class StbAdmin{
      * @var TelegramBotLibrary $Bot
      */
     global $Bot;
+    DebugTrace();
     $CmdsNew = new TblCommands;
     $CmdsOld = $Bot->MyCmdGet()->Get();
     $DescrBackup = null;
@@ -631,6 +634,7 @@ abstract class StbAdmin{
      * @var StbLanguageSys $Lang
      */
     global $Db, $Webhook, $Bot, $Lang;
+    DebugTrace();
     if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Cmds) === null):
       return;
     endif;
@@ -659,6 +663,7 @@ abstract class StbAdmin{
      * @var TelegramBotLibrary $Bot
      */
     global $Bot;
+    DebugTrace();
     $CmdsNew = new TblCommands;
     $CmdsOld = $Bot->MyCmdGet()->Get();
     $BackupCmd = null;
@@ -694,6 +699,7 @@ abstract class StbAdmin{
      * @var StbLanguageSys $Lang
      */
     global $Db, $Webhook, $Bot, $Lang;
+    DebugTrace();
     if($Webhook instanceof TgCallback):
       $temp = $Webhook->User->Id;
     else:
