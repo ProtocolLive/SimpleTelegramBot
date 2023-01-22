@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.22.04
+//2023.01.22.05
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -603,10 +603,14 @@ abstract class StbAdmin{
     string $Cmd
   ):void{
     /**
+     * @var TgCallback $Webhook
      * @var TelegramBotLibrary $Bot
      */
-    global $Bot;
+    global $Webhook, $Bot;
     DebugTrace();
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Cmds) === null):
+      return;
+    endif;
     $CmdsNew = new TblCommands;
     $CmdsOld = $Bot->MyCmdGet()->Get();
     $DescrBackup = null;
@@ -660,10 +664,14 @@ abstract class StbAdmin{
     string $Cmd
   ):void{
     /**
+     * @var TgCallback $Webhook
      * @var TelegramBotLibrary $Bot
      */
-    global $Bot;
+    global $Webhook, $Bot;
     DebugTrace();
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Cmds) === null):
+      return;
+    endif;
     $CmdsNew = new TblCommands;
     $CmdsOld = $Bot->MyCmdGet()->Get();
     $BackupCmd = null;
