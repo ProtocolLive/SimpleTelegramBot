@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2023.01.09.00
+//2023.01.21.00
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbDatabase,
@@ -9,14 +9,17 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbDbAdminPerm,
   StbLog
 };
-use ProtocolLive\TelegramBotLibrary\{
-  TblObjects\TblCmd,
-  TelegramBotLibrary,
-  TgObjects\TgChat,
-  TgObjects\TgParseMode,
-  TgObjects\TgUser
+use ProtocolLive\TelegramBotLibrary\TblObjects\TblCmd;
+use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
+use ProtocolLive\TelegramBotLibrary\TgObjects\{
+  TgChat,
+  TgParseMode,
+  TgUser
 };
 
+/**
+ * Check if the user permission match and return the user if true
+ */
 function AdminCheck(
   int $Id,
   StbDbAdminPerm $Level = StbDbAdminPerm::All
