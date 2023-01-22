@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.22.01
+//2023.01.22.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -587,7 +587,7 @@ abstract class StbAdmin{
     $Db->VariableSet(
       StbDbVariables::Action->name,
       null,
-      null,
+      __CLASS__,
       $Webhook->Data->User->Id
     );
     $Db->ListenerDel(
