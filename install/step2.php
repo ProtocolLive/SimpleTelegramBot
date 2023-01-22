@@ -1,5 +1,5 @@
 <?php
-//2023.01.21.00
+//2023.01.22.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -70,7 +70,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $consult->Add(
     'hash',
     Formats::Varchar,
-    100,
+    40,
     NotNull: true,
     Primary: true
   );
