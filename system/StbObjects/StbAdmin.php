@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.22.03
+//2023.01.22.04
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -17,7 +17,7 @@ use ProtocolLive\TelegramBotLibrary\TgObjects\{
 };
 
 abstract class StbAdmin{
-  public static function AdminAdd():void{
+  private static function AdminAdd():void{
     /**
      * @var TelegramBotLibrary $Bot
      * @var TgText $Webhook
@@ -95,7 +95,7 @@ abstract class StbAdmin{
     endif;
   }
 
-  public static function CmdAddName():void{
+  private static function CmdAddName():void{
     /**
      * @var TgText $Webhook
      * @var StbDatabase $Db
@@ -125,7 +125,7 @@ abstract class StbAdmin{
     );
   }
 
-  public static function CmdAddDescription():void{
+  private static function CmdAddDescription():void{
     /**
      * @var TgText $Webhook
      * @var StbDatabase $Db
