@@ -1,11 +1,12 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.21.00
+//2023.01.21.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
   TblCmd,
+  TblCommands,
   TblException,
   TblMarkupInline
 };
@@ -161,6 +162,7 @@ abstract class StbAdmin{
       );
       self::JumpLineCheck($line, $col);
     endif;
+    //Updates
     if($id === Admin):
       $mk->ButtonCallback(
         $line,
@@ -172,6 +174,19 @@ abstract class StbAdmin{
       );
       self::JumpLineCheck($line, $col);
     endif;
+    //Commands
+    if($user->Perms & StbDbAdminPerm::Cmds->value):
+      $mk->ButtonCallback(
+        $line,
+        $col++,
+        $Lang->Get('CommandsButton', Group: 'Admin'),
+        $Db->CallBackHashSet([
+          __CLASS__ . '::Callback_Commands'
+        ])
+      );
+      self::JumpLineCheck($line, $col);
+    endif;
+    //Info
     if($id === Admin):
       $mk->ButtonWebapp(
         $line,
@@ -181,6 +196,7 @@ abstract class StbAdmin{
       );
       self::JumpLineCheck($line, $col);
     endif;
+    //Stats
     if($user->Perms & StbDbAdminPerm::Stats->value):
       $mk->ButtonWebapp(
         $line,
@@ -519,6 +535,124 @@ abstract class StbAdmin{
       $Webhook->Data->User->Id
     );
     self::Callback_Admins();
+  }
+
+  public static function Callback_CmdDown(
+    string $Cmd
+  ):void{
+    /**
+     * @var TelegramBotLibrary $Bot
+     */
+    global $Bot;
+    $CmdsNew = new TblCommands;
+    $CmdsOld = $Bot->MyCmdGet()->Get();
+    $DescrBackup = null;
+    foreach($CmdsOld as $cmd => $descr):
+      if($cmd === $Cmd):
+        $DescrBackup = $descr;
+        continue;
+      else:
+        $CmdsNew->Add($cmd, $descr);
+      endif;
+      if($DescrBackup !== null):
+        $CmdsNew->Add($Cmd, $DescrBackup);
+        $DescrBackup = null;
+      endif;
+    endforeach;
+    $Bot->MyCmdSet($CmdsNew);
+    self::Callback_Commands();
+  }
+
+  public static function Callback_CmdUp(
+    string $Cmd
+  ):void{
+    /**
+     * @var TelegramBotLibrary $Bot
+     */
+    global $Bot;
+    $CmdsNew = new TblCommands;
+    $CmdsOld = $Bot->MyCmdGet()->Get();
+    $BackupCmd = null;
+    $BackupDescr = null;
+    $first = true;
+    $moved = false;
+    foreach($CmdsOld as $cmd => $descr):
+      if($first):
+        $BackupCmd = $cmd;
+        $BackupDescr = $descr;
+      elseif($cmd == $Cmd):
+        $CmdsNew->Add($cmd, $descr);
+        $CmdsNew->Add($BackupCmd, $BackupDescr);
+        $moved = true;
+      elseif($moved):
+        $CmdsNew->Add($cmd, $descr);
+      else:
+        $CmdsNew->Add($BackupCmd, $BackupDescr);
+        $BackupCmd = $cmd;
+        $BackupDescr = $descr;
+      endif;
+      $first = false;
+    endforeach;
+    $Bot->MyCmdSet($CmdsNew);
+    self::Callback_Commands();
+  }
+
+  public static function Callback_Commands():void{
+    /**
+     * @var StbDatabase $Db
+     * @var TgCallback $Webhook
+     * @var TelegramBotLibrary $Bot
+     * @var StbLanguageSys $Lang
+     */
+    global $Db, $Webhook, $Bot, $Lang;
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Cmds) === null):
+      return;
+    endif;
+    $mk = new TblMarkupInline;
+    $line = 0;
+    $col = 0;
+    $i = 0;
+    $mk->ButtonCallback(
+      $line++,
+      0,
+      '🔙',
+      $Db->CallBackHashSet([__CLASS__ . '::Command_admin'])
+    );
+    $cmds = $Bot->MyCmdGet()->Get();
+    $last = count($cmds) - 1;
+    foreach($cmds as $cmd => $descr):
+      $mk->ButtonCallback(
+        $line,
+        $col++,
+        $cmd,
+        $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdEdit', $cmd])
+      );
+      if($i < $last):
+        $mk->ButtonCallback(
+          $line,
+          $col++,
+          '🔽',
+          $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdDown', $cmd])
+        );
+      endif;
+      if($i > 0):
+        $mk->ButtonCallback(
+          $line,
+          $col++,
+          '🔼',
+          $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdUp', $cmd])
+        );
+      endif;
+      $i++;
+      $line++;
+      $col = 0;
+    endforeach;
+    $Bot->TextEdit(
+      $Webhook->Data->Data->Chat->Id,
+      $Webhook->Data->Data->Id,
+      $Lang->Get('CommandsButton', Group: 'Admin'),
+      Markup: $mk
+    );
   }
 
   public static function Callback_Updates():void{
