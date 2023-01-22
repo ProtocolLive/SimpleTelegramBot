@@ -16,6 +16,8 @@
     "Admins": "🎖️ Administrators:",
     "AdminsButton": "🎖️ Administrators",
     "CommandsButton": "🤖 Commands",
+    "CommandDescription": "Send the description:",
+    "CommandName": "Send the command:",
     "ModulesButton": "🧩 Modules",
     "PermAdmins": " Administradores",
     "PermModules": " Módulos",
