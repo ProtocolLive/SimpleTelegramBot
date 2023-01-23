@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.22.06
+//2023.01.22.07
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -136,16 +136,6 @@ abstract class StbAdmin{
     if(AdminCheck($Webhook->Data->User->Id, StbDbAdminPerm::Cmds) === null):
       return;
     endif;
-    $Db->VariableSet(
-      StbDbVariables::Action->name,
-      null,
-      __CLASS__,
-      $Webhook->Data->User->Id
-    );
-    $Db->ListenerDel(
-      StbDbListeners::Text,
-      $Webhook->Data->User->Id
-    );
     $temp = $Db->VariableGet(
       StbDbVariables::CmdName->name,
       __CLASS__,
@@ -154,7 +144,61 @@ abstract class StbAdmin{
     $cmds = $Bot->MyCmdGet();
     $cmds->Add($temp, trim($Webhook->Text));
     $Bot->MyCmdSet($cmds);
+    $Db->VariableSet(
+      StbDbVariables::Action->name,
+      null,
+      __CLASS__,
+      $Webhook->Data->User->Id
+    );
+    $Db->VariableSet(
+      StbDbVariables::CmdName->name,
+      null,
+      __CLASS__,
+      $Webhook->Data->User->Id
+    );
+    $Db->ListenerDel(
+      StbDbListeners::Text,
+      $Webhook->Data->User->Id
+    );
     self::Callback_Commands();
+  }
+
+  private static function CmdEdit():void{
+    /**
+     * @var TgText $Webhook
+     * @var StbDatabase $Db
+     * @var TelegramBotLibrary $Bot
+     */
+    global $Webhook, $Db, $Bot;
+    DebugTrace();
+    if(AdminCheck($Webhook->Data->User->Id, StbDbAdminPerm::Cmds) === null):
+      return;
+    endif;
+    $temp = $Db->VariableGet(
+      StbDbVariables::CmdName->name,
+      __CLASS__,
+      $Webhook->Data->User->Id
+    );
+    $cmds = $Bot->MyCmdGet();
+    $cmds->Add($temp, trim($Webhook->Text));
+    $Bot->MyCmdSet($cmds);
+    $Db->VariableSet(
+      StbDbVariables::Action->name,
+      null,
+      __CLASS__,
+      $Webhook->Data->User->Id
+    );
+    $Db->VariableSet(
+      StbDbVariables::CmdName->name,
+      null,
+      __CLASS__,
+      $Webhook->Data->User->Id
+    );
+    $Db->ListenerDel(
+      StbDbListeners::Text,
+      $Webhook->Data->User->Id
+    );
+    self::Callback_Cmd($temp);
   }
 
   public static function Command_id():void{
@@ -603,14 +647,19 @@ abstract class StbAdmin{
     string $Cmd
   ):void{
     /**
-     * @var TgCallback $Webhook
+     * @var TgCallback|TgText $Webhook
      * @var TelegramBotLibrary $Bot
      * @var StbLanguageSys $Lang
      * @var StbDatabase $Db
      */
     global $Webhook, $Bot, $Lang, $Db;
     DebugTrace();
-    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Cmds) === null):
+    if($Webhook instanceof TgCallback):
+      $id = $Webhook->User->Id;
+    else:
+      $id = $Webhook->Data->User->Id;
+    endif;
+    if(AdminCheck($id, StbDbAdminPerm::Cmds) === null):
       return;
     endif;
     $description = $Bot->MyCmdGet()->Get($Cmd);
@@ -633,16 +682,28 @@ abstract class StbAdmin{
       '❌',
       $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdDel', $Cmd])
     );
-    $Bot->TextEdit(
-      $Webhook->Data->Data->Chat->Id,
-      $Webhook->Data->Data->Id,
-      sprintf(
-        $Lang->Get('Command', Group: 'Admin'),
-        $Cmd,
-        $description
-      ),
-      Markup: $mk
-    );
+    if($Webhook instanceof TgCallback):
+      $Bot->TextEdit(
+        $Webhook->Data->Data->Chat->Id,
+        $Webhook->Data->Data->Id,
+        sprintf(
+          $Lang->Get('Command', Group: 'Admin'),
+          $Cmd,
+          $description
+        ),
+        Markup: $mk
+      );
+    else:
+      $Bot->TextSend(
+        $Webhook->Data->Chat->Id,
+        sprintf(
+          $Lang->Get('Command', Group: 'Admin'),
+          $Cmd,
+          $description
+        ),
+        Markup: $mk
+      );
+    endif;
   }
 
   public static function Callback_CmdDel(
@@ -730,6 +791,80 @@ abstract class StbAdmin{
     endforeach;
     $Bot->MyCmdSet($CmdsNew);
     self::Callback_Commands();
+  }
+
+  public static function Callback_CmdEdit(
+    string $Cmd
+  ){
+    /**
+     * @var TgCallback $Webhook
+     * @var StbDatabase $Db
+     * @var TelegramBotLibrary $Bot
+     * @var StbLanguageSys $Lang
+     */
+    global $Webhook, $Db, $Bot, $Lang;
+    DebugTrace();
+    if(AdminCheck($Webhook->User->Id, StbDbAdminPerm::Cmds) === null):
+      return;
+    endif;
+    $Db->ListenerAdd(
+      StbDbListeners::Text,
+      __CLASS__,
+      $Webhook->User->Id
+    );
+    $Db->VariableSet(
+      StbDbVariables::Action->name,
+      StbDbVariables::CmdEdit->name,
+      __CLASS__,
+      $Webhook->User->Id
+    );
+    $Db->VariableSet(
+      StbDbVariables::CmdName->name,
+      $Cmd,
+      __CLASS__,
+      $Webhook->User->Id
+    );
+    $mk = new TblMarkupInline;
+    $mk->ButtonCallback(
+      0,
+      0,
+      '🔙',
+      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdEditCancel', $Cmd])
+    );
+    $Bot->TextEdit(
+      $Webhook->Data->Data->Chat->Id,
+      $Webhook->Data->Data->Id,
+      $Lang->Get('CommandDescription', Group: 'Admin'),
+      Markup: $mk
+    );
+  }
+
+  public static function Callback_CmdEditCancel(
+    string $Cmd
+  ):void{
+    /**
+     * @var StbDatabase $Db
+     * @var TgCallback $Webhook
+     */
+    global $Db, $Webhook;
+    DebugTrace();
+    $Db->VariableSet(
+      StbDbVariables::Action->name,
+      null,
+      __CLASS__,
+      $Webhook->User->Id
+    );
+    $Db->VariableSet(
+      StbDbVariables::CmdName->name,
+      null,
+      __CLASS__,
+      $Webhook->User->Id
+    );
+    $Db->ListenerDel(
+      StbDbListeners::Text,
+      $Webhook->User->Id
+    );
+    self::Callback_Cmd($Cmd);
   }
 
   public static function Callback_CmdNew():void{
@@ -956,6 +1091,9 @@ abstract class StbAdmin{
       return false;
     elseif($temp === StbDbVariables::CmdAddDescription->name):
       self::CmdAddDescription();
+      return false;
+    elseif($temp === StbDbVariables::CmdEdit->name):
+      self::CmdEdit();
       return false;
     endif;
   }
