@@ -25,8 +25,8 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\tools\index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\index.htm
 8a04013ea26ff940756de39d684457fa819612d6  install\step1.php
 7de3f1da23f061a69fe8a77a5c133df7aba0e916  install\step2.php
-aa211cb8879f14204ca8d1b6375c70a210fd64cf  language\en\system.json
-e78ceaeab3b4871859e0caa61b71e5c0ccba3782  language\pt-br\system.json
+72f6872083bc3893eca2f363a21df8933f4fabf9  language\en\system.json
+d03ba97a7d944e24c1902da55e5477869eb988cd  language\pt-br\system.json
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
 d486e5d5939cefc3e7251fd6e397140929a6e651  system\StbObjects\StbAdmin.php
 9852565d7357d3b34a55e3a006eb2dd03238085d  system\StbObjects\StbAdminModules.php

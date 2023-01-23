@@ -21,6 +21,7 @@
     "CommandName": "Send the command:",
     "ModulesButton": "🧩 Modules",
     "PermAdmins": " Administradores",
+    "PermCmds": "Commands",
     "PermModules": " Módulos",
     "PermUserCmds": " Comandos",
     "PermStats": " Estatísticas",

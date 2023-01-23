@@ -21,6 +21,7 @@
     "CommandName": "Digite o comando:",
     "ModulesButton": "🧩 Módulos",
     "PermAdmins": " Administradores",
+    "PermCmds": "Comandos",
     "PermModules": " Módulos",
     "PermUserCmds": " Comandos",
     "PermStats": " Estatísticas",
