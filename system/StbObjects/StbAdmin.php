@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.22.07
+//2023.01.23.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -44,19 +44,17 @@ abstract class StbAdmin{
       0,
       0,
       '🔙',
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_Admins'
-      ])
+      $Db->CallBackHashSet(self::Callback_Admins(...))
     );
     $mk->ButtonCallback(
       0,
       1,
       '✅',
-      $Db->CallBackHashSet([
-        __CLASS__ . '::CallBack_Admin',
+      $Db->CallBackHashSet(
+        self::CallBack_Admin(...),
         $Webhook->Text,
         true
-      ])
+      )
     );
     $name = $user->Name;
     if($user->NameLast !== null):
@@ -251,9 +249,7 @@ abstract class StbAdmin{
         $line,
         $col++,
         $Lang->Get('AdminsButton', Group: 'Admin'),
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_Admins'
-        ])
+        $Db->CallBackHashSet(self::Callback_Admins(...))
       );
       self::JumpLineCheck($line, $col);
     endif;
@@ -274,9 +270,7 @@ abstract class StbAdmin{
         $line,
         $col++,
         $Lang->Get('UpdatesButton', Group: 'Admin'),
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_Updates'
-        ])
+        $Db->CallBackHashSet(self::Callback_Updates(...))
       );
       self::JumpLineCheck($line, $col);
     endif;
@@ -286,9 +280,7 @@ abstract class StbAdmin{
         $line,
         $col++,
         $Lang->Get('CommandsButton', Group: 'Admin'),
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_Commands'
-        ])
+        $Db->CallBackHashSet(self::Callback_Commands(...))
       );
       self::JumpLineCheck($line, $col);
     endif;
@@ -348,17 +340,13 @@ abstract class StbAdmin{
       0,
       0,
       '🔙',
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_AdminMenu'
-      ])
+      $Db->CallBackHashSet(self::Callback_AdminMenu(...))
     );
     $mk->ButtonCallback(
       0,
       1,
       '➕',
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_AdminAdd'
-      ])
+      $Db->CallBackHashSet(self::Callback_AdminAdd(...))
     );
     $line = 1;
     $col = 0;
@@ -373,10 +361,10 @@ abstract class StbAdmin{
         $line,
         $col++,
         $detail,
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_Admin',
+        $Db->CallBackHashSet(
+          self::Callback_Admin(...),
           $admin->Id
-        ])
+        )
       );
       self::JumpLineCheck($line, $col);
     endforeach;
@@ -420,7 +408,7 @@ abstract class StbAdmin{
       0,
       0,
       $Lang->Get('Cancel'),
-      $Db->CallBackHashSet([__CLASS__ . '::Callback_Cancel'])
+      $Db->CallBackHashSet(self::Callback_Cancel(...))
     );
     $Bot->TextSend(
       $Webhook->User->Id,
@@ -455,9 +443,7 @@ abstract class StbAdmin{
       $line,
       $col++,
       '🔙',
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_Admins'
-      ])
+      $Db->CallBackHashSet(self::Callback_Admins(...))
     );
     self::JumpLineCheck($line, $col, 2);
     if($Admin !== Admin):
@@ -465,10 +451,10 @@ abstract class StbAdmin{
         $line,
         $col++,
         '🗑️',
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_AdminDel',
+        $Db->CallBackHashSet(
+          self::Callback_AdminDel(...),
           $Admin
-        ])
+        )
       );
       self::JumpLineCheck($line, $col, 2);
     endif;
@@ -483,12 +469,12 @@ abstract class StbAdmin{
         $line,
         $col++,
         ($value ? '✅' : '') . $Lang->Get('Perm' . $perm->name, Group: 'Admin'),
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_AdminPerm',
+        $Db->CallBackHashSet(
+          self::Callback_AdminPerm(...),
           $Admin,
           $perm->value,
           !$value
-        ])
+        )
       );
       self::JumpLineCheck($line, $col, 2);
     endforeach;
@@ -547,19 +533,19 @@ abstract class StbAdmin{
       0,
       0,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_Admin',
+      $Db->CallBackHashSet(
+        self::Callback_Admin(...),
         $Id
-      ])
+      )
     );
     $mk->ButtonCallback(
       0,
       1,
       $Lang->Get('Yes'),
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_AdminDel2',
+      $Db->CallBackHashSet(
+        self::Callback_AdminDel2(...),
         $Id
-      ])
+      )
     );
     $Bot->TextEdit(
       $Webhook->Data->Data->Chat->Id,
@@ -668,19 +654,19 @@ abstract class StbAdmin{
       0,
       0,
       '🔙',
-      $Db->CallBackHashSet([__CLASS__ . '::Callback_Commands'])
+      $Db->CallBackHashSet(self::Callback_Commands(...))
     );
     $mk->ButtonCallback(
       0,
       1,
       '📝',
-      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdEdit', $Cmd])
+      $Db->CallBackHashSet(self::Callback_CmdEdit(...), $Cmd)
     );
     $mk->ButtonCallback(
       0,
       2,
       '❌',
-      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdDel', $Cmd])
+      $Db->CallBackHashSet(self::Callback_CmdDel(...), $Cmd)
     );
     if($Webhook instanceof TgCallback):
       $Bot->TextEdit(
@@ -724,19 +710,19 @@ abstract class StbAdmin{
       0,
       0,
       '🔙',
-      $Db->CallBackHashSet([__CLASS__ . '::Callback_Commands'])
+      $Db->CallBackHashSet(self::Callback_Commands(...))
     );
     $mk->ButtonCallback(
       0,
       1,
       '📝',
-      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdEdit', $Cmd])
+      $Db->CallBackHashSet(self::Callback_CmdEdit(...), $Cmd)
     );
     $mk->ButtonCallback(
       0,
       2,
       '✅',
-      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdDelOk', $Cmd])
+      $Db->CallBackHashSet(self::Callback_CmdDelOk(...), $Cmd)
     );
     $Bot->MarkupEdit(
       $Webhook->Data->Data->Chat->Id,
@@ -829,7 +815,7 @@ abstract class StbAdmin{
       0,
       0,
       '🔙',
-      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdEditCancel', $Cmd])
+      $Db->CallBackHashSet(self::Callback_CmdEditCancel(...), $Cmd)
     );
     $Bot->TextEdit(
       $Webhook->Data->Data->Chat->Id,
@@ -961,13 +947,13 @@ abstract class StbAdmin{
       $line,
       0,
       '🔙',
-      $Db->CallBackHashSet([__CLASS__ . '::Command_admin'])
+      $Db->CallBackHashSet(self::Command_admin(...))
     );
     $mk->ButtonCallback(
       $line++,
       1,
       '🆕',
-      $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdNew'])
+      $Db->CallBackHashSet(self::Callback_CmdNew(...))
     );
     $cmds = $Bot->MyCmdGet()->Get();
     $last = count($cmds) - 1;
@@ -976,14 +962,14 @@ abstract class StbAdmin{
         $line,
         $col++,
         $cmd,
-        $Db->CallBackHashSet([__CLASS__ . '::Callback_Cmd', $cmd])
+        $Db->CallBackHashSet(self::Callback_Cmd(...), $cmd)
       );
       if($i < $last):
         $mk->ButtonCallback(
           $line,
           $col++,
           '🔽',
-          $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdDown', $cmd])
+          $Db->CallBackHashSet(self::Callback_CmdDown(...), $cmd)
         );
       endif;
       if($i > 0):
@@ -991,7 +977,7 @@ abstract class StbAdmin{
           $line,
           $col++,
           '🔼',
-          $Db->CallBackHashSet([__CLASS__ . '::Callback_CmdUp', $cmd])
+          $Db->CallBackHashSet(self::Callback_CmdUp(...), $cmd)
         );
       endif;
       $i++;
@@ -1037,9 +1023,7 @@ abstract class StbAdmin{
       $line,
       $col++,
       '🔙',
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_AdminMenu'
-      ])
+      $Db->CallBackHashSet(self::Callback_AdminMenu(...))
     );
     $stb = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/SimpleTelegramBot/main/sha1sum.txt');
     $stb = str_replace("\n", "\r\n", $stb);

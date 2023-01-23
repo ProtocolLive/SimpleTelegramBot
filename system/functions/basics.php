@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/FuncoesComuns
-//2022.06.03.00
+//2023.01.23.00
 
 enum WeekDay:int{
   case Sunday = 7;
@@ -59,6 +59,24 @@ function Equals(string $Text1, string $Text2):bool{
   $Text1 = AccentInsensitive($Text1);
   $Text2 = AccentInsensitive($Text2);
   return strcasecmp($Text1, $Text2) === 0;
+}
+
+function F2s(\Closure $Function):string{
+  $Function = new \ReflectionFunction($Function);
+  $return = '';
+  $temp = $Function->getNamespaceName();
+  if($temp !== ''):
+    $return = $temp . '\\';
+  endif;
+  $temp = $Function->getClosureScopeClass();
+  if($temp !== null):
+    $temp = $temp->getName();
+    if($temp !== ''):
+      $return .= $temp . '::';
+    endif;
+  endif;
+  $return .= $Function->getName();
+  return $return;
 }
 
 function FloatInt(string $Val):int{

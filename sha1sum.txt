@@ -28,9 +28,9 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  install\index.htm
 72f6872083bc3893eca2f363a21df8933f4fabf9  language\en\system.json
 d03ba97a7d944e24c1902da55e5477869eb988cd  language\pt-br\system.json
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
-d486e5d5939cefc3e7251fd6e397140929a6e651  system\StbObjects\StbAdmin.php
-9852565d7357d3b34a55e3a006eb2dd03238085d  system\StbObjects\StbAdminModules.php
-6a47a0983b7bb0ba2c6f1a7c63b64e7e441b98b4  system\StbObjects\StbDatabase.php
+9c6ca3a5dc864a1383938958d1cf61cd84aafef8  system\StbObjects\StbAdmin.php
+3a8ed03c8131aa848882ef6440aadb7463202881  system\StbObjects\StbAdminModules.php
+2e8efbe60c9599c85d51a486c266187aff2b94e7  system\StbObjects\StbDatabase.php
 f8c03985ceea05890f609a5741617f602db2fa3a  system\StbObjects\StbDbAdminData.php
 a9485738a7d7a00c3df0a1585db7ba09224fb137  system\StbObjects\StbDbAdminPerm.php
 b444644ea4c1559841793eeb0ef7887086e82a81  system\StbObjects\StbDbListeners.php
@@ -42,7 +42,7 @@ dbec8db3a62317c182520da2e5537248ae6ae577  system\StbObjects\StbLog.php
 c06c661e07c0a25b6936545de325a7cb2e8dca3f  system\StbObjects\StbModuleHelper.php
 8863b50216ed86c0af7729680cfb76357bdc1b53  system\StbObjects\StbModuleInterface.php
 6d10158a742eec5dcd46a7092f3e6d79bf5169cf  system\constants.php
-8fbbb9d59ca541847f4a61df73406ad4ae7150df  system\functions\basics.php
+3952e47971ad03439c4521ec81994072ec5d52cd  system\functions\basics.php
 0f70a4a06892dbc07443b936d6d4526a56a533f9  system\functions\debug.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  system\php.php
 6b7999b6be40e86c7c62f60a67ea1467643c03b3  system\requires.php

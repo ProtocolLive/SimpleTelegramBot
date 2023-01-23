@@ -1,9 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.21.00
+//2023.01.23.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
+use Closure;
 use PDO;
 use PDOException;
 use ProtocolLive\PhpLiveDb\{
@@ -136,14 +137,17 @@ final class StbDatabase{
    * The callback data are limited to 64 bytes. This function hash the function to be called
    */
   public function CallBackHashSet(
-    array $Data
-  ):string|false{
+    callable $Method,
+    ...$Args
+  ):string{
     DebugTrace();
-    $Data = json_encode($Data);
-    $hash = sha1($Data);
+    $Args = func_get_args();
+    $Args[0] = F2s($Args[0]);
+    $Args = json_encode($Args);
+    $hash = sha1($Args);
     $consult = $this->Db->InsertUpdate('callbackshash');
     $consult->FieldAdd('hash', $hash, Types::Str, Update: true);
-    $consult->FieldAdd('method', $Data, Types::Str, Update: true);
+    $consult->FieldAdd('method', $Args, Types::Str, Update: true);
     $consult->Run(HtmlSafe: false);
     return $hash;
   }

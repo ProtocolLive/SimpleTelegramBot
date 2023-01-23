@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.02.01
+//2023.01.23.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\{
@@ -36,17 +36,13 @@ class StbAdminModules{
       $line,
       $col++,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet([
-        StbAdmin::class . '::Callback_AdminMenu'
-      ])
+      $Db->CallBackHashSet(StbAdmin::Callback_AdminMenu(...))
     );
     $mk->ButtonCallback(
       $line,
       $col++,
       $Lang->Get('Add'),
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_ModuleAdd'
-      ])
+      $Db->CallBackHashSet(self::Callback_ModuleAdd(...))
     );
     $line = 1;
     $col = 0;
@@ -58,10 +54,7 @@ class StbAdminModules{
         $line,
         $col++,
         basename($mod['module']),
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_Mod',
-          $mod['module']
-        ])
+        $Db->CallBackHashSet(self::Callback_Mod(...), $mod['module'])
       );
       if($col === 4):
         $col = 0;
@@ -108,19 +101,14 @@ class StbAdminModules{
       $line,
       $col++,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_Modules'
-      ])
+      $Db->CallBackHashSet(self::Callback_Modules(...))
     );
     foreach($modules as $mod):
       $mk->ButtonCallback(
         $line,
         $col++,
         $mod,
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_InsModPic',
-          $mod
-        ])
+        $Db->CallBackHashSet(self::Callback_InsModPic(...), $mod)
       );
       if($col === 4):
         $line++;
@@ -163,9 +151,7 @@ class StbAdminModules{
         $line,
         $col++,
         $Lang->Get('Back'),
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_ModuleAdd'
-        ])
+        $Db->CallBackHashSet(self::Callback_ModuleAdd(...))
       );
       $Bot->TextEdit(
         $Webhook->Data->Data->Chat->Id,
@@ -180,9 +166,7 @@ class StbAdminModules{
         $line,
         $col++,
         $Lang->Get('Back'),
-        $Db->CallBackHashSet([
-          __CLASS__ . '::Callback_ModuleAdd'
-        ])
+        $Db->CallBackHashSet(self::Callback_ModuleAdd(...))
       );
       $Bot->TextEdit(
         $Webhook->Data->Data->Chat->Id,
@@ -221,18 +205,13 @@ class StbAdminModules{
       $line,
       $col++,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_Modules'
-      ])
+      $Db->CallBackHashSet(self::Callback_Modules(...))
     );
     $mk->ButtonCallback(
       $line,
       $col++,
       $Lang->Get('UninstallButton', Group: 'Module'),
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_UniModPic1',
-        $Module
-      ])
+      $Db->CallBackHashSet(self::Callback_UniModPic1(...), $Module)
     );
     $date = $Db->Modules($Module);
     $Bot->TextEdit(
@@ -272,19 +251,13 @@ class StbAdminModules{
       0,
       0,
       $Lang->Get('Back'),
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_Mod',
-        $Module
-      ])
+      $Db->CallBackHashSet(self::Callback_Mod(...), $Module)
     );
     $mk->ButtonCallback(
       0,
       1,
       $Lang->Get('Yes'),
-      $Db->CallBackHashSet([
-        __CLASS__ . '::Callback_UniModPic2',
-        $Module
-      ])
+      $Db->CallBackHashSet(self::Callback_UniModPic2(...), $Module)
     );
     $Bot->MarkupEdit(
       Admin,
