@@ -1,5 +1,5 @@
 <?php
-//2023.01.22.00
+//2023.01.26.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -48,8 +48,12 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $config = str_replace('##DBUSER##', $_POST['user'], $config);
   $config = str_replace('##DBPWD##', $_POST['pwd'], $config);
   $config = str_replace('##DBNAME##', $_POST['db'], $config);
+
+  $temp = md5(uniqid());
+  $config = str_replace('##DIRLOGS##', $temp, $config);
   file_put_contents($DirSystem . '/DirBot/config.php', $config);
 
+  rename($DirSystem . '/DirBot/logs', $DirSystem . '/DirBot/logs-' . $temp);
   rename($DirSystem . '/DirBot', $DirSystem . '/' . $DirBot);
 
   if($_POST['dbtype'] === 'mysql'):

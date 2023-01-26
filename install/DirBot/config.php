@@ -1,15 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.12.23.00
+//2023.01.26.00
+
+use ProtocolLive\PhpLiveDb\Drivers;
+use ProtocolLive\TelegramBotLibrary\TblObjects\TblLog;
+use ProtocolLive\TelegramBotLibrary\TgObjects\TgInvoiceCurrencies;
 
 //Installation date: ##DATE##
-
-use ProtocolLive\TelegramBotLibrary\{
-  TblObjects\TblLog,
-  TgObjects\TgInvoiceCurrencies
-};
-use ProtocolLive\PhpLiveDb\Drivers;
 
 //Token given by @BotFather
 //Type: string
@@ -55,3 +53,6 @@ const DbHost = '##DBHOST##';
 const DbUser = '##DBUSER##';
 const DbPwd = '##DBPWD##';
 const DbName = '##DBNAME##';
+
+//Internal config. DO NOT CHANGE
+const DirLogs = __DIR__ . '/logs-##DIRLOGS##';
