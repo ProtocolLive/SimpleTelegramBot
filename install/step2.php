@@ -1,5 +1,5 @@
 <?php
-//2023.01.26.00
+//2023.01.26.01
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -25,7 +25,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   <h1>SimpleTelegramBot Install</h1><?php
 
   $DirSystem = dirname(__DIR__, 1);
-  $DirBot = 'Bot-' . $_POST['name'] . '-' . md5($_POST['token']);
+  $DirBot = 'Bot-' . $_POST['name'] . '-' . md5(uniqid());
 
   mkdir($DirSystem . '/DirBot', 0755, true);
   CopyRecursive(__DIR__ . '/DirBot', $DirSystem . '/DirBot');
