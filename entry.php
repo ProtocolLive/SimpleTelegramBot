@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.20.00
+//2023.01.26.00
 
 //This file are included by DirBot/index.php
 
@@ -10,23 +10,25 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbDbListeners,
   StbLanguageSys
 };
-use ProtocolLive\TelegramBotLibrary\{
-  TblObjects\TblCmd,
-  TblObjects\TblData,
-  TblObjects\TblException,
-  TblObjects\TblWebhook,
-  TelegramBotLibrary,
-  TgObjects\TgCallback,
-  TgObjects\TgChat,
-  TgObjects\TgChatTitle,
-  TgObjects\TgGroupStatusMy,
-  TgObjects\TgInlineQuery,
-  TgObjects\TgInvoiceCheckout,
-  TgObjects\TgInvoiceShipping,
-  TgObjects\TgPhoto,
-  TgObjects\TgText,
-  TgObjects\TgUpdateType,
-  TgObjects\TgUser
+use ProtocolLive\TelegramBotLibrary\TblObjects\{
+  TblCmd,
+  TblData,
+  TblException,
+  TblWebhook
+};
+use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
+use ProtocolLive\TelegramBotLibrary\TgObjects\{
+  TgCallback,
+  TgChat,
+  TgChatTitle,
+  TgGroupStatusMy,
+  TgInlineQuery,
+  TgInvoiceCheckout,
+  TgInvoiceShipping,
+  TgPhoto,
+  TgText,
+  TgUpdateType,
+  TgUser
 };
 
 $_GET['a'] ??= '';
@@ -134,6 +136,23 @@ function Action_WebhookDel():void{
   }
 }
 
+function Update_Callback():void{
+  /**
+   * @var TgCallback $Webhook
+   * @var StbDatabase $Db
+   * @var TelegramBotLibrary $bot
+   * @var StbLanguageSys $Lang
+   */
+  global $Webhook, $Db, $Bot, $Lang;
+  $Db->UserSeen($Webhook->User);
+  if($Db->CallBackHashRun($Webhook->Callback) === false):
+    $Bot->CallbackAnswer(
+      $Webhook->Id,
+      $Lang->Get('ButtonWithoutAction', Group: 'Errors')
+    );
+  endif;
+}
+
 function Update_Cmd():void{
   /**
    * @var TelegramBotLibrary $Bot
@@ -172,23 +191,6 @@ function Update_Cmd():void{
 
   if(SendUserCmd($Webhook->Command) === false):
     SendUserCmd('unknown');
-  endif;
-}
-
-function Update_Callback():void{
-  /**
-   * @var TgCallback $Webhook
-   * @var StbDatabase $Db
-   * @var TelegramBotLibrary $bot
-   * @var StbLanguageSys $Lang
-   */
-  global $Webhook, $Db, $Bot, $Lang;
-  $Db->UserSeen($Webhook->User);
-  if($Db->CallBackHashRun($Webhook->Callback) === false):
-    $Bot->CallbackAnswer(
-      $Webhook->Id,
-      $Lang->Get('ButtonWithoutAction', Group: 'Errors')
-    );
   endif;
 }
 
