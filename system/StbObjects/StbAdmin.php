@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.26.04
+//2023.01.26.05
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -926,7 +926,7 @@ abstract class StbAdmin{
     );
     $stb = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/SimpleTelegramBot/main/sha1sum.txt');
     $stb = str_replace("\n", "\r\n", $stb);
-    $stb = file_get_contents(DirSystem . '\sha1sum.txt') === $stb;
+    $stb = file_get_contents(DirSystem . '/sha1sum.txt') === $stb;
     if($stb):
       $stb = $Lang->Get('Yes');
     else:
@@ -934,7 +934,7 @@ abstract class StbAdmin{
     endif;
     $tbl = file_get_contents('https://raw.githubusercontent.com/ProtocolLive/TelegramBotLibrary/main/src/sha1sum.txt');
     $tbl = str_replace("\n", "\r\n", $tbl);
-    $tbl = file_get_contents(DirSystem . '\vendor\protocollive\telegrambotlibrary\src\sha1sum.txt') === $tbl;
+    $tbl = file_get_contents(DirSystem . '/vendor/protocollive/telegrambotlibrary/src/sha1sum.txt') === $tbl;
     if($tbl):
       $tbl = $Lang->Get('Yes');
     else:
