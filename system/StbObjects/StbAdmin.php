@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.23.00
+//2023.01.26.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -290,7 +290,7 @@ abstract class StbAdmin{
         $line,
         $col++,
         $Lang->Get('PhpInfoButton', Group: 'Admin'),
-        dirname('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']) . '/tools/info.php'
+        dirname('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']) . '/info.php'
       );
       self::JumpLineCheck($line, $col);
     endif;
