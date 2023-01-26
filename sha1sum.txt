@@ -28,7 +28,6 @@ c8415be91589b409c70ccefe08912f3eddf07aab  language\pt-br\system.json
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
 12959f4f06508ee61c0511607767e5c7b6ffa85d  system\StbObjects\StbAdmin.php
 43f4906826315aa843d375bcb7763f473caf647f  system\StbObjects\StbAdminModules.php
-be943d502202bf9ff8bdf51663188f3b5affce2c  system\StbObjects\StbCronTools.php
 3b3d20b5c5305d6c9d4137f4174d542aaa535040  system\StbObjects\StbDatabase.php
 4f049dac171284786edde442f21d40f933958d93  system\StbObjects\StbDbAdminData.php
 4d9165ee25705edf8a5ebdf48feffb9a2e5246e6  system\StbObjects\StbDbAdminPerm.php
