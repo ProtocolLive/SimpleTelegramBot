@@ -1,10 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.26.00
+//2023.01.26.01
 
 define('DirSystem', dirname(__DIR__));
-const DirDb = DirBot . '/db';
 const DirModules = DirBot . '/modules';
 const DirUserCmds = DirBot . '/UserCmds';
 
