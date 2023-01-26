@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.26.03
+//2023.01.26.04
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -340,16 +340,6 @@ abstract class StbAdmin{
         $col++,
         $Lang->Get('CommandsButton', Group: 'Admin'),
         $Db->CallBackHashSet(self::Callback_Commands(...))
-      );
-      self::JumpLineCheck($line, $col);
-    endif;
-    //Info
-    if($id === Admin):
-      $mk->ButtonWebapp(
-        $line,
-        $col++,
-        $Lang->Get('PhpInfoButton', Group: 'Admin'),
-        dirname('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']) . '/info.php'
       );
       self::JumpLineCheck($line, $col);
     endif;
