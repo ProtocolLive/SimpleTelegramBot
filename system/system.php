@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.26.00
+//2023.01.26.01
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -15,12 +15,9 @@ use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
 use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
 
 require(__DIR__ . '/php.php');
-require(__DIR__ . '/requires.php');
+require(dirname(__DIR__) . '/vendor/autoload.php');
 set_error_handler('HandlerError');
 set_exception_handler('HandlerException');
-
-require(DirSystem . '/vendor/autoload.php');
-
 require(DirBot . '/config.php');
 date_default_timezone_set(Timezone);
 

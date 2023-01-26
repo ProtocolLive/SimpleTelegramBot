@@ -20,6 +20,13 @@
     "autoload": {
         "psr-4": {
             "ProtocolLive\\SimpleTelegramBot\\StbObjects\\": "system/StbObjects"
-        }
+        },
+        "files": [
+            "functions/bot.php",
+            "functions/module.php",
+            "system/functions/debug.php",
+            "system/functions/basics.php",
+            "system/constants.php"
+        ]
     }
 }
