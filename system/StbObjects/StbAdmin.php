@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.26.02
+//2023.01.26.03
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
@@ -13,6 +13,7 @@ use ProtocolLive\TelegramBotLibrary\TblObjects\{
 use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
 use ProtocolLive\TelegramBotLibrary\TgObjects\{
   TgCallback,
+  TgParseMode,
   TgText
 };
 
@@ -354,11 +355,11 @@ abstract class StbAdmin{
     endif;
     //Stats
     if($user->Perms & StbDbAdminPerm::Stats->value):
-      $mk->ButtonWebapp(
+      $mk->ButtonCallback(
         $line,
         $col++,
         $Lang->Get('StatsButton', Group: 'Admin'),
-        dirname('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']) . '/stats.php'
+        $Db->CallBackHashSet(self::Callback_Stats(...))
       );
     endif;
     if($Webhook instanceof TblCmd):
@@ -854,6 +855,58 @@ abstract class StbAdmin{
         Markup: $mk
       );
     endif;
+  }
+
+  public static function Callback_Stats():void{
+    /**
+     * @var PhpLiveDb $PlDb
+     * @var TelegramBotLibrary $Bot
+     * @var TgCallback $Webhook
+     */
+    global $PlDb, $Bot, $Webhook;
+    $consult = $PlDb->Select('chats');
+    $consult->Fields('count(*) as count');
+    $chats = $consult->Run();
+    $msg = 'Lifetime users interacted: ' . $chats[0]['count'] . PHP_EOL;
+    $msg .= PHP_EOL;
+    $msg .= '<b>Commands:</b>' . PHP_EOL;
+    $consult = $PlDb->Select('sys_logs');
+    $consult->Fields('event,count(event) as count');
+    $consult->Group('event');
+    $consult->Order('count desc');
+    $consult->Run(Fetch: true);
+    while(($event = $consult->Fetch()) !== false):
+      $msg .= $event['count'] . ' - ' . $event['event'] . PHP_EOL;
+    endwhile;
+    $msg .= PHP_EOL;
+    $msg .= '<b>Logs:</b>' . PHP_EOL;
+    $consult = $PlDb->Select('sys_logs');
+    $consult->JoinAdd('chats', 'chat_id');
+    $consult->Order('time desc');
+    $consult->Run(Fetch: true);
+    while(($log = $consult->Fetch()) !== false):
+      $msg .= date('Y/m/d H:i:s', $log['time']) . ' - ';
+      $msg .= $log['event'] . ' ';
+      if($log['additional'] !== null):
+        $msg .= $log['additional'];
+      endif;
+      $msg .= PHP_EOL;
+      $msg .= $log['chat_id'] . ', ';
+      if($log['nick'] !== null):
+        $msg .= '@' . $log['nick'] . ', ';
+      endif;
+      $msg .= $log['name'] . ' ';
+      if($log['name2'] !== null):
+        $msg .= $log['name2'] . ' ';
+      endif;
+      $msg .= PHP_EOL;
+      $msg .= '-----------------------------' . PHP_EOL;
+    endwhile;
+    $Bot->TextSend(
+      $Webhook->User->Id,
+      $msg,
+      ParseMode: TgParseMode::Html
+    );
   }
 
   public static function Callback_Updates():void{
