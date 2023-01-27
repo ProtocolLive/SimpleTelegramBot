@@ -4,7 +4,7 @@
 db47c5517d82424e5cc44148d2cbfa6f44f7b0cd  functions\bot.php
 9e13e275ee407bda468729cd4ef2122e3e9f4533  functions\module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  index.htm
-3b059a191bf00d8e1f0c9966611ea9c66478d569  index.php
+28527fb764a9b392112a7c90e06eef5a0cdaaeb0  index.php
 9ccd6abd6b29bdb66e65686d4cf36f35b6f40993  install\DirBot\UserCmds\en\dontknow.txt
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\UserCmds\en\index.htm
 5054c3d7f1583aa0a043a72b08d9abf93591802f  install\DirBot\UserCmds\en\start.txt
@@ -26,7 +26,7 @@ e048c00d9b6eac1ff45f2ef7368b33ec6afb1ca8  install\step2.php
 72f6872083bc3893eca2f363a21df8933f4fabf9  language\en\system.json
 d03ba97a7d944e24c1902da55e5477869eb988cd  language\pt-br\system.json
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
-ab5cba69e4dc84832388079a6bf5a3bb03e0198a  system\StbObjects\StbAdmin.php
+a405cfa4910d3b1b6059128624d0fed4f06251db  system\StbObjects\StbAdmin.php
 3a8ed03c8131aa848882ef6440aadb7463202881  system\StbObjects\StbAdminModules.php
 be943d502202bf9ff8bdf51663188f3b5affce2c  system\StbObjects\StbCronTools.php
 2e8efbe60c9599c85d51a486c266187aff2b94e7  system\StbObjects\StbDatabase.php
@@ -40,9 +40,8 @@ b444644ea4c1559841793eeb0ef7887086e82a81  system\StbObjects\StbDbListeners.php
 dbec8db3a62317c182520da2e5537248ae6ae577  system\StbObjects\StbLog.php
 c06c661e07c0a25b6936545de325a7cb2e8dca3f  system\StbObjects\StbModuleHelper.php
 8863b50216ed86c0af7729680cfb76357bdc1b53  system\StbObjects\StbModuleInterface.php
-386da2744f61ae798f33380b7677a548b3ba6a0d  system\constants.php
+6b20bee83aba2484044298a2195fccf4982fd3c4  system\constants.php
 3952e47971ad03439c4521ec81994072ec5d52cd  system\functions\basics.php
 0f70a4a06892dbc07443b936d6d4526a56a533f9  system\functions\debug.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  system\php.php
-6b7999b6be40e86c7c62f60a67ea1467643c03b3  system\requires.php
-5b92974eb759861d78fea5963d1f859a364e814a  system\system.php
+e020ad81403c1d492662b8921861edaedb612190  system\system.php
