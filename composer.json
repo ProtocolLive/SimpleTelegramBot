@@ -4,9 +4,6 @@
     "type": "project",
     "require": {
         "php": ">=8.1",
-        "ext-openssl": "*",
-        "ext-curl": "*",
-        "ext-pdo": "*",
         "protocollive/telegrambotlibrary": "*",
         "protocollive/phplivedb": "*"
     },
@@ -24,8 +21,8 @@
         "files": [
             "functions/bot.php",
             "functions/module.php",
-            "system/functions/debug.php",
             "system/functions/basics.php",
+            "system/functions/debug.php",
             "system/constants.php"
         ]
     }
