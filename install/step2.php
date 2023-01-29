@@ -1,5 +1,5 @@
 <?php
-//2023.01.26.01
+//2023.01.29.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -140,7 +140,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $consult->Add(
     'module',
     Formats::Varchar,
-    100,
+    255,
     NotNull: true,
     Primary: true
   );
@@ -167,7 +167,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $consult->Add(
     'module',
     Formats::Varchar,
-    100,
+    255,
     NotNull: true,
     RefTable: 'modules',
     RefField: 'module',
@@ -209,7 +209,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $consult->Add(
     'module',
     Formats::Varchar,
-    100,
+    255,
     NotNull: true,
     RefTable: 'modules',
     RefField: 'module',
@@ -287,9 +287,20 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
     AutoIncrement: true
   );
   $consult->Add(
+    'name',
+    Formats::Varchar,
+    50,
+    NotNull: true
+  );
+  $consult->Add(
+    'value',
+    Formats::Varchar,
+    50
+  );
+  $consult->Add(
     'module',
     Formats::Varchar,
-    100,
+    255,
     RefTable: 'modules',
     RefField: 'module',
     RefDelete: RefTypes::Cascade,
@@ -303,17 +314,6 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
     RefField: 'chat_id',
     RefDelete: RefTypes::Cascade,
     RefUpdate: RefTypes::Cascade
-  );
-  $consult->Add(
-    'name',
-    Formats::Varchar,
-    50,
-    NotNull: true
-  );
-  $consult->Add(
-    'value',
-    Formats::Varchar,
-    50
   );
   $consult->Unique(['module', 'chat_id', 'name']);
   $consult->Run();
