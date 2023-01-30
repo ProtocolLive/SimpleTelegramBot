@@ -22,14 +22,14 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\tools\index.htm
 6dc84b18d4c6ffe5042fd9ece8e62fada1695875  install\DirBot\tools\scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\index.htm
 8a04013ea26ff940756de39d684457fa819612d6  install\step1.php
-42c0bc53fba25f31b0e784f65c1479b309757fb9  install\step2.php
+9cfc5729ba3bdcca71a6d79644159e8fb0808338  install\step2.php
 72f6872083bc3893eca2f363a21df8933f4fabf9  language\en\system.json
 d03ba97a7d944e24c1902da55e5477869eb988cd  language\pt-br\system.json
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
 a405cfa4910d3b1b6059128624d0fed4f06251db  system\StbObjects\StbAdmin.php
 3a8ed03c8131aa848882ef6440aadb7463202881  system\StbObjects\StbAdminModules.php
 be943d502202bf9ff8bdf51663188f3b5affce2c  system\StbObjects\StbCronTools.php
-ea134502a0c870bf471b25c3eb8a039fd52acb6d  system\StbObjects\StbDatabase.php
+bc6f668a8aa6a82fe09fd52c1cd888adb909e349  system\StbObjects\StbDatabase.php
 f8c03985ceea05890f609a5741617f602db2fa3a  system\StbObjects\StbDbAdminData.php
 a9485738a7d7a00c3df0a1585db7ba09224fb137  system\StbObjects\StbDbAdminPerm.php
 b444644ea4c1559841793eeb0ef7887086e82a81  system\StbObjects\StbDbListeners.php

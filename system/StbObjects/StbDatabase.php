@@ -1,10 +1,9 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.30.00
+//2023.01.30.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
-use Closure;
 use PDO;
 use PDOException;
 use ProtocolLive\PhpLiveDb\{
@@ -436,11 +435,24 @@ final class StbDatabase{
       $consult->WhereAdd('chat_id', $User, Types::Int);
       $consult->WhereAdd('module', $Module, Types::Str);
     else:
-      $consult = $this->Db->InsertUpdate('variables');
-      $consult->FieldAdd('name', $Name, Types::Str);
-      $consult->FieldAdd('chat_id', $User, Types::Int);
-      $consult->FieldAdd('module', $Module, Types::Str);
-      $consult->FieldAdd('value', $Value, Types::Str, Update: true);
+      //InsertUpdate don't work because null values
+      $consult = $this->Db->Select('variables');
+      $consult->WhereAdd('name', $Name, Types::Str);
+      $consult->WhereAdd('module', $Module, Types::Str);
+      $consult->WhereAdd('chat_id', $User, Types::Int);
+      $result = $consult->Run();
+      if($result === []):
+        $consult = $this->Db->Insert('variables');
+        $consult->FieldAdd('name', $Name, Types::Str);
+        $consult->FieldAdd('chat_id', $User, Types::Int);
+        $consult->FieldAdd('module', $Module, Types::Str);
+      else:
+        $consult = $this->Db->Update('variables');
+        $consult->WhereAdd('name', $Name, Types::Str);
+        $consult->WhereAdd('module', $Module, Types::Str);
+        $consult->WhereAdd('chat_id', $User, Types::Int);
+      endif;
+      $consult->FieldAdd('value', $Value, Types::Str);
     endif;
     $consult->Run();
   }
