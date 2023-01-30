@@ -1,5 +1,5 @@
 <?php
-//2023.01.30.00
+//2023.01.30.01
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -307,16 +307,11 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
     RefDelete: RefTypes::Cascade,
     RefUpdate: RefTypes::Cascade
   );
+  //chat_id are signed and have no foreign key to store super groups too
   $consult->Add(
     'chat_id',
-    Formats::IntBig,
-    Unsigned: true,
-    RefTable: 'chats',
-    RefField: 'chat_id',
-    RefDelete: RefTypes::Cascade,
-    RefUpdate: RefTypes::Cascade
+    Formats::IntBig
   );
-  $consult->Unique(['module', 'chat_id', 'name']);
   $consult->Run();
 
   $consult = $PlDb->Insert('chats');
