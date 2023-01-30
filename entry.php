@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.26.00
+//2023.01.30.00
 
 //This file are included by DirBot/index.php
 
@@ -165,16 +165,8 @@ function Update_Cmd():void{
   //In a group, with many bots, the commands have the target bot.
   //This block check the target and caches the bot name
   if($Webhook->Data->Chat instanceof TgChat):
-    $user = $Db->UserGet($Webhook->Data->User->Id);
-    if($user === null):
-      $user = $Bot->MyGet();
-      if($user !== null):
-        $Db->UserEdit($user);
-        $user = $user->Nick;
-      endif;
-    else:
-      $user = $user->Nick;
-    endif;
+    $user = $Bot->MyGet();
+    $user = $user->Nick;
     if($Webhook->Target !== null
     and $Webhook->Target !== $user):
       return;
