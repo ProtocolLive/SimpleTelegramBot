@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.23.00
+//2023.01.30.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use Closure;
@@ -389,6 +389,19 @@ final class StbDatabase{
     $consult->FieldAdd('nick', $User->Nick, Types::Str, Update: true);
     $consult->FieldAdd('lastseen', time(), Types::Int, Update: true);
     $consult->FieldAdd('lang', $User->Language, Types::Str, Update: true);
+    $consult->Run();
+  }
+
+  public function VariableDel(
+    string $Name,
+    string $Module = null,
+    int $User = null
+  ):void{
+    DebugTrace();
+    $consult = $this->Db->Delete('variables');
+    $consult->WhereAdd('name', $Name, Types::Str);
+    $consult->WhereAdd('chat_id', $User, Types::Int);
+    $consult->WhereAdd('module', $Module, Types::Str);
     $consult->Run();
   }
 
