@@ -1,5 +1,5 @@
 <?php
-//2023.01.29.00
+//2023.01.30.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -295,7 +295,8 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $consult->Add(
     'value',
     Formats::Varchar,
-    50
+    255,
+    NotNull: true
   );
   $consult->Add(
     'module',
