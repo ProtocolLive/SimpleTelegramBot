@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.31.00
+//2023.01.31.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -151,7 +151,10 @@ final class StbDatabase{
     return $hash;
   }
 
-  public function CommandAdd(string $Command, string $Module):bool{
+  public function CommandAdd(
+    string $Command,
+    string $Module
+  ):bool{
     DebugTrace();
     $consult = $this->Db->Insert('commands');
     $consult->FieldAdd('command', $Command, Types::Str);
@@ -165,7 +168,9 @@ final class StbDatabase{
     }
   }
 
-  public function CommandDel(string|array $Command):void{
+  public function CommandDel(
+    string|array $Command
+  ):void{
     DebugTrace();
     if(is_string($Command)):
       $Command = [$Command];
@@ -190,7 +195,9 @@ final class StbDatabase{
    * @param string $Command
    * @return array Return all commands or the respective module
    */
-  public function Commands(string $Command = null):array{
+  public function Commands(
+    string $Command = null
+  ):array{
     DebugTrace();
     $consult = $this->Db->Select('commands');
     if($Command !== null):
@@ -256,7 +263,9 @@ final class StbDatabase{
     return $consult->Run();
   }
 
-  public function ModuleInstall(string $Module):bool{
+  public function ModuleInstall(
+    string $Module
+  ):bool{
     DebugTrace();
     if($this->ModuleRestricted($Module)):
       return false;
@@ -272,7 +281,9 @@ final class StbDatabase{
     }
   }
 
-  public function ModuleRestricted(string $Module):bool{
+  public function ModuleRestricted(
+    string $Module
+  ):bool{
     DebugTrace();
     return (
       str_contains($Module, '\Stb')
@@ -286,7 +297,9 @@ final class StbDatabase{
    * @param string $Module
    * @return array
    */
-  public function Modules(string $Module = null):array{
+  public function Modules(
+    string $Module = null
+  ):array{
     DebugTrace();
     $consult = $this->Db->Select('modules');
     if($Module !== null):
@@ -299,7 +312,9 @@ final class StbDatabase{
   /**
    * Removes listeners, callback hashes and module data before uninstall
    */
-  public function ModuleUninstall(string $Module):void{
+  public function ModuleUninstall(
+    string $Module
+  ):void{
     DebugTrace();
     $consult = $this->Db->Delete('modules');
     $consult->WhereAdd('module', $Module, Types::Str);
@@ -378,7 +393,9 @@ final class StbDatabase{
     return new TgUser($return);
   }
 
-  public function UserSeen(TgUser $User):void{
+  public function UserSeen(
+    TgUser $User
+  ):void{
     DebugTrace();
     $consult = $this->Db->InsertUpdate('chats');
     $consult->FieldAdd('chat_id', $User->Id, Types::Int);
@@ -390,7 +407,6 @@ final class StbDatabase{
     $consult->FieldAdd('lang', $User->Language, Types::Str, Update: true);
     $consult->Run();
   }
-
 
   public function VariableDel(
     string $Name,
