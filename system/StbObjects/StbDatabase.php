@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.30.01
+//2023.01.30.02
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -419,6 +419,24 @@ final class StbDatabase{
       return null;
     else:
       return $result[0]['value'];
+    endif;
+  }
+
+  public function VariableGet2(
+    string $Value,
+    string $Module = null,
+    int $User = null
+  ):string|null{
+    DebugTrace();
+    $consult = $this->Db->Select('variables');
+    $consult->WhereAdd('value', $Value, Types::Str);
+    $consult->WhereAdd('module', $Module, Types::Str);
+    $consult->WhereAdd('chat_id', $User, Types::Int);
+    $result = $consult->Run();
+    if($result === []):
+      return null;
+    else:
+      return $result[0]['name'];
     endif;
   }
 

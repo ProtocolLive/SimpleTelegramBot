@@ -29,7 +29,7 @@ d03ba97a7d944e24c1902da55e5477869eb988cd  language\pt-br\system.json
 a405cfa4910d3b1b6059128624d0fed4f06251db  system\StbObjects\StbAdmin.php
 3a8ed03c8131aa848882ef6440aadb7463202881  system\StbObjects\StbAdminModules.php
 be943d502202bf9ff8bdf51663188f3b5affce2c  system\StbObjects\StbCronTools.php
-bc6f668a8aa6a82fe09fd52c1cd888adb909e349  system\StbObjects\StbDatabase.php
+7e687471da6063a99f586f9e7502d830685fb3a5  system\StbObjects\StbDatabase.php
 f8c03985ceea05890f609a5741617f602db2fa3a  system\StbObjects\StbDbAdminData.php
 a9485738a7d7a00c3df0a1585db7ba09224fb137  system\StbObjects\StbDbAdminPerm.php
 b444644ea4c1559841793eeb0ef7887086e82a81  system\StbObjects\StbDbListeners.php
