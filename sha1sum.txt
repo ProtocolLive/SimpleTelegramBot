@@ -1,6 +1,6 @@
 213fc25c6e693e6120985a337e42ff7c1d3170d2  LICENSE
 22de30c512c151b80ba92774340c00fbd74cc9d8  cron.php
-93bb502e60fda33006389a973d9ccc7ee040e7a4  entry.php
+8e3054211dabb099bb3ca86e49aeb1d0fb03449f  entry.php
 db47c5517d82424e5cc44148d2cbfa6f44f7b0cd  functions\bot.php
 9e13e275ee407bda468729cd4ef2122e3e9f4533  functions\module.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  index.htm
@@ -22,7 +22,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\tools\index.htm
 6dc84b18d4c6ffe5042fd9ece8e62fada1695875  install\DirBot\tools\scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\index.htm
 8a04013ea26ff940756de39d684457fa819612d6  install\step1.php
-9cfc5729ba3bdcca71a6d79644159e8fb0808338  install\step2.php
+5394cc24fca19b84f2d04fb19011406e04c25bb9  install\step2.php
 72f6872083bc3893eca2f363a21df8933f4fabf9  language\en\system.json
 d03ba97a7d944e24c1902da55e5477869eb988cd  language\pt-br\system.json
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
