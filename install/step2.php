@@ -1,5 +1,5 @@
 <?php
-//2023.01.30.01
+//2023.02.01.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -197,14 +197,10 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
     50,
     NotNull: true
   );
+  //Without foreign key to use with groups
   $consult->Add(
     'chat_id',
-    Formats::IntBig,
-    Unsigned: true,
-    RefTable: 'chats',
-    RefField: 'chat_id',
-    RefDelete: RefTypes::Cascade,
-    RefUpdate: RefTypes::Cascade
+    Formats::IntBig
   );
   $consult->Add(
     'module',
