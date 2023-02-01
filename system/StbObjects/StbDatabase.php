@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.31.01
+//2023.02.01.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -216,15 +216,18 @@ final class StbDatabase{
   public function ListenerAdd(
     StbDbListeners $Listener,
     string $Class,
-    int $User = null
+    int $Chat = null
   ):bool{
     DebugTrace();
+    if($Chat === 0):
+      return false;
+    endif;
     if($this->NoUserListener($Listener)):
-      $User = null;
+      $Chat = null;
     endif;
     $consult = $this->Db->InsertUpdate('listeners');
     $consult->FieldAdd('listener', $Listener->name, Types::Str);
-    $consult->FieldAdd('chat_id', $User, Types::Str, Update: true);
+    $consult->FieldAdd('chat_id', $Chat, Types::Str, Update: true);
     $consult->FieldAdd('module', $Class, Types::Str, Update: true);
     try{
       $consult->Run();
