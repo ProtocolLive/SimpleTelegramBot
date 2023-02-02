@@ -1,10 +1,17 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.28.00
+//2023.02.02.00
 
-use ProtocolLive\SimpleTelegramBot\StbObjects\StbLog;
+use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbBotTools,
+  StbLog,
+  StbModuleTools
+};
 
-StbModuleLoad($_SERVER['Cron']);
+StbModuleTools::StbModuleLoad($_SERVER['Cron']);
 call_user_func($_SERVER['Cron'] . '::Cron');
-StbLog(StbLog::Cron, 'Time: ' . (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']));
+StbBotTools::StbLog(
+  StbLog::Cron,
+  'Time: ' . (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'])
+);

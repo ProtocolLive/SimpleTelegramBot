@@ -1,14 +1,16 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.02.01.00
+//2023.02.02.00
 
 //This file are included by DirBot/index.php
 
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbBotTools,
   StbDatabase,
   StbDbListeners,
-  StbLanguageSys
+  StbLanguageSys,
+  StbModuleTools
 };
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
   TblCmd,
@@ -176,13 +178,13 @@ function Update_Cmd():void{
   //Module command
   $module = $Db->Commands($Webhook->Command);
   if($module !== []):
-    StbModuleLoad($module[0]['module']);
+    StbModuleTools::StbModuleLoad($module[0]['module']);
     call_user_func($module[0]['module'] . '::Command_' . $Webhook->Command);
     return;
   endif;
 
-  if(SendUserCmd($Webhook->Command) === false):
-    SendUserCmd('unknown');
+  if(StbBotTools::SendUserCmd($Webhook->Command) === false):
+    StbBotTools::SendUserCmd('unknown');
   endif;
 }
 
@@ -196,21 +198,21 @@ function Update_Text():void{
   $Run = false;
   foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
     $Run = true;
-    StbModuleLoad($listener['module']);
+    StbModuleTools::StbModuleLoad($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_Text') === false):
       return;
     endif;
   endforeach;
   foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Data->Chat->Id) as $listener):
     $Run = true;
-    StbModuleLoad($listener['module']);
+    StbModuleTools::StbModuleLoad($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_Text') === false):
       return;
     endif;
   endforeach;
   if($Run === false
   and $Webhook->Data->Chat instanceof TgUser):
-    SendUserCmd('dontknow', $Webhook->Text);
+    StbBotTools::SendUserCmd('dontknow', $Webhook->Text);
   endif;
   return;
 }
@@ -222,13 +224,13 @@ function Update_ListenerDual(StbDbListeners $Listener):void{
    */
   global $Db, $Webhook;
   foreach($Db->ListenerGet($Listener) as $listener):
-    StbModuleLoad($listener['module']);
+    StbModuleTools::StbModuleLoad($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_' . $Listener->name) === false):
       return;
     endif;
   endforeach;
   foreach($Db->ListenerGet($Listener, $Webhook->Data->Chat->Id) as $listener):
-    StbModuleLoad($listener['module']);
+    StbModuleTools::StbModuleLoad($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_' . $Listener->name) === false):
       return;
     endif;
@@ -241,7 +243,7 @@ function Update_ListenerSimple(StbDbListeners $Listener):void{
    */
   global $Db;
   foreach($Db->ListenerGet($Listener) as $listener):
-    StbModuleLoad($listener['module']);
+    StbModuleTools::StbModuleLoad($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_' . $Listener->name) === false):
       return;
     endif;
