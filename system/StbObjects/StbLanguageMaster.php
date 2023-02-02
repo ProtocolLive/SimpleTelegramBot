@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2022.08.27.00
+//2023.02.02.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 
@@ -15,9 +15,6 @@ abstract class StbLanguageMaster{
     string $Group = null
   ):string|null{
     DebugTrace();
-    if($Text === 'Commands'):
-      return null;
-    endif;
     if($Language === null):
       $lang = $this->Default;
     else:
