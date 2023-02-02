@@ -1,29 +1,23 @@
 {
-    "name": "protocollive/simpletelegrambot",
-    "description": "A bot to simple respond commands with txt files",
-    "type": "project",
-    "require": {
-        "php": ">=8.1",
-        "protocollive/telegrambotlibrary": "*",
-        "protocollive/phplivedb": "*"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Protocol Corporation",
-            "email": "protocollive@outlook.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "ProtocolLive\\SimpleTelegramBot\\StbObjects\\": "system/StbObjects"
-        },
-        "files": [
-            "functions/bot.php",
-            "functions/module.php",
-            "system/functions/basics.php",
-            "system/functions/debug.php",
-            "system/constants.php"
-        ]
+  "name": "protocollive/simpletelegrambot",
+  "description": "A bot to simple respond commands with txt files",
+  "type": "project",
+  "require": {
+    "php": ">=8.1",
+    "protocollive/stbcore": "*",
+    "protocollive/telegrambotlibrary": "*",
+    "protocollive/phplivedb": "*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Protocol Corporation",
+      "email": "protocollive@outlook.com"
     }
+  ],
+  "autoload": {
+    "files": [
+      "system/constants.php"
+    ]
+  }
 }
