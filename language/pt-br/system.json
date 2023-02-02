@@ -1,5 +1,5 @@
 {
-  "Module":{
+  "Module": {
     "Fail": "⚠️ Erro no procedimento",
     "InstallOk": "✅ Instalação concluída",
     "InstallPick": "Clique em um módulo para instalar:",
@@ -7,7 +7,7 @@
     "Modules": "🧩 Módulos instalados:",
     "UninstallButton": "Desinstalar"
   },
-  "Admin":{
+  "Admin": {
     "Admin": "Administrador: %1$s\nAdicionado: %2$s",
     "AdminAddConfirm": "Usuário encontrado: %1$s",
     "AdminAddId": "Peça para o novo administrador usar o comando /id, depois responda esta mensagem com o ID dele",
@@ -31,16 +31,21 @@
     "UpdatesButton": "📡 Atualizações",
     "UserFound": "Usuário encontrado: %s"
   },
-  "Errors":{
+  "Errors": {
     "ButtonWithoutAction": "⚠️ Botão sem ação",
     "ChatNull": "Não foi possível obter as informações do chat",
     "Denied": "⛔ Acesso negado",
     "UserNull": "Não foi possível obter as informações do usuário"
   },
+  "Stats": {
+    "Commands": "Comandos: (20 mais usados)",
+    "Logs": "Logs: (Últimos 20)",
+    "Used": "Total de usuários: %s"
+  },
   "Add": "➕",
   "Back": "🔙",
   "Cancel": "Cancelar",
-  "DateTime":"d/m/Y H:i:s",
+  "DateTime": "d/m/Y H:i:s",
   "MyId": "Seu ID é %s",
   "No": "❎",
   "Yes": "✅"

@@ -1,5 +1,5 @@
 {
-  "Module":{
+  "Module": {
     "Fail": "⚠️ Procedure fail",
     "InstallOk": "✅ Install done",
     "InstallPick": "Choose a module to install:",
@@ -7,7 +7,7 @@
     "Modules": "🧩 Modules installed:",
     "UninstallButton": "Uninstall"
   },
-  "Admin":{
+  "Admin": {
     "Admin": "Administrator: %1$s\nAdded: %2$s",
     "AdminAddConfirm": "Usuário encontrado: %1$s",
     "AdminAddId": "Ask the new administrator to use the command /id, them reply this with the ID",
@@ -31,16 +31,21 @@
     "UpdatesButton": "📡 Updates",
     "UserFound": "User founded: %s"
   },
-  "Errors":{
+  "Errors": {
     "ButtonWithoutAction": "⚠️ Button without action",
     "ChatNull": "Could not possible to get chat data",
     "Denied": "⛔ Access denied",
     "UserNull": "Could not possible to get user data"
   },
+  "Stats": {
+    "Commands": "Commands: (20 most used)",
+    "Logs": "Logs: (last 20)",
+    "Used": "Lifetime users interacted: %s"
+  },
   "Add": "➕",
   "Back": "🔙",
   "Cancel": "Cancelar",
-  "DateTime":"m/d/Y h:i:s",
+  "DateTime": "m/d/Y h:i:s",
   "MyId": "Your ID is %s",
   "No": "❎",
   "Yes": "✅"

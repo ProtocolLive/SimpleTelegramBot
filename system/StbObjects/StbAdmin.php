@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.02.02.00
+//2023.02.02.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use ProtocolLive\PhpLiveDb\PhpLiveDb;
@@ -853,14 +853,18 @@ abstract class StbAdmin{
      * @var PhpLiveDb $PlDb
      * @var TelegramBotLibrary $Bot
      * @var TgCallback $Webhook
+     * @var StbLanguageSys $Lang
      */
-    global $PlDb, $Bot, $Webhook;
+    global $PlDb, $Bot, $Webhook, $Lang;
     $consult = $PlDb->Select('chats');
     $consult->Fields('count(*) as count');
     $chats = $consult->Run();
-    $msg = 'Lifetime users interacted: ' . $chats[0]['count'] . PHP_EOL;
+    $msg = sprintf(
+      '<b>' . $Lang->Get('Used', Group: 'Stats') . '</b>' . PHP_EOL,
+      $chats[0]['count']
+    );
     $msg .= PHP_EOL;
-    $msg .= '<b>Commands: (20 most used)</b>' . PHP_EOL;
+    $msg .= '<b>' . $Lang->Get('Commands', Group: 'Stats') . '</b>' . PHP_EOL;
     $consult = $PlDb->Select('sys_logs');
     $consult->Fields('event,count(event) as count');
     $consult->Group('event');
@@ -871,7 +875,7 @@ abstract class StbAdmin{
       $msg .= $event['count'] . ' - ' . $event['event'] . PHP_EOL;
     endwhile;
     $msg .= PHP_EOL;
-    $msg .= '<b>Logs: (last 20)</b>' . PHP_EOL;
+    $msg .= '<b>' . $Lang->Get('Logs', Group: 'Stats') . '</b>' . PHP_EOL;
     $consult = $PlDb->Select('sys_logs');
     $consult->JoinAdd('chats', 'chat_id');
     $consult->Order('time desc');
@@ -888,11 +892,11 @@ abstract class StbAdmin{
       if($log['nick'] !== null):
         $msg .= '@' . $log['nick'] . ', ';
       endif;
-      $msg .= $log['name'] . ' ';
+      $msg .= '<a href="tg://user?id=' . $log['chat_id'] . '">' . $log['name'] . ' ';
       if($log['name2'] !== null):
-        $msg .= $log['name2'] . ' ';
+        $msg .= $log['name2'];
       endif;
-      $msg .= PHP_EOL;
+      $msg .= '</a>' . PHP_EOL;
       $msg .= '-----------------------------' . PHP_EOL;
     endwhile;
     $Bot->TextSend(
