@@ -1,5 +1,5 @@
 <?php
-//2023.02.01.00
+//2023.02.01.01
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -90,7 +90,6 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $consult->Add(
     'chat_id',
     Formats::IntBig,
-    Unsigned: true,
     NotNull: true,
     Primary: true
   );
@@ -197,10 +196,13 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
     50,
     NotNull: true
   );
-  //Without foreign key to use with groups
   $consult->Add(
     'chat_id',
-    Formats::IntBig
+    Formats::IntBig,
+    RefTable: 'chats',
+    RefField: 'chat_id',
+    RefDelete: RefTypes::Cascade,
+    RefUpdate: RefTypes::Cascade
   );
   $consult->Add(
     'module',
@@ -233,7 +235,6 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $consult->Add(
     'chat_id',
     Formats::IntBig,
-    Unsigned: true,
     NotNull: true,
     RefTable: 'chats',
     RefField: 'chat_id',
@@ -303,10 +304,13 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
     RefDelete: RefTypes::Cascade,
     RefUpdate: RefTypes::Cascade
   );
-  //chat_id are signed and have no foreign key to store super groups too
   $consult->Add(
     'chat_id',
-    Formats::IntBig
+    Formats::IntBig,
+    RefTable: 'chats',
+    RefField: 'chat_id',
+    RefDelete: RefTypes::Cascade,
+    RefUpdate: RefTypes::Cascade
   );
   $consult->Run();
 
