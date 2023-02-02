@@ -1,9 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.26.05
+//2023.02.02.00
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
+use ProtocolLive\PhpLiveDb\PhpLiveDb;
 use ProtocolLive\TelegramBotLibrary\TblObjects\{
   TblCmd,
   TblCommands,
@@ -859,20 +860,22 @@ abstract class StbAdmin{
     $chats = $consult->Run();
     $msg = 'Lifetime users interacted: ' . $chats[0]['count'] . PHP_EOL;
     $msg .= PHP_EOL;
-    $msg .= '<b>Commands:</b>' . PHP_EOL;
+    $msg .= '<b>Commands: (20 most used)</b>' . PHP_EOL;
     $consult = $PlDb->Select('sys_logs');
     $consult->Fields('event,count(event) as count');
     $consult->Group('event');
     $consult->Order('count desc');
+    $consult->Limit(20);
     $consult->Run(Fetch: true);
     while(($event = $consult->Fetch()) !== false):
       $msg .= $event['count'] . ' - ' . $event['event'] . PHP_EOL;
     endwhile;
     $msg .= PHP_EOL;
-    $msg .= '<b>Logs:</b>' . PHP_EOL;
+    $msg .= '<b>Logs: (last 20)</b>' . PHP_EOL;
     $consult = $PlDb->Select('sys_logs');
     $consult->JoinAdd('chats', 'chat_id');
     $consult->Order('time desc');
+    $consult->Limit(20);
     $consult->Run(Fetch: true);
     while(($log = $consult->Fetch()) !== false):
       $msg .= date('Y/m/d H:i:s', $log['time']) . ' - ';
