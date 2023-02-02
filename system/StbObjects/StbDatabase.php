@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.02.01.00
+//2023.02.01.01
 
 namespace ProtocolLive\SimpleTelegramBot\StbObjects;
 use PDO;
@@ -13,7 +13,10 @@ use ProtocolLive\PhpLiveDb\{
   PhpLiveDb,
   Types
 };
-use ProtocolLive\TelegramBotLibrary\TgObjects\TgUser;
+use ProtocolLive\TelegramBotLibrary\TgObjects\{
+  TgChat,
+  TgUser
+};
 
 final class StbDatabase{
 
@@ -149,6 +152,22 @@ final class StbDatabase{
     $consult->FieldAdd('method', $Args, Types::Str, Update: true);
     $consult->Run(HtmlSafe: false);
     return $hash;
+  }
+
+  public function ChatAdd(
+    TgChat $Chat
+  ):bool{
+    DebugTrace();
+    $consult = $this->Db->Insert('chats');
+    $consult->FieldAdd('chat_id', $Chat->Id, Types::Int);
+    $consult->FieldAdd('name', $Chat->Name, Types::Str);
+    $consult->FieldAdd('created', time(), Types::Int);
+    try{
+      $consult->Run();
+      return true;
+    }catch(PDOException){
+      return false;
+    }
   }
 
   public function CommandAdd(
