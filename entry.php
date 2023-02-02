@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.02.02.00
+//2023.02.02.01
 
 //This file are included by DirBot/index.php
 
@@ -178,7 +178,7 @@ function Update_Cmd():void{
   //Module command
   $module = $Db->Commands($Webhook->Command);
   if($module !== []):
-    StbModuleTools::StbModuleLoad($module[0]['module']);
+    StbModuleTools::Load($module[0]['module']);
     call_user_func($module[0]['module'] . '::Command_' . $Webhook->Command);
     return;
   endif;
@@ -198,14 +198,14 @@ function Update_Text():void{
   $Run = false;
   foreach($Db->ListenerGet(StbDbListeners::Text) as $listener):
     $Run = true;
-    StbModuleTools::StbModuleLoad($listener['module']);
+    StbModuleTools::Load($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_Text') === false):
       return;
     endif;
   endforeach;
   foreach($Db->ListenerGet(StbDbListeners::Text, $Webhook->Data->Chat->Id) as $listener):
     $Run = true;
-    StbModuleTools::StbModuleLoad($listener['module']);
+    StbModuleTools::Load($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_Text') === false):
       return;
     endif;
@@ -224,13 +224,13 @@ function Update_ListenerDual(StbDbListeners $Listener):void{
    */
   global $Db, $Webhook;
   foreach($Db->ListenerGet($Listener) as $listener):
-    StbModuleTools::StbModuleLoad($listener['module']);
+    StbModuleTools::Load($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_' . $Listener->name) === false):
       return;
     endif;
   endforeach;
   foreach($Db->ListenerGet($Listener, $Webhook->Data->Chat->Id) as $listener):
-    StbModuleTools::StbModuleLoad($listener['module']);
+    StbModuleTools::Load($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_' . $Listener->name) === false):
       return;
     endif;
@@ -243,7 +243,7 @@ function Update_ListenerSimple(StbDbListeners $Listener):void{
    */
   global $Db;
   foreach($Db->ListenerGet($Listener) as $listener):
-    StbModuleTools::StbModuleLoad($listener['module']);
+    StbModuleTools::Load($listener['module']);
     if(call_user_func($listener['module'] . '::Listener_' . $Listener->name) === false):
       return;
     endif;
