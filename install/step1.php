@@ -34,7 +34,7 @@
         <td>
           <select name="timezone"><?php
             foreach(DateTimeZone::listIdentifiers(DateTimeZone::ALL) as $name):?>
-              <option value="<?php echo $name;?>"><?php echo $name;?></option><?php
+              <option value="<?=$name?>"><?=$name?></option><?php
             endforeach;?>
           </select>
         </td>
