@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.01.26.00
+//2023.02.13.00
 
 use ProtocolLive\PhpLiveDb\Drivers;
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblLog;
@@ -16,7 +16,7 @@ const Token = '##TOKEN##';
 //Token created for authenticate the webhook
 //Type: string
 //Default: null
-const TokenWebhook = ##TOKENWEBHOOK##;
+const TokenWebhook = '##TOKENWEBHOOK##';
 
 //Main admin
 //Type: int

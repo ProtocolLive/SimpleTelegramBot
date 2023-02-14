@@ -1,5 +1,5 @@
 <?php
-//2023.02.01.01
+//2023.02.13.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -23,6 +23,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
 </head>
 <body>
   <h1>SimpleTelegramBot Install</h1><?php
+  $_POST = filter_input_array(INPUT_POST);
 
   $DirSystem = dirname(__DIR__, 1);
   $DirBot = 'Bot-' . $_POST['name'] . '-' . md5(uniqid());
@@ -37,7 +38,7 @@ use ProtocolLive\SimpleTelegramBot\StbObjects\{
   $config = str_replace('##TESTSERVER##', $_POST['testserver'], $config);
   $config = str_replace('##LANGUAGE##', $_POST['language'], $config);
   $config = str_replace('##ADMIN##', $_POST['admin'], $config);
-  $config = str_replace('##TOKENWEBHOOK##', "'" . hash('sha256', uniqid()) . "'", $config);
+  $config = str_replace('##TOKENWEBHOOK##', hash('sha256', uniqid()), $config);
 
   if($_POST['dbtype'] === 'mysql'):
     $config = str_replace('##DBTYPE##', 'Drivers::MySql', $config);
