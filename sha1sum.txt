@@ -10,7 +10,7 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\UserCmds\index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\UserCmds\pt-br\index.htm
 a6bd1dbe6c6fe7249552f794d0b78ba5618e0188  install\DirBot\UserCmds\pt-br\start.txt
 673be2874cd1daaf48768fe60ce464d7254e9caa  install\DirBot\UserCmds\pt-br\unknown.txt
-98f95c1d463ff15ede7d2ee140d99d5f1b19edeb  install\DirBot\config.php
+dc1348462afaf098c659c8674d3d2e3319f7b4d0  install\DirBot\config.php
 bf6dcef9254ec594af1af12fecff5a12cf493614  install\DirBot\index.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\logs\index.htm
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\modules\index.htm
@@ -18,10 +18,8 @@ da39a3ee5e6b4b0d3255bfef95601890afd80709  install\DirBot\tools\index.htm
 6dc84b18d4c6ffe5042fd9ece8e62fada1695875  install\DirBot\tools\scope.php
 da39a3ee5e6b4b0d3255bfef95601890afd80709  install\index.htm
 46d0892fd60bed89182e7b3fec2baaa518979282  install\step1.php
-6fc9496b565d87c125f8668331dd761a5df44cf3  install\step2.php
-e682aea18d7c271c8e4aa64a7d5db65c77f6234a  language\en\system.json
-7e1b5f7a8a340af204719f451cc4f9da3eeb3f60  language\pt-br\system.json
+a6d7af6931a85466e6968425ea030b88109d7991  install\step2.php
 3864c42e280c075c3cd15c77c3f87f426d5f83ef  readme.md
-6b20bee83aba2484044298a2195fccf4982fd3c4  system\constants.php
+de47be2a6d4bf903cb03d2736136e8529cce1af5  system\constants.php
 e3813ae3423e3fe61eec44af3c65d31523a86cac  system\php.php
-563859abde934fe31bfc5131474e38eb9647e73e  system\system.php
+5a8c21f7b9ca9f8f9a3bea41e27b35cfb9fb25b6  system\system.php
