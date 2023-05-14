@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.02.08.00
+//2023.05.14.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -9,7 +9,8 @@ use ProtocolLive\PhpLiveDb\{
 };
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbDatabase,
-  StbLanguageSys
+  StbLanguageSys,
+  StbLog
 };
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
 use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
@@ -23,6 +24,7 @@ date_default_timezone_set(Timezone);
 
 ini_set('error_log', DirLogs . '/error.log');
 $DebugTraceFolder = DirLogs;
+const DebugTrace = Log & StbLog::Trace;
 
 $BotData = new TblData(
   Token,
