@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.05.14.00
+//2023.05.23.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -41,4 +41,3 @@ else:
 endif;
 $Db = new StbDatabase($PlDb);
 $Lang = new StbLanguageSys(DefaultLanguage);
-$UserLang = DefaultLanguage;
