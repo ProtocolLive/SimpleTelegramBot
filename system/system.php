@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.05.23.00
+//2023.05.29.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
@@ -31,7 +31,8 @@ $BotData = new TblData(
   DirLogs,
   TokenWebhook,
   Log,
-  TestServer
+  TestServer,
+  StbBotTools::TblLog(...)
 );
 $Bot = new TelegramBotLibrary($BotData);
 if(DbType === Drivers::MySql):
