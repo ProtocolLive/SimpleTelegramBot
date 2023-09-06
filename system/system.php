@@ -1,13 +1,14 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2023.05.29.00
+//2023.09.06.00
 
 use ProtocolLive\PhpLiveDb\{
   Drivers,
   PhpLiveDb
 };
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
+  StbBotTools,
   StbDatabase,
   StbLanguageSys,
   StbLog
@@ -17,8 +18,8 @@ use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
 
 require(__DIR__ . '/php.php');
 require(dirname(__DIR__) . '/vendor/autoload.php');
-set_error_handler(HandlerError(...));
-set_exception_handler(HandlerException(...));
+set_error_handler(Handler(...));
+set_exception_handler(Handler(...));
 require(DirBot . '/config.php');
 date_default_timezone_set(Timezone);
 
@@ -35,10 +36,13 @@ $BotData = new TblData(
   StbBotTools::TblLog(...)
 );
 $Bot = new TelegramBotLibrary($BotData);
+
 if(DbType === Drivers::MySql):
   $PlDb = new PhpLiveDb(DbHost, DbUser, DbPwd, DbName);
 else:
   $PlDb = new PhpLiveDb(DirBot . '/db.db', Driver: Drivers::SqLite);
 endif;
+
 $Db = new StbDatabase($PlDb);
+
 $Lang = new StbLanguageSys(DefaultLanguage);
