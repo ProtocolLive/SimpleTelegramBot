@@ -12,8 +12,3 @@ Check the [Wiki](https://github.com/ProtocolLive/SimpleTelegramBot/wiki) for mor
 ``
 composer create-project protocollive/simpletelegrambot ./
 ``
-
-## Donation
-
-### Bitcoin - 34UswyxCATYXJzyQ12c3XZRviPhGWmFzxK
-![Bitcoin](https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=34UswyxCATYXJzyQ12c3XZRviPhGWmFzxK)
