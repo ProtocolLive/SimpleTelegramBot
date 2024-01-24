@@ -3,7 +3,7 @@
   "description": "A bot to simple respond commands with txt files",
   "type": "project",
   "require": {
-    "php": ">=8.1",
+    "php": ">=8.2",
     "protocollive/stbcore": "*",
     "protocollive/telegrambotlibrary": "*",
     "protocollive/phplivedb": "*"
