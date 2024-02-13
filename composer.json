@@ -14,10 +14,5 @@
       "name": "Protocol Corporation",
       "email": "protocollive@outlook.com"
     }
-  ],
-  "autoload": {
-    "files": [
-      "system/constants.php"
-    ]
-  }
+  ]
 }
