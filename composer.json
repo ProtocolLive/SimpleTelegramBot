@@ -2,6 +2,7 @@
   "name": "protocollive/simpletelegrambot",
   "description": "A bot to simple respond commands with txt files",
   "type": "project",
+  "version": "1.0.0",
   "require": {
     "php": ">=8.2",
     "protocollive/stbcore": "*",
