@@ -1,13 +1,13 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2025.06.29.00
+//2025.06.29.01
 
 use ProtocolLive\PhpLiveDb\Enums\Drivers;
 use ProtocolLive\PhpLiveDb\PhpLiveDb;
 use ProtocolLive\SimpleTelegramBot\StbEnums\StbLog;
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
-  StbBotTools,
+  StbCore,
   StbDatabase,
   StbLanguageSys
 };
@@ -32,7 +32,7 @@ $BotData = new TblData(
   TokenWebhook,
   Log,
   TestServer,
-  //StbBotTools::TblLog(...)
+  StbCore::Log(...)
 );
 $Bot = new TelegramBotLibrary($BotData);
 
