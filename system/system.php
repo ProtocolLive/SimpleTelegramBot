@@ -1,17 +1,15 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/SimpleTelegramBot
-//2024.02.23.00
+//2025.06.29.00
 
-use ProtocolLive\PhpLiveDb\Enums\{
-  Drivers
-};
+use ProtocolLive\PhpLiveDb\Enums\Drivers;
 use ProtocolLive\PhpLiveDb\PhpLiveDb;
+use ProtocolLive\SimpleTelegramBot\StbEnums\StbLog;
 use ProtocolLive\SimpleTelegramBot\StbObjects\{
   StbBotTools,
   StbDatabase,
-  StbLanguageSys,
-  StbLog
+  StbLanguageSys
 };
 use ProtocolLive\TelegramBotLibrary\TblObjects\TblData;
 use ProtocolLive\TelegramBotLibrary\TelegramBotLibrary;
@@ -26,7 +24,7 @@ date_default_timezone_set(Timezone);
 
 ini_set('error_log', DirLogs . '/error.log');
 $DebugTraceFolder = DirLogs;
-const DebugTrace = Log & StbLog::Trace;
+define('DebugTrace', in_array(StbLog::Trace, Log));
 
 $BotData = new TblData(
   Token,
