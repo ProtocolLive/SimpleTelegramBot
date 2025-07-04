@@ -4,7 +4,7 @@
   "type": "project",
   "version": "1.0.0",
   "require": {
-    "php": ">=8.2",
+    "php": ">=8.3",
     "protocollive/stbcore": "*",
     "protocollive/telegrambotlibrary": "*",
     "protocollive/phplivedb": "*"
