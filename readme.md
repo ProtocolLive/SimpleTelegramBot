@@ -1,4 +1,4 @@
-![SimpleTelegramBot](https://repository-images.githubusercontent.com/466767180/cbf06952-83b4-4d49-8df9-d7d7c23bbd48)
+<img width="1280" height="720" alt="Slide1" src="https://github.com/user-attachments/assets/59a632bd-3e39-49d8-a15f-96ec9c18fb4d" />
 # Simple Telegram Bot
 
 This bot responds to commands with TXT file content. To create a new response/command, simply create the TXT file. The name is the command and the content is the answer.
